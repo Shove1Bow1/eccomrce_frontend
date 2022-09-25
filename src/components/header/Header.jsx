@@ -18,7 +18,7 @@ function Header(props) {
           <div className="text-[#151515] text-[36px] pr-[auto]">LOGO</div>
           <div className="rounded-[12px] flex w-fit p-[15px] mx-auto flex-row  border-[1px]  border-[#D1D1D1] bg-[#F9F9F9]">
             <input
-              className="bg-[#F9F9F9] w-[300px] focus:ring-0"
+              className="bg-[#F9F9F9] w-[300px] focus:ring-0 focus:border-white"
               placeholder="Search Products, categories ..."
             />
             <img
