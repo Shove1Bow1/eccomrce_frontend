@@ -2,7 +2,7 @@ import axios from "axios";
 import { useFormik } from "formik";
 import styled from "styled-components";
 import * as yup from "yup";
-import background from '../img/delaney-van-unsplash.png'
+import background from '../assets/img/delaney-van-unsplash.png'
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
