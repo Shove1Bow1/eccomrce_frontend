@@ -1,5 +1,6 @@
 import React from "react";
 import Banner from "../components/banner/Banner";
+import Footer from "../components/Footer";
 import CategoryMenu from "../components/menu/CategoryMenu";
 import NewRunner from "../components/runner/NewRunner";
 
@@ -18,6 +19,7 @@ function Home(props) {
       <Banner />
       <CategoryMenu title="Best from Product " item={filter} />
       <NewRunner />
+      <Footer />
     </div>
   );
 }
