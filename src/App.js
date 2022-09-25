@@ -1,14 +1,18 @@
-import './App.css';
-import Login from "./components/Login";
-import { Route, Routes } from 'react-router-dom';
-import Register from './components/Register';
+import { Route, Routes } from "react-router-dom";
+import "./App.css";
+import Header from "./Component/Silder/header/Header";
+import Home from "./container/Home";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/login" element={<Login/>}></Route>
-      <Route path="/register" element={<Register/>}></Route>
-    </Routes>
+    <div className="bg-[#E5E5E5] w-full h-[100vh]">
+      <div className="max-w-[1260px] bg-white mx-auto">
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </div>
+    </div>
   );
 }
 
