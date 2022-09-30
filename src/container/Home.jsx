@@ -2,6 +2,7 @@ import React from "react";
 import Banner from "../components/banner/Banner";
 import Footer from "../components/Footer";
 import CategoryMenu from "../components/menu/CategoryMenu";
+import TemplateProducts from "../components/products/TemplateProducts";
 import NewRunner from "../components/runner/NewRunner";
 
 function Home(props) {
@@ -18,6 +19,7 @@ function Home(props) {
     <div>
       <Banner />
       <CategoryMenu title="Best from Product " item={filter} />
+      <TemplateProducts />
       <NewRunner />
       <Footer />
     </div>
