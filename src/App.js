@@ -1,7 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Header from "./components/header/Header";
+import Checkout from "./container/Checkout";
 import Home from "./container/Home";
+import View from "./container/View";
 function App() {
   return (
     <div className="bg-[#E5E5E5] w-full h-full">
@@ -9,6 +11,8 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/view" element={<View />} />
         </Routes>
       </div>
     </div>
