@@ -13,7 +13,9 @@ function NewRunner(props) {
         setnews(data);
       });
   });
-  return <Marquee className="w-full h-[200px]">{}</Marquee>;
+  return <Marquee className="w-full h-[200px]">{
+    news.map((item,data)=>{<div> <span className=""></span></div>})
+  }</Marquee>;
 }
 
 export default NewRunner;

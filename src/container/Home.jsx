@@ -2,7 +2,7 @@ import React from "react";
 import Banner from "../components/banner/Banner";
 import Footer from "../components/Footer";
 import CategoryMenu from "../components/menu/CategoryMenu";
-import NewRunner from "../components/runner/NewRunner";
+import ProductList from "../components/product/ProductList";
 
 function Home(props) {
   const filter = [
@@ -18,10 +18,10 @@ function Home(props) {
     <div>
       <Banner />
       <CategoryMenu title="Best from Product " item={filter} />
-      <NewRunner />
+      <ProductList />
       <Footer />
     </div>
   );
 }
-
+  
 export default Home;
