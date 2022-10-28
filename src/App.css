@@ -1,0 +1,13 @@
+.ant-checkbox-checked .ant-checkbox-inner {
+  background-color: #6a983c;
+  border-color: 1.5px solid #46760a;
+}
+.ant-checkbox-wrapper:hover .ant-checkbox-inner,
+.ant-checkbox:hover .ant-checkbox-inner,
+.ant-checkbox-input:focus + .ant-checkbox-inner {
+  border-color: #46760a !important;
+}
+
+.ant-checkbox-indeterminate .ant-checkbox-inner::after {
+  background-color: #6a983c;
+}
