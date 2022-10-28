@@ -4,7 +4,7 @@ const LayoutProduct = (props) => {
     console.log(price);
     return (
         <div className="flex flex-col items-start p-[16px] gap-[16px] w-[268px] h-[332px] border-[#D1D1D1] border-[1px] rounded-[12px] bg-white">
-            <img className="left-[0px] right-[0px] top-[0px] bottom-[0px] bg-[#F9F9F9] rounded-[12px] w-[236px] h-[180px]" title={title} alt="img" src="https://linhkienlammusic.com/thumbs/540x540x1/upload/product/khuon-lam-banh-xep-nhua-7968.jpg" />
+            <img className="left-[0px] right-[0px] top-[0px] bottom-[0px] bg-[#F9F9F9] rounded-[12px] w-[236px] h-[180px]" title={title} alt="img" src={imgUrl} />
             <div className="flex flex-col items-start w-[236px] h-[184px] padding-[0px] self-stretch">
                 <p className="w-[251px] h-[49px] font-[500] text-[15px] text-[#151515]">{title}</p>
                 <div className="w-[237px] h-[36px] relative self-stretch flex">

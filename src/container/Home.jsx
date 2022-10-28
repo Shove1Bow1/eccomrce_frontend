@@ -26,7 +26,7 @@ function Home(props) {
   return (
     <div>
       <div className="flex flex-row items-start w-full h-[410px] px-[45px] justify-around py-[64px]">
-        <CategoryMenu title="Best from Product " item={filter} />
+        <CategoryMenu title="Những sản phẩm tốt nhất" item={filter} />
         {
           BannerInfo.map(index => {
             return (

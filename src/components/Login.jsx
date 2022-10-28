@@ -2,9 +2,9 @@ import axios from "axios";
 import { useFormik } from "formik";
 import styled from "styled-components";
 import * as yup from "yup";
-import background from '../assets/img/delaney-van-unsplash.png'
+import background from '../assets/img/delaney-van-unsplash.png';
 const Container = styled.div`
-  width: 100vw;
+  width: full;
   height: 100vh;
   background: linear-gradient(
       rgba(255, 255, 255, 0.5),
@@ -62,36 +62,38 @@ const Link = styled.a`
 const Login = () => {
   const formik = useFormik({
     initialValues: {
-      userName:'',
-      Password:'',
+      userName: '',
+      Password: '',
     },
     validationSchema: yup.object({
-      userName: yup.string().max(40,"must be 40 characters or less").required('Required'),
-      Password:yup.string()
-      .required('No password provided.') 
-      .min(8, 'Password is too short - should be 8 chars minimum.'),
+      userName: yup.string().max(40, "must be 40 characters or less").required('Required'),
+      Password: yup.string()
+        .required('No password provided.')
+        .min(8, 'Password is too short - should be 8 chars minimum.'),
     }),
-    onSubmit:async values  => {
+    onSubmit: async values => {
       console.log(process.env.REACT_APP_SERVER_URL);
-      const res=await axios({method:'post', 
-        url:process.env.SERVER_URL,data:{
-        userName:values.userName,
-        password:values.Password,
-      }})
-      const result=res.data;
+      const res = await axios({
+        method: 'post',
+        url: process.env.SERVER_URL, data: {
+          userName: values.userName,
+          password: values.Password,
+        }
+      })
+      const result = res.data;
       alert(result.message);
-      }
-    },
+    }
+  },
   );
   return (
     <Container>
       <Wrapper>
         <Title>SIGN IN</Title>
         <Form onSubmit={formik.handleSubmit}>
-          <Input placeholder="username" name="userName" onChange={formik.handleChange} minLength="3" onBlur={formik.handleBlur} value={formik.values.userName} required/>
-          {formik.touched.userName&&formik.errors.userName?<div style={{color:'red'}}>{formik.errors.userName}</div>:null}
-          <Input placeholder="password" type="Password" name="Password" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.Password} required/>
-          {formik.touched.Password&&formik.errors.Password?<div style={{color:'red'}}>{formik.errors.Password}</div>:null}
+          <Input placeholder="username" name="userName" onChange={formik.handleChange} minLength="3" onBlur={formik.handleBlur} value={formik.values.userName} required />
+          {formik.touched.userName && formik.errors.userName ? <div style={{ color: 'red' }}>{formik.errors.userName}</div> : null}
+          <Input placeholder="password" type="Password" name="Password" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.Password} required />
+          {formik.touched.Password && formik.errors.Password ? <div style={{ color: 'red' }}>{formik.errors.Password}</div> : null}
           <Button type="submit">LOGIN</Button>
           <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
           <Link>CREATE A NEW ACCOUNT</Link>

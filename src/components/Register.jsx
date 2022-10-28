@@ -2,9 +2,9 @@ import axios from "axios";
 import { useFormik } from "formik";
 import styled from "styled-components";
 import * as yup from 'yup';
-import background from '../assets/img/delaney-van-unsplash.png'
+import background from '../assets/img/delaney-van-unsplash.png';
 const Container = styled.div`
-  width: 100vw;
+  width: full;
   height: 100vh;
   background: linear-gradient(
       rgba(255, 255, 255, 0.5),
@@ -66,58 +66,60 @@ const Register = () => {
     initialValues: {
       firstName: '',
       lastName: '',
-      userName:'',
+      userName: '',
       email: '',
-      Password:'',
-      confirmPassword:'',
+      Password: '',
+      confirmPassword: '',
     },
     validationSchema: yup.object({
       firstName: yup.string()
         .max(50, 'Must be 50 characters or less'),
       lastName: yup.string()
         .max(50, 'Must be 50 characters or less'),
-      userName: yup.string().max(40,"must be 40 characters or less").required('Required'),
-      email:yup.string().email('Invalid email address').required('Required'),
-      Password:yup.string()
-      .required('No password provided.') 
-      .min(8, 'Password is too short - should be 8 chars minimum.'),
-      confirmPassword:yup.string()
-      .required('No password provided.') 
-      .min(8, 'Password is too short - should be 8 chars minimum.')
+      userName: yup.string().max(40, "must be 40 characters or less").required('Required'),
+      email: yup.string().email('Invalid email address').required('Required'),
+      Password: yup.string()
+        .required('No password provided.')
+        .min(8, 'Password is too short - should be 8 chars minimum.'),
+      confirmPassword: yup.string()
+        .required('No password provided.')
+        .min(8, 'Password is too short - should be 8 chars minimum.')
     }),
-    onSubmit:async values  => {
-      if(values.Password!==values.confirmPassword){
-          alert("password typed in no match")
-          return;
-        }
-      const res=await axios({method:'post', 
-        url:process.env.REACT_APP_SERVER_URL,data:{
-        firstName:values.firstName,
-        lastName:values.lastName,
-        userName:values.userName,
-        email:values.email,
-        password:values.Password,
-      }})
-      const result=res.data;
-      alert(result.message);
+    onSubmit: async values => {
+      if (values.Password !== values.confirmPassword) {
+        alert("password typed in no match")
+        return;
       }
-    },
+      const res = await axios({
+        method: 'post',
+        url: process.env.REACT_APP_SERVER_URL, data: {
+          firstName: values.firstName,
+          lastName: values.lastName,
+          userName: values.userName,
+          email: values.email,
+          password: values.Password,
+        }
+      })
+      const result = res.data;
+      alert(result.message);
+    }
+  },
   );
   return (
     <Container>
       <Wrapper>
         <Title>CREATE AN ACCOUNT</Title>
         <Form onSubmit={formik.handleSubmit}>
-          <Input placeholder="name" type="text" name="firstName" onChange={formik.handleChange} maxLength="50" onBlur={formik.handleBlur} value={formik.values.firstName}/>
-          <Input placeholder="last name" type="text" name="lastName" onChange={formik.handleChange} maxLength="50" onBlur={formik.handleBlur} value={formik.values.lastName}/>
-          <Input placeholder="username" type="text" name="userName" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.userName} required/>
-          {formik.touched.userName&&formik.errors.userName?<div style={{color:'red'}}>{formik.errors.userName}</div>:null}
-          <Input placeholder="email" type='email' name="email" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.email} required/>
-          {formik.touched.email&&formik.errors.userName?<div style={{color:'red'}}>{formik.errors.email}</div>:null}
-          <Input placeholder="password" type='password' name="Password" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.Password} required/>
-          {formik.touched.Password&&formik.errors.Password?<div style={{color:'red'}}>{formik.errors.Password}</div>:null}
-          <Input placeholder="confirm password" type='password' name="confirmPassword" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.confirmPassword} required/>
-          {formik.values.Password!==formik.values.confirmPassword?<div style={{color:'red'}}>You need to type in the same with password</div>:null}
+          <Input placeholder="name" type="text" name="firstName" onChange={formik.handleChange} maxLength="50" onBlur={formik.handleBlur} value={formik.values.firstName} />
+          <Input placeholder="last name" type="text" name="lastName" onChange={formik.handleChange} maxLength="50" onBlur={formik.handleBlur} value={formik.values.lastName} />
+          <Input placeholder="username" type="text" name="userName" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.userName} required />
+          {formik.touched.userName && formik.errors.userName ? <div style={{ color: 'red' }}>{formik.errors.userName}</div> : null}
+          <Input placeholder="email" type='email' name="email" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.email} required />
+          {formik.touched.email && formik.errors.userName ? <div style={{ color: 'red' }}>{formik.errors.email}</div> : null}
+          <Input placeholder="password" type='password' name="Password" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.Password} required />
+          {formik.touched.Password && formik.errors.Password ? <div style={{ color: 'red' }}>{formik.errors.Password}</div> : null}
+          <Input placeholder="confirm password" type='password' name="confirmPassword" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.confirmPassword} required />
+          {formik.values.Password !== formik.values.confirmPassword ? <div style={{ color: 'red' }}>You need to type in the same with password</div> : null}
           <Agreement>
             By creating an account, I consent to the processing of my personal
             data in accordance with the <b>PRIVACY POLICY</b>
