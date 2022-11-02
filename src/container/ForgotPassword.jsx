@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useFormik } from "formik";
 import { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
 import styled from "styled-components";
 import * as yup from "yup";
 import background from '../assets/img/delaney-van-unsplash.png';
+import { CorrectRecoverEmail, DifferentPassword, WrongRecoverEmail } from "../components/notification/Toastify";
 const Container = styled.div`
   width: full;
   height: 100vh;
@@ -66,64 +68,161 @@ const ForgotPassword = () => {
     // var [getCheckbox, setCheckbox] = useState(0);
     var [getRecoverForm, setRecoverForm] = useState(false);
     var [getId, setId] = useState("");
-    const formik = useFormik({
-        initialValues: {
-            userEmail: '',
-            secretCode: '',
-        },
-        validationSchema: yup.object({
-            userEmail: yup.string().max(40, "must be 40 characters or less").required('Required'),
-            secretCode: yup.string().max(50, "must be 50 characters or less").required('Required')
-        }),
-        onSubmit: async values => {
-            const res = await axios({
-                method: 'post',
-                url: 'http://localhost:1402/users/recover',
-                headers: {
-                    token: process.env.REACT_APP_TOKEN_CONFIRM
-                },
-                data: {
-                    email: values.userEmail,
-                    secretCode: values.secretCode
-                }
-            })
-            const result = res.data;
-            setRecoverForm(result.message)
-            setId(result.idUser);
-            alert(result.status);
-        }
-    },
-    );
-    const recoverPasswordFormik = useFormik({
-        initialValues: {
-            newPassword: '',
-            confirmPassword: '',
-        },
-        validationSchema: yup.object({
-            newPassword: yup.string().max(40, "must be 40 characters or less").min(8, "must be 40 characters or more").required('Required'),
-            confirmPassword: yup.string().max(40, "must be 40 characters or less").min(8, "must be 40 characters or more").required('Required'),
-        }),
-        onSubmit: async values => {
-            console.log(true);
-            if (values.confirmPassword === values.newPassword) {
+    // const formik = useFormik({
+    //     initialValues: {
+    //         userEmail: '',
+    //         secretCode: '',
+    //     },
+    //     validationSchema: yup.object({
+    //         userEmail: yup.string().max(40, "must be 40 characters or less").required('Required'),
+    //         secretCode: yup.string().max(50, "must be 50 characters or less").required('Required')
+    //     }),
+    //     onSubmit: async values => {
+    //         const res = await axios({
+    //             method: 'post',
+    //             url: 'http://localhost:1402/users/recover',
+    //             headers: {
+    //                 token: process.env.REACT_APP_TOKEN_CONFIRM
+    //             },
+    //             data: {
+    //                 email: values.userEmail,
+    //                 secretCode: values.secretCode
+    //             }
+    //         })
+    //         const result = res.data;
+    //         setRecoverForm(result.message)
+    //         setId(result.idUser);
+    //         alert(result.status);
+    //     }
+    // },
+    // );
+    // const recoverPasswordFormik = useFormik({
+    //     initialValues: {
+    //         newPassword: '',
+    //         confirmPassword: '',
+    //     },
+    //     validationSchema: yup.object({
+    //         newPassword: yup.string().max(40, "must be 40 characters or less").min(8, "must be 40 characters or more").required('Required'),
+    //         confirmPassword: yup.string().max(40, "must be 40 characters or less").min(8, "must be 40 characters or more").required('Required'),
+    //     }),
+    //     onSubmit: async values => {
+    //         console.log(true);
+    //         if (values.confirmPassword === values.newPassword) {
+    //             const res = await axios({
+    //                 method: 'post',
+    //                 url: 'http://localhost:1402/users/forgot_password',
+    //                 headers: {
+    //                     token: process.env.REACT_APP_TOKEN_CONFIRM
+    //                 },
+    //                 data: {
+    //                     uuid: getId,
+    //                     newPassword: values.newPassword
+    //                 }
+    //             })
+    //             const result = res.data;
+    //             alert(result.status)
+    //         }
+    //         else
+    //             alert("re enter your password");
+    //     }
+    // },);
+    function ShowPage() {
+        const formik = useFormik({
+            initialValues: {
+                userEmail: '',
+                secretCode: '',
+            },
+            validationSchema: yup.object({
+                userEmail: yup.string().max(40, "must be 40 characters or less").required('Required'),
+                secretCode: yup.string().max(50, "must be 50 characters or less").required('Required')
+            }),
+            onSubmit: async values => {
                 const res = await axios({
                     method: 'post',
-                    url: 'http://localhost:1402/users/forgot_password',
+                    url: 'http://localhost:1402/users/recover',
                     headers: {
                         token: process.env.REACT_APP_TOKEN_CONFIRM
                     },
                     data: {
-                        uuid: getId,
-                        newPassword: values.newPassword
+                        email: values.userEmail,
+                        secretCode: values.secretCode
                     }
                 })
                 const result = res.data;
-                alert(result.status)
+                if (result.message) {
+                    console.log(result);
+                    setRecoverForm(result.message)
+                    setId(result.idUser);
+                    CorrectRecoverEmail();
+                }
+                else {
+                    WrongRecoverEmail();
+                }
             }
-            else
-                alert("re enter your password");
+        },
+        );
+        const recoverPasswordFormik = useFormik({
+            initialValues: {
+                newPassword: '',
+                confirmPassword: '',
+            },
+            validationSchema: yup.object({
+                newPassword: yup.string().max(40, "must be 40 characters or less").min(8, "must be 40 characters or more").required('Required'),
+                confirmPassword: yup.string().max(40, "must be 40 characters or less").min(8, "must be 40 characters or more").required('Required'),
+            }),
+            onSubmit: async values => {
+                if (values.confirmPassword === values.newPassword) {
+                    console.log(getId)
+                    const res = await axios({
+                        method: 'post',
+                        url: 'http://localhost:1402/users/forgot_password',
+                        headers: {
+                            token: process.env.REACT_APP_TOKEN_CONFIRM
+                        },
+                        data: {
+                            uuid: getId,
+                            newPassword: values.newPassword
+                        }
+                    })
+                    const result = res.data;
+                    console.log(result);
+                    if (result.isUpdate) {
+                        window.location.replace("/Login");
+                    }
+                    else {
+                        toast.error("yêu cầu quá thời gian nhập", { position: toast.POSITION.BOTTOM_LEFT })
+                    }
+                }
+                else
+                    DifferentPassword();
+            }
+        },);
+        if (!getRecoverForm) {
+            return (
+                <Form onSubmit={formik.handleSubmit}>
+                    <label>Email</label>
+                    <Input placeholder="example@mail" name="userEmail" type="email" onChange={formik.handleChange} minLength="3" onBlur={formik.handleBlur} value={formik.values.userName} required />
+                    <label>Mã phục hồi</label>
+                    <Input placeholder="xyd12" name="secretCode" type="text" onChange={formik.handleChange} minLength="5" onBlur={formik.handleBlur} value={formik.values.secretCode} required />
+                    <Button type="submit">Xác Thực</Button>
+                    <Link href="/login">Quay trở lại việc đăng nhập</Link>
+                    <Link href="/register">Tạo tài khoản mới</Link>
+                </Form>
+            )
         }
-    },);
+        else {
+            return (
+                <Form onSubmit={recoverPasswordFormik.handleSubmit}>
+                    <label>Mật khẩu mới</label>
+                    <Input placeholder="*****" name="newPassword" type="password" onChange={recoverPasswordFormik.handleChange} minLength="8" onBlur={recoverPasswordFormik.handleBlur} value={recoverPasswordFormik.values.newPassword} required />
+                    {recoverPasswordFormik.touched.newPassword && recoverPasswordFormik.errors.newPassword ? <div style={{ width: "100%", color: 'red', marginTop: '5px', marginBottom: "5px" }}>{formik.errors.newPassword}</div> : null}
+                    <label>Nhập lại mật khẩu mới</label>
+                    <Input placeholder="*****" name="confirmPassword" type="password" onChange={recoverPasswordFormik.handleChange} minLength="8" onBlur={recoverPasswordFormik.handleBlur} value={recoverPasswordFormik.values.confirmPassword} required />
+                    <Button type="submit">Thay đổi mật khẩu</Button>
+                </Form>
+            )
+        }
+    }
     return (
         <Container>
             <Wrapper>
@@ -136,7 +235,7 @@ const ForgotPassword = () => {
                         <input type="checkbox" className="radio" value="2" onChange={(e) => setCheckbox(2)} checked={getCheckbox === 2 ? true : false} />Email kèm mã OTP
                     </label>
                 </div> */}
-                {/* {getCheckbox === 1 ? */}{
+                {/* {getCheckbox === 1 ?{
                     !getRecoverForm ?
                         <Form onSubmit={formik.handleSubmit}>
                             <label>Email</label>
@@ -157,12 +256,13 @@ const ForgotPassword = () => {
                             {recoverPasswordFormik.touched.confirmPassword && recoverPasswordFormik.errors.confirmPassword ? <div style={{ width: "100%", color: 'red', marginTop: '5px', marginBottom: "5px" }}>{formik.errors.confirmPassword}</div> : null}
                             <Button type="submit">Thay đổi mật khẩu</Button>
                         </Form>
-                }
-
+                } */}
+                <ShowPage />
                 {/* : */}
                 {/* <OtpLayout /> */}
                 {/* } */}
             </Wrapper>
+            <ToastContainer />
         </Container>
     )
 }

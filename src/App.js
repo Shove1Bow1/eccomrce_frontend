@@ -1,13 +1,13 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import Header from "./components/header/Header";
+import Authentication from "./container/Authentication";
 import Checkout from "./container/Checkout";
 import ForgotPassword from "./container/ForgotPassword";
 import Home from "./container/Home";
 import Login from "./container/Login";
 import Register from "./container/Register";
 import View from "./container/View";
-
 function App() {
   const location = useLocation()
   return (
@@ -25,11 +25,26 @@ function App() {
           </Routes>
         </div>
       </div>
+
       <Routes>
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/forgotpassword" element={<ForgotPassword />} />
+        <Route path="/register" element={
+          <Authentication>
+            <Register />
+          </Authentication>
+        } />
+
+        <Route path="/login" element={
+          <Authentication>
+            <Login />
+          </Authentication>
+        } />
+        <Route path="/forgotpassword" element={
+          <Authentication>
+            <ForgotPassword />
+          </Authentication>
+        } />
       </Routes>
+
 
     </>
   );

@@ -1,4 +1,5 @@
 import React from "react";
+import { ShowUsername } from "../../container/Authentication";
 import iconGlass from "./assets/icon/ic-actions-search.svg";
 import iconUser from "./assets/icon/ic-actions-user.svg";
 import iconBasket from "./assets/icon/ic-ecommerce-basket.svg";
@@ -32,6 +33,7 @@ function Header(props) {
             alt="user"
             src={iconUser}
           />
+          <ShowUsername />
           <img
             className="w-[24px] h-[24px] my-auto "
             alt="basket"

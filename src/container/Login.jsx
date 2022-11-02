@@ -1,8 +1,10 @@
 import axios from "axios";
 import { useFormik } from "formik";
+import { ToastContainer } from "react-toastify";
 import styled from "styled-components";
 import * as yup from "yup";
 import background from '../assets/img/delaney-van-unsplash.png';
+import { LoginFailedToast, LoginSucessToast } from "../components/notification/Toastify";
 const Container = styled.div`
   width: full;
   height: 100vh;
@@ -84,8 +86,20 @@ const Login = () => {
         }
       })
       const result = res.data;
-      console.log(res.data)
-      alert(res.data.userName);
+      if (!result.message) {
+        LoginFailedToast();
+      }
+      else {
+        LoginSucessToast(result.userName);
+        const d = new Date();
+        d.setTime(d.getTime() + (3 * 24 * 60 * 60 * 1000))
+        localStorage.setItem("userId", result.userId);
+        localStorage.setItem("username", values.userName);
+        // document.cookie = "userId=" + result.idUser + ";expires=" + d + ";path=/";
+        // document.cookie = " userName=" + result.userName + ";expires=" + d + ";path=/";
+        setTimeout(() => { window.location.replace("http://localhost:3000"); }, 4000)
+
+      }
     }
   },
   );
@@ -103,6 +117,7 @@ const Login = () => {
           <Link href="/register">CREATE A NEW ACCOUNT</Link>
         </Form>
       </Wrapper>
+      <ToastContainer />
     </Container>
   );
 };

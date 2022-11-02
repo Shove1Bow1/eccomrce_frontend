@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useFormik } from "formik";
 import Select from "react-select";
+import { ToastContainer } from "react-toastify";
 import styled from "styled-components";
 import * as yup from 'yup';
 import background from '../assets/img/delaney-van-unsplash.png';
+import { HandleToastRegister } from "../components/notification/Toastify";
 import useLocationForm from "../service/useLocationForm";
 const Container = styled.div`
   width: full;
@@ -109,30 +111,51 @@ const Register = () => {
       phoneNumber: yup.string()
         .required('No phone number provided')
         .min(9, "chiều dài phải là 9").max(9, "phone number only need 9 characters"),
-      address: yup.string().required("nhập địa chỉ số nhà").min(10, "Cần số nhà và tên đường").max(100, "Nhập quá số từ cho phép")
+      address: yup.string().required("nhập địa chỉ số nhà").min(5, "Cần số nhà và tên đường").max(100, "Nhập quá số từ cho phép")
     }),
     onSubmit: async values => {
-
       if (values.password !== values.confirmPassword) {
-        alert("password typed in no match")
+        console.log("run 1");
+        var message = false;
+        var passwordCheck = false;
+        var emailCheck = true;
+        HandleToastRegister(message, emailCheck, passwordCheck);
         return;
       }
-      const res = await axios({
-        headers: {
-          token: process.env.REACT_APP_TOKEN_CONFIRM
-        },
-        method: 'post',
-        url: "http://localhost:1402/users/register", data: {
-          userName: values.userName,
-          email: values.email,
-          password: values.password,
-          phoneNumber: "0" + values.phoneNumber,
-          address: values.address + ", " + selectedWard.label + ", " + selectedDistrict.label + ", " + selectedCity.label,
+      else {
+        const res = await axios({
+          headers: {
+            token: process.env.REACT_APP_TOKEN_CONFIRM
+          },
+          method: 'post',
+          url: "http://localhost:1402/users/register", data: {
+            userName: values.userName,
+            email: values.email,
+            password: values.password,
+            phoneNumber: "0" + values.phoneNumber,
+            address: values.address + ", " + selectedWard.label + ", " + selectedDistrict.label + ", " + selectedCity.label,
+          }
+        })
+        const result = res.data;
+        if (!result.message) {
+          console.log("run 2");
+          var passwordCheck = true;
+          var emailCheck = false;
+          HandleToastRegister(result.message, emailCheck, passwordCheck);
+          return;
         }
-      })
-      const result = res.data;
-      console.log(res.data);
-      alert(result.status);
+        else {
+          const d = new Date();
+          d.setTime(d.getTime() + (3 * 24 * 60 * 60 * 1000))
+          localStorage.setItem("userId", result.userId);
+          localStorage.setItem("username", values.userName);
+          // document.cookie = " userName=" + result.userName + ";expires=" + d + ";path=/";
+          setTimeout(() => {
+            window.location.replace("http://localhost:3000");
+            HandleToastRegister(result.message, values.userName);
+          }, 3000);
+        }
+      }
     }
   },
   );
@@ -152,7 +175,7 @@ const Register = () => {
           {formik.touched.password && formik.errors.password ? <div style={{ width: "100%", color: 'red', marginTop: '5px', marginBottom: "5px" }}>{formik.errors.password}</div> : null}
           <label style={{ height: "25px", fontWeight: "700", marginTop: "10px" }}>Nhập lại mật khẩu</label>
           <Input placeholder="confirm password" type='password' name="confirmPassword" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.confirmPassword} required />
-          {formik.values.password !== formik.values.confirmPassword ? <div style={{ width: "100%", color: 'red', marginTop: '5px', marginBottom: "5px" }}>Mật khẩu xác nhận không giống với mật khẩu nhập vào</div> : null}
+          {/* {formik.values.password !== formik.values.confirmPassword ? <div style={{ width: "100%", color: 'red', marginTop: '5px', marginBottom: "5px" }}>Mật khẩu xác nhận không giống với mật khẩu nhập vào</div> : null} */}
           < label style={{ height: "25px", fontWeight: "700", marginTop: "10px" }}> Nhập số điện thoại</label>
           <div style={{ width: "100%", display: "flex", flexWrap: "wrap" }}>
             <Input1 value="(+84)" type="text" disabled />
@@ -198,10 +221,11 @@ const Register = () => {
             By creating an account, I consent to the processing of my personal
             data in accordance with the <b>PRIVACY POLICY</b>
           </Agreement>
-          <Button type="submit">CREATE</Button>
+          <Button type="submit" >CREATE</Button>
         </Form>
         <Link href="/login">Đã có tài khoản?</Link>
       </Wrapper>
+      <ToastContainer />
     </Container >
   );
 };
