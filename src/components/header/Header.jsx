@@ -1,10 +1,13 @@
-import React from "react";
+import { Badge } from "antd";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { ShowUsername } from "../../container/Authentication";
 import iconGlass from "./assets/icon/ic-actions-search.svg";
 import iconUser from "./assets/icon/ic-actions-user.svg";
 import iconBasket from "./assets/icon/ic-ecommerce-basket.svg";
 import { filter } from "./data/data";
 function Header(props) {
+  const [count, setCount] = useState(3);
   return (
     <div className="w-full h-full bg-white">
       <div className="px-[45px] pt-[16px]">
@@ -16,7 +19,9 @@ function Header(props) {
         <div className=" w-full h-[1px] bg-[#151515]"></div>
 
         <div className="py-[40px] flex  flex-row">
-          <div className="text-[#151515] text-[36px] pr-[auto]">LOGO</div>
+          <Link to={"/"}>
+            <div className="text-[#151515] text-[36px] pr-[auto]">LOGO</div>
+          </Link>
           <div className="rounded-[12px] flex w-fit p-[15px] mx-auto flex-row  border-[1px]  border-[#D1D1D1] bg-[#F9F9F9]">
             <input
               className="bg-[#F9F9F9] w-[300px] focus:ring-0 focus:border-white"
@@ -28,17 +33,23 @@ function Header(props) {
               src={iconGlass}
             />
           </div>
-          <img
-            className="w-[24px] h-[24px] my-auto mr-[42px]"
-            alt="user"
-            src={iconUser}
-          />
+          <Link>
+            <img
+              className="w-[24px] h-[24px] my-auto mr-[42px]"
+              alt="user"
+              src={iconUser}
+            />
+          </Link>
           <ShowUsername />
-          <img
-            className="w-[24px] h-[24px] my-auto "
-            alt="basket"
-            src={iconBasket}
-          />
+          <Link to={"/checkout"}>
+            <Badge count={count} size="small">
+              <img
+                className="w-[24px] h-[24px] my-auto "
+                alt="basket"
+                src={iconBasket}
+              />
+            </Badge>
+          </Link>
         </div>
       </div>
       <div className="px-[45px] py-[16px] bg-[#F9F9F9]">
