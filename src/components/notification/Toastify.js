@@ -61,3 +61,13 @@ export function DifferentPassword() {
         position: toast.POSITION.BOTTOM_LEFT
     })
 }
+export function SuccessUpdate(data) {
+    return toast.success(data, {
+        position: toast.POSITION.TOP_RIGHT
+    })
+}
+export function ErrorUpdate(data) {
+    return toast.error(data, {
+        position: toast.POSITION.BOTTOM_LEFT
+    })
+}

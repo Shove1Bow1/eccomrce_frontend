@@ -172,7 +172,6 @@ const ForgotPassword = () => {
             }),
             onSubmit: async values => {
                 if (values.confirmPassword === values.newPassword) {
-                    console.log(getId)
                     const res = await axios({
                         method: 'post',
                         url: 'http://localhost:1402/users/forgot_password',
