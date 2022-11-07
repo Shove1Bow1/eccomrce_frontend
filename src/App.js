@@ -8,10 +8,11 @@ import Home from "./container/Home";
 import Login from "./container/Login";
 import Register from "./container/Register";
 import View from "./container/View";
+import { ShoppingCartProvider } from "./context/ShoppingCartContext";
 function App() {
   const location = useLocation()
   return (
-    <>
+    <ShoppingCartProvider>
       <div className="bg-[#E5E5E5] w-full h-full">
         <div className="max-w-[1260px] bg-white mx-auto">
           {
@@ -44,9 +45,7 @@ function App() {
           </Authentication>
         } />
       </Routes>
-
-
-    </>
+    </ShoppingCartProvider>
   );
 }
 
