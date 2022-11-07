@@ -4,12 +4,12 @@ import {
   Connections,
   Earnings,
   GetInTouch,
-  ProductTag,
+  ProductTag
 } from "../assets/data/FooterData";
 const Footer = () => {
   return (
-    <div className="w-full   h-full ">
-      <div className="  ml-[45px] flex flex-row w-full">
+    <div className="w-full h-full ">
+      <div className=" ml-[45px] flex flex-row w-full">
         <div className="w-1/4 h-auto flex-1">
           <h5 className="font-bold text-[18px] mb-[10px] text-[#151515]">
             Theo dõi chúng tôi
@@ -79,7 +79,7 @@ const Footer = () => {
           })}
         </div>
       </div>
-      <div className="w-2/3 h-1/5 mx-auto mb-[10px] mt-[20px]">
+      <div className="w-full ml-[45px] h-1/5  mb-[10px] mt-[20px]">
         <h5 className="font-bold text-[18px] mb-[10px] text-[#151515]">
           Từ khoá được tìm kiếm nhiều
         </h5>

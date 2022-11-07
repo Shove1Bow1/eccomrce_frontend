@@ -1,9 +1,32 @@
-import React from "react";
+import { Select } from "antd";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import iconGlass from "./assets/icon/ic-actions-search.svg";
 import iconUser from "./assets/icon/ic-actions-user.svg";
 import iconBasket from "./assets/icon/ic-ecommerce-basket.svg";
 import { filter } from "./data/data";
 function Header(props) {
+  const [dataSearch, setDataSearch] = useState([{ label: 'cc', value: 'dds' }]);
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:1402/products")
+      .then((e) => {
+        const data = e.data.data.map((value) => { return { value: value._id, label: value.productName } })
+        setDataSearch(data)
+      })
+      .then(function (error) {
+        if (error)
+          console.log(error);
+      });
+  }, [])
+
+  const handleSelect = (value) => {
+    navigate('/view-detail', { state: { id: value } })
+  }
   return (
     <div className="w-full h-full bg-white">
       <div className="px-[45px] pt-[16px]">
@@ -17,8 +40,16 @@ function Header(props) {
         <div className="py-[40px] flex  flex-row">
           <div className="text-[#151515] text-[36px] pr-[auto]">LOGO</div>
           <div className="rounded-[12px] flex w-fit p-[15px] mx-auto flex-row  border-[1px]  border-[#D1D1D1] bg-[#F9F9F9]">
-            <input
-              className="bg-[#F9F9F9] w-[300px] focus:ring-0 focus:border-white"
+            <Select
+              showSearch
+              onSelect={handleSelect}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+
+                }
+              }}
+              options={dataSearch}
+              className="bg-black border-none w-[300px] focus:ring-0 focus:border-white"
               placeholder="Search Products, categories ..."
             />
             <img
