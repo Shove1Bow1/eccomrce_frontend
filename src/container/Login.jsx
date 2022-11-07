@@ -108,13 +108,15 @@ const Login = () => {
       <Wrapper>
         <Title>SIGN IN</Title>
         <Form onSubmit={formik.handleSubmit}>
+          <label>email</label>
           <Input placeholder="email" name="email" onChange={formik.handleChange} minLength="5" onBlur={formik.handleBlur} value={formik.values.email} required />
           {formik.touched.email && formik.errors.email ? <div style={{ color: 'red' }}>{formik.errors.email}</div> : null}
+          <label>password</label>
           <Input placeholder="password" type="password" name="password" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.password} required />
           {formik.touched.password && formik.errors.password ? <div style={{ color: 'red' }}>{formik.errors.password}</div> : null}
           <Button type="submit">LOGIN</Button>
-          <Link href="/forgotpassword">DO NOT YOU REMEMBER THE PASSWORD?</Link>
-          <Link href="/register">CREATE A NEW ACCOUNT</Link>
+          <Link href="/forgotpassword">Bạn quên mật khẩu?</Link>
+          <Link href="/register">Tạo tài khoản mới</Link>
         </Form>
       </Wrapper>
       <ToastContainer />

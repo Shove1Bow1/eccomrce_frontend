@@ -3,7 +3,6 @@ import LayoutProduct from "../product/LayoutProduct";
 import { ProductsData } from "../products/data/ProductsData";
 const TemplateProducts = (props) => {
     const productData = ProductsData;
-    console.log(productData)
     return (
         <div className="w-full h-[530px] flex flex-col px-[64px] py-[45px] bg-white">
             <div className="w-full h-[38px] relative mb-[33.5px]">
