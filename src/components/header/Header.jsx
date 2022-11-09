@@ -1,7 +1,13 @@
+<<<<<<< HEAD
 import { Badge } from "antd";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { ShowUsername } from "../../container/Authentication";
+=======
+import React from "react";
+import { Link } from "react-router-dom";
+import { DirectPage, ShowUsername } from "../../container/Authentication";
+>>>>>>> feat/hoang
 import iconGlass from "./assets/icon/ic-actions-search.svg";
 import iconUser from "./assets/icon/ic-actions-user.svg";
 import iconBasket from "./assets/icon/ic-ecommerce-basket.svg";
@@ -33,6 +39,7 @@ function Header(props) {
               src={iconGlass}
             />
           </div>
+<<<<<<< HEAD
           <Link>
             <img
               className="w-[24px] h-[24px] my-auto mr-[42px]"
@@ -50,13 +57,34 @@ function Header(props) {
               />
             </Badge>
           </Link>
+=======
+          <div className="max-w-[150px] h-[24px] my-auto">
+            <DirectPage>
+              <img
+                className="w-[24px] h-[24px] my-auto"
+                alt="user"
+                src={iconUser}
+              />
+              <ShowUsername />
+            </DirectPage>
+
+          </div>
+
+          <img
+            className="w-[24px] h-[24px] my-auto "
+            alt="basket"
+            src={iconBasket}
+          />
+>>>>>>> feat/hoang
         </div>
       </div>
       <div className="px-[45px] py-[16px] bg-[#F9F9F9]">
         <div className="mx-auto w-fit">
           {filter.map((value, index) => (
             <span className="text-[15px] font-bold mr-[54px]" key={index}>
-              {value}
+              <Link to={value.linkPath} >
+                {value.name}
+              </Link>
             </span>
           ))}
         </div>

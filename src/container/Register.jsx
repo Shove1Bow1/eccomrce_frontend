@@ -5,7 +5,7 @@ import { ToastContainer } from "react-toastify";
 import styled from "styled-components";
 import * as yup from 'yup';
 import background from '../assets/img/delaney-van-unsplash.png';
-import { HandleToastRegister } from "../components/notification/Toastify";
+import { ErrorUpdate, HandleToastRegister } from "../components/notification/Toastify";
 import useLocationForm from "../service/useLocationForm";
 const Container = styled.div`
   width: full;
@@ -62,6 +62,7 @@ const Input2 = styled.input`
 const Agreement = styled.span`
   font-size: 12px;
   margin: 20px 0px;
+  width: 100%;
 `;
 
 const Button = styled.button`
@@ -88,8 +89,12 @@ const Register = () => {
     wardOptions,
     selectedCity,
     selectedDistrict,
-    selectedWard,
+    selectedWard
   } = state;
+  function CheckAddress(value) {
+    var validString = /^[aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆfFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTuUùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ0-9 ]*$/;
+    return (validString.test(value))
+  }
   const formik = useFormik({
     initialValues: {
       userName: '',
@@ -123,37 +128,44 @@ const Register = () => {
         return;
       }
       else {
-        const res = await axios({
-          headers: {
-            token: process.env.REACT_APP_TOKEN_CONFIRM
-          },
-          method: 'post',
-          url: "http://localhost:1402/users/register", data: {
-            userName: values.userName,
-            email: values.email,
-            password: values.password,
-            phoneNumber: "0" + values.phoneNumber,
-            address: values.address + ", " + selectedWard.label + ", " + selectedDistrict.label + ", " + selectedCity.label,
+        if (CheckAddress(values.address)) {
+          const res = await axios({
+            headers: {
+              token: process.env.REACT_APP_TOKEN_CONFIRM
+            },
+            method: 'post',
+            url: "http://localhost:1402/users/register", data: {
+              userName: values.userName,
+              email: values.email,
+              password: values.password,
+              phoneNumber: "0" + values.phoneNumber,
+              address: values.address + ", " + selectedWard.label + ", " + selectedDistrict.label + ", " + selectedCity.label,
+              addressId: selectedWard.value + "/" + selectedDistrict.value + "/" + selectedCity.value,
+            }
+          })
+          const result = res.data;
+          if (!result.message) {
+            console.log("run 2");
+            var passwordCheck = true;
+            var emailCheck = false;
+            HandleToastRegister(result.message, emailCheck, passwordCheck);
+            return;
           }
-        })
-        const result = res.data;
-        if (!result.message) {
-          console.log("run 2");
-          var passwordCheck = true;
-          var emailCheck = false;
-          HandleToastRegister(result.message, emailCheck, passwordCheck);
-          return;
+          else {
+            const d = new Date();
+            d.setTime(d.getTime() + (3 * 24 * 60 * 60 * 1000))
+            localStorage.setItem("userId", result.userId);
+            localStorage.setItem("username", values.userName);
+            localStorage.setItem("addressId", result.addressId);
+            // document.cookie = " userName=" + result.userName + ";expires=" + d + ";path=/";
+            setTimeout(() => {
+              window.location.replace("http://localhost:3000");
+              HandleToastRegister(result.message, values.userName);
+            }, 3000);
+          }
         }
         else {
-          const d = new Date();
-          d.setTime(d.getTime() + (3 * 24 * 60 * 60 * 1000))
-          localStorage.setItem("userId", result.userId);
-          localStorage.setItem("username", values.userName);
-          // document.cookie = " userName=" + result.userName + ";expires=" + d + ";path=/";
-          setTimeout(() => {
-            window.location.replace("http://localhost:3000");
-            HandleToastRegister(result.message, values.userName);
-          }, 3000);
+          ErrorUpdate("địa chỉ chỉ nhà và đường bao gồm số và ký tự và khoảng trắng")
         }
       }
     }
@@ -162,10 +174,10 @@ const Register = () => {
   return (
     <Container>
       <Wrapper>
-        <Title>CREATE AN ACCOUNT</Title>
+        <Title>Tạo tài khoản</Title>
         <Form onSubmit={formik.handleSubmit}>
           <label style={{ height: "25px", fontWeight: "700", marginTop: "10px" }}>Tên người dùng</label>
-          <Input placeholder="username" type="text" name="userName" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.userName} required />
+          <Input placeholder="username" type="text" name="userName" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.userName} val required />
           {formik.touched.userName && formik.errors.userName ? <div style={{ width: "100%", color: 'red', marginTop: '5px', marginBottom: "5px" }}>{formik.errors.userName}</div> : null}
           <label style={{ height: "25px", fontWeight: "700", marginTop: "10px" }}>Email</label>
           <Input placeholder="email" type='email' name="email" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.email} required />
@@ -192,8 +204,8 @@ const Register = () => {
               onChange={(option) => onCitySelect(option)}
               placeholder="Tỉnh/Thành"
               defaultValue={selectedCity}
-              required
             />
+
             <Select
               name="districtId"
               key={`districtId_${selectedDistrict?.value}`}
@@ -202,8 +214,8 @@ const Register = () => {
               onChange={(option) => onDistrictSelect(option)}
               placeholder="Quận/Huyện"
               defaultValue={selectedDistrict}
-              required
             />
+
             <Select
               name="wardId"
               key={`wardId_${selectedWard?.value}`}
@@ -212,16 +224,14 @@ const Register = () => {
               placeholder="Phường/Xã"
               onChange={(option) => onWardSelect(option)}
               defaultValue={selectedWard}
-              required
             />
             <Input name="address" type="text" onChange={formik.handleChange} value={formik.values.address} onBlur={formik.handleBlur} placeholder="Địa chỉ nhà và đường" />
             {formik.touched.address && formik.errors.address ? <div style={{ width: "100%", color: 'red', marginTop: '5px', marginBottom: "5px" }}>{formik.errors.address}</div> : null}
           </div>
           <Agreement>
-            By creating an account, I consent to the processing of my personal
-            data in accordance with the <b>PRIVACY POLICY</b>
+            Bằng việc tạo tài khoản bạn đã đồng ý các điều khoản của chúng tôi <b>Điều khoản</b>
           </Agreement>
-          <Button type="submit" >CREATE</Button>
+          <Button type="submit" >Tạo tài khoản</Button>
         </Form>
         <Link href="/login">Đã có tài khoản?</Link>
       </Wrapper>

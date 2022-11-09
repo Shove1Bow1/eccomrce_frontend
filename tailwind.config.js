@@ -5,8 +5,12 @@ module.exports = {
   ],
   theme: {
     extend: {},
-    maxWidth:{
-      '1/2':'50%',
+    maxWidth: {
+      '1/2': '50%',
+    },
+    minWidth: {
+      '1/2': '50%',
+      '2/5': '40%',
     }
   },
   plugins: [],

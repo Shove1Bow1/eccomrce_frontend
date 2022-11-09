@@ -85,16 +85,18 @@ const Login = () => {
           password: values.password,
         }
       })
-      const result = res.data;
+      const result = await res.data;
       if (!result.message) {
+        console.log(false);
         LoginFailedToast();
       }
       else {
         LoginSucessToast(result.userName);
         const d = new Date();
         d.setTime(d.getTime() + (3 * 24 * 60 * 60 * 1000))
-        localStorage.setItem("userId", result.userId);
-        localStorage.setItem("username", values.userName);
+        localStorage.setItem("userId", result.idUser);
+        localStorage.setItem("username", result.userName);
+        localStorage.setItem("addressId", result.addressId);
         // document.cookie = "userId=" + result.idUser + ";expires=" + d + ";path=/";
         // document.cookie = " userName=" + result.userName + ";expires=" + d + ";path=/";
         setTimeout(() => { window.location.replace("http://localhost:3000"); }, 4000)

@@ -15,6 +15,7 @@ const TemplateProducts = (props) => {
                 {
                     productData.map(index => {
                         return (
+<<<<<<< HEAD
                             <LayoutProduct
                                 key={index.id}
                                 id={index.id}
@@ -22,6 +23,9 @@ const TemplateProducts = (props) => {
                                 title={index.title}
                                 price={index.price}
                                 smDes={index.smallDescription} />
+=======
+                            <LayoutProduct key={index.id} imgUrl={index.imgUrl} title={index.title} price={index.price} stock={index.stock} />
+>>>>>>> feat/hoang
                         )
                     })
                 }
