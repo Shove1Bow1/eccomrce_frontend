@@ -6,7 +6,7 @@ import { PATHS } from "./constants/paths";
 const FETCH_TYPES = {
     CITIES: "FETCH_CITIES",
     DISTRICTS: "FETCH_DISTRICTS",
-    WARDS: "FETCH_WARDS",
+    WARDS: "FETCH_WARDS"
 };
 
 async function fetchLocationOptions(fetchType, locationId) {
@@ -16,10 +16,11 @@ async function fetchLocationOptions(fetchType, locationId) {
             url = PATHS.CITIES;
             break;
         }
-        case FETCH_TYPES.DISTRICTS: {
-            url = `${PATHS.DISTRICTS}/${locationId}.json`;
-            break;
-        }
+        case FETCH_TYPES.DISTRICTS:
+            {
+                url = `${PATHS.DISTRICTS}/${locationId}.json`;
+                break;
+            }
         case FETCH_TYPES.WARDS: {
             url = `${PATHS.WARDS}/${locationId}.json`;
             break;
@@ -32,12 +33,30 @@ async function fetchLocationOptions(fetchType, locationId) {
     return locations.map(({ id, name }) => ({ value: id, label: name }));
 }
 
-async function fetchInitialData() {
-    const { cityId, districtId, wardId } = (await axios.get(PATHS.LOCATION)).data;
+async function fetchInitialData(cityIdclone, districtIdClone, wardIdClone) {
+
+    // console.log(false);
+    var cityId = 294;
+    var districtId = 484;
+    var wardId = 10379;
+    if (localStorage.getItem("addressId")) {
+        var value = localStorage.getItem("addressId").toString().split("/", 3);
+        console.log(value[0])
+        cityId = Number(value[2]);
+        districtId = Number(value[1]);
+        wardId = Number(value[0]);
+    }
+    // if (cityIdclone && districtIdClone && wardIdClone) {
+    //     console.log(true);
+    //     cityId = Number(cityIdclone);
+    //     districtId = Number(districtIdClone);
+    //     wardIdClone = Number(wardIdClone);
+    // }
+
     const [cities, districts, wards] = await Promise.all([
         fetchLocationOptions(FETCH_TYPES.CITIES),
         fetchLocationOptions(FETCH_TYPES.DISTRICTS, cityId),
-        fetchLocationOptions(FETCH_TYPES.WARDS, districtId),
+        fetchLocationOptions(FETCH_TYPES.WARDS, districtId)
     ]);
     return {
         cityOptions: cities,
@@ -45,18 +64,18 @@ async function fetchInitialData() {
         wardOptions: wards,
         selectedCity: cities.find((c) => c.value === cityId),
         selectedDistrict: districts.find((d) => d.value === districtId),
-        selectedWard: wards.find((w) => w.value === wardId),
+        selectedWard: wards.find((w) => w.value === wardId)
     };
 }
 
-function useLocationForm(shouldFetchInitialLocation) {
+function useLocationForm(shouldFetchInitialLocation, cityIdclone, districtIdClone, wardIdClone) {
     const [state, setState] = useState({
         cityOptions: [],
         districtOptions: [],
         wardOptions: [],
         selectedCity: null,
         selectedDistrict: null,
-        selectedWard: null,
+        selectedWard: null
     });
 
     const { selectedCity, selectedDistrict } = state;
@@ -64,11 +83,11 @@ function useLocationForm(shouldFetchInitialLocation) {
     useEffect(() => {
         (async function () {
             if (shouldFetchInitialLocation) {
-                const initialData = await fetchInitialData();
+                const initialData = await fetchInitialData(cityIdclone, districtIdClone, wardIdClone);
                 setState(initialData);
             } else {
-                const options = await fetchLocationOptions(FETCH_TYPES.CITIES)
-                setState({ ...state, cityOptions: options })
+                const options = await fetchLocationOptions(FETCH_TYPES.CITIES);
+                setState({ ...state, cityOptions: options });
             }
         })();
     }, []);
@@ -76,37 +95,47 @@ function useLocationForm(shouldFetchInitialLocation) {
     useEffect(() => {
         (async function () {
             if (!selectedCity) return;
-            const options = await fetchLocationOptions(FETCH_TYPES.DISTRICTS, selectedCity.value);
-            setState({ ...state, districtOptions: options })
+            const options = await fetchLocationOptions(
+                FETCH_TYPES.DISTRICTS,
+                selectedCity.value
+            );
+            setState({ ...state, districtOptions: options });
         })();
     }, [selectedCity]);
 
     useEffect(() => {
         (async function () {
             if (!selectedDistrict) return;
-            const options = await fetchLocationOptions(FETCH_TYPES.WARDS, selectedDistrict.value);
-            setState({ ...state, wardOptions: options })
-        })()
-    }, [selectedDistrict])
+            const options = await fetchLocationOptions(
+                FETCH_TYPES.WARDS,
+                selectedDistrict.value
+            );
+            setState({ ...state, wardOptions: options });
+        })();
+    }, [selectedDistrict]);
 
     function onCitySelect(option) {
-        setState({
-            ...state,
-            districtOptions: [],
-            wardOptions: [],
-            selectedCity: option,
-            selectedDistrict: null,
-            selectedWard: null,
-        });
+        if (option !== selectedCity) {
+            setState({
+                ...state,
+                districtOptions: [],
+                wardOptions: [],
+                selectedCity: option,
+                selectedDistrict: null,
+                selectedWard: null
+            });
+        }
     }
 
     function onDistrictSelect(option) {
-        setState({
-            ...state,
-            wardOptions: [],
-            selectedDistrict: option,
-            selectedWard: null,
-        });
+        if (option !== selectedDistrict) {
+            setState({
+                ...state,
+                wardOptions: [],
+                selectedDistrict: option,
+                selectedWard: null
+            });
+        }
     }
 
     function onWardSelect(option) {

@@ -5,13 +5,18 @@ import React, { useState } from 'react';
 const { Title } = Typography;
 
 const Categories = () => {
-    const [inputMin, setInputMin] = useState(1);
-    const [inputMax, setInputMax] = useState(1);
+    const [inputMin, setInputMin] = useState(1000);
+    const [inputMax, setInputMax] = useState(20000000);
     const onChangeMin = (newValue) => {
-        setInputMin(newValue);
+        if (newValue < inputMax)
+            setInputMin(newValue);
+        else
+            return;
     };
     const onChangeMax = (newValue) => {
-        setInputMax(newValue);
+        if (newValue > inputMin)
+            setInputMax(newValue);
+        return;
     };
     return (
         <>
@@ -105,8 +110,8 @@ const Categories = () => {
                 <Row gutter={24}>
                     <Col span={20}>
                         <Slider
-                            min={1}
-                            max={100}
+                            min={1000}
+                            max={20000000}
                             onChange={onChangeMin}
                             backgroundColor='#ffffff'
                             value={typeof inputMin === 'number' ? inputMin : 0}
@@ -115,8 +120,8 @@ const Categories = () => {
                     <Col span={24}>
                         <label>MIN:</label>
                         <InputNumber
-                            min={1}
-                            max={20}
+                            min={1000}
+                            max={20000000}
                             style={{
                                 margin: '0 16px',
                                 borderRadius: '12px',
@@ -130,8 +135,8 @@ const Categories = () => {
                 <Row gutter={24}>
                     <Col span={20}>
                         <Slider
-                            min={1}
-                            max={100}
+                            min={1000}
+                            max={20000000}
                             onChange={onChangeMax}
                             value={typeof inputMax === 'number' ? inputMax : 0}
                         />
@@ -139,8 +144,8 @@ const Categories = () => {
                     <Col span={24}>
                         <label>MAX:</label>
                         <InputNumber
-                            min={1}
-                            max={20}
+                            min={1000}
+                            max={20000000}
                             style={{
                                 margin: '0 16px',
                                 borderRadius: '12px',

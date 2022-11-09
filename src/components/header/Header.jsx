@@ -1,5 +1,6 @@
 import React from "react";
-import { ShowUsername } from "../../container/Authentication";
+import { Link } from "react-router-dom";
+import { DirectPage, ShowUsername } from "../../container/Authentication";
 import iconGlass from "./assets/icon/ic-actions-search.svg";
 import iconUser from "./assets/icon/ic-actions-user.svg";
 import iconBasket from "./assets/icon/ic-ecommerce-basket.svg";
@@ -28,12 +29,18 @@ function Header(props) {
               src={iconGlass}
             />
           </div>
-          <img
-            className="w-[24px] h-[24px] my-auto mr-[42px]"
-            alt="user"
-            src={iconUser}
-          />
-          <ShowUsername />
+          <div className="max-w-[150px] h-[24px] my-auto">
+            <DirectPage>
+              <img
+                className="w-[24px] h-[24px] my-auto"
+                alt="user"
+                src={iconUser}
+              />
+              <ShowUsername />
+            </DirectPage>
+
+          </div>
+
           <img
             className="w-[24px] h-[24px] my-auto "
             alt="basket"
@@ -45,7 +52,9 @@ function Header(props) {
         <div className="mx-auto w-fit">
           {filter.map((value, index) => (
             <span className="text-[15px] font-bold mr-[54px]" key={index}>
-              {value}
+              <Link to={value.linkPath} >
+                {value.name}
+              </Link>
             </span>
           ))}
         </div>
