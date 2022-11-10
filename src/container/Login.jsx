@@ -86,7 +86,7 @@ const Login = () => {
         }
       })
       const result = await res.data;
-      if (!result.message) {
+      if (!result.isAuth) {
         console.log(false);
         LoginFailedToast();
       }
@@ -94,7 +94,7 @@ const Login = () => {
         LoginSucessToast(result.userName);
         const d = new Date();
         d.setTime(d.getTime() + (3 * 24 * 60 * 60 * 1000))
-        localStorage.setItem("userId", result.idUser);
+        localStorage.setItem("userId", result.userId);
         localStorage.setItem("username", result.userName);
         localStorage.setItem("addressId", result.addressId);
         // document.cookie = "userId=" + result.idUser + ";expires=" + d + ";path=/";

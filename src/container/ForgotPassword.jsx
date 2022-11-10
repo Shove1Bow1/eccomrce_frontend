@@ -1,11 +1,12 @@
 import axios from "axios";
 import { useFormik } from "formik";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import styled from "styled-components";
 import * as yup from "yup";
 import background from '../assets/img/delaney-van-unsplash.png';
-import { CorrectRecoverEmail, DifferentPassword, WrongRecoverEmail } from "../components/notification/Toastify";
+import { CorrectRecoverEmail, DifferentPassword, SuccessUpdate, WrongRecoverEmail } from "../components/notification/Toastify";
 const Container = styled.div`
   width: full;
   height: 100vh;
@@ -64,10 +65,34 @@ const Link = styled.a`
   cursor: pointer;
 `;
 
-const ForgotPassword = () => {
+const ForgotPassword = (props) => {
     // var [getCheckbox, setCheckbox] = useState(0);
     var [getRecoverForm, setRecoverForm] = useState(false);
     var [getId, setId] = useState("");
+    var getLocation = useLocation();
+    var valueCode = getLocation.pathname.toString().split("/");
+    var endCode = valueCode[valueCode.length - 2];
+    var userId = valueCode[valueCode.length - 1]
+    console.log(endCode);
+    // async function ChangeForm(value) {
+    //     const res = await axios({
+    //         url: "http://localhost:1402/users/check_code",
+    //         method: "get",
+    //         headers: {
+    //             token: process.env.REACT_APP_TOKEN_CONFIRM,
+    //             recover_code: value,
+    //         }
+    //     })
+    //     const data = await res.data;
+    //     return data.isAuth;
+    // }  
+
+    useEffect(() => {
+        if (props.isRecover) {
+            setRecoverForm(true);
+        }
+    }, [])
+
     // const formik = useFormik({
     //     initialValues: {
     //         userEmail: '',
@@ -130,30 +155,31 @@ const ForgotPassword = () => {
         const formik = useFormik({
             initialValues: {
                 userEmail: '',
-                secretCode: '',
+                // secretCode: '',
             },
             validationSchema: yup.object({
                 userEmail: yup.string().max(40, "must be 40 characters or less").required('Required'),
-                secretCode: yup.string().max(50, "must be 50 characters or less").required('Required')
+                // secretCode: yup.string().max(50, "must be 50 characters or less").required('Required')
             }),
             onSubmit: async values => {
                 const res = await axios({
                     method: 'post',
-                    url: 'http://localhost:1402/users/recover',
+                    url: 'http://localhost:1402/users/recover_email',
                     headers: {
                         token: process.env.REACT_APP_TOKEN_CONFIRM
                     },
                     data: {
-                        email: values.userEmail,
-                        secretCode: values.secretCode
+                        email: values.userEmail
                     }
                 })
                 const result = res.data;
-                if (result.message) {
-                    console.log(result);
-                    setRecoverForm(result.message)
-                    setId(result.idUser);
+                if (result.isAuth) {
+                    // console.log(result);
+                    // setRecoverForm(result.message)
+                    // setId(result.idUser);
+                    values.userEmail = '';
                     CorrectRecoverEmail();
+
                 }
                 else {
                     WrongRecoverEmail();
@@ -179,14 +205,18 @@ const ForgotPassword = () => {
                             token: process.env.REACT_APP_TOKEN_CONFIRM
                         },
                         data: {
-                            uuid: getId,
-                            newPassword: values.newPassword
+                            recoverCode: endCode,
+                            newPassword: values.newPassword,
+                            userId: userId,
                         }
                     })
                     const result = res.data;
-                    console.log(result);
                     if (result.isUpdate) {
-                        window.location.replace("/Login");
+                        SuccessUpdate("Cập nhật mật khẩu thành công, chuyển hướng đến trang đăng nhập");
+                        setTimeout(() => {
+                            window.location.replace("/Login");
+                        }, 3000)
+
                     }
                     else {
                         toast.error("yêu cầu quá thời gian nhập", { position: toast.POSITION.BOTTOM_LEFT })
@@ -200,9 +230,9 @@ const ForgotPassword = () => {
             return (
                 <Form onSubmit={formik.handleSubmit}>
                     <label>Email</label>
-                    <Input placeholder="example@mail" name="userEmail" type="email" onChange={formik.handleChange} minLength="3" onBlur={formik.handleBlur} value={formik.values.userName} required />
-                    <label>Mã phục hồi</label>
-                    <Input placeholder="xyd12" name="secretCode" type="text" onChange={formik.handleChange} minLength="5" onBlur={formik.handleBlur} value={formik.values.secretCode} required />
+                    <Input placeholder="example@mail" name="userEmail" type="email" onChange={formik.handleChange} minLength="3" onBlur={formik.handleBlur} value={formik.values.userEmail} required />
+                    {/* <label>Mã phục hồi</label>
+                    <Input placeholder="xyd12" name="secretCode" type="text" onChange={formik.handleChange} minLength="5" onBlur={formik.handleBlur} value={formik.values.secretCode} required /> */}
                     <Button type="submit">Xác Thực</Button>
                     <Link href="/login">Quay trở lại việc đăng nhập</Link>
                     <Link href="/register">Tạo tài khoản mới</Link>

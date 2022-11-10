@@ -1,6 +1,5 @@
 import { Col, Row } from 'antd';
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Categories from '../components/category/Categories';
 import Footer from '../components/Footer';
@@ -14,34 +13,34 @@ const View = () => {
     if (valuePath[2]) {
         finalPath = valuePath[2].replace("%20", ' ');
     }
-    useEffect(() => {
-        if (finalPath) {
-            console.log(finalPath)
-            const response = axios(`http://localhost:1402/products/category/by_name`,
-                {
-                    method: "get",
-                    headers: {
-                        token: process.env.REACT_APP_TOKEN_CONFIRM,
-                        category: finalPath,
-                    }
-                }
-            )
-            setData(response.data);
-        }
-        else {
-            const response = axios(`http://localhost:1402/products/category/all`, {
-                method: "get",
-                headers: {
-                    token: process.env.REACT_APP_TOKEN_CONFIRM
-                }
-            })
-            setData(response.data)
-        }
-    },)
+    // useEffect(() => {
+    //     if (finalPath) {
+    //         console.log(finalPath)
+    //         const response = axios(`http://localhost:1402/products/by_category`,
+    //             {
+    //                 method: "get",
+    //                 headers: {
+    //                     token: process.env.REACT_APP_TOKEN_CONFIRM,
+    //                     category: finalPath,
+    //                 }
+    //             }
+    //         )
+    //         setData(response.data);
+    //     }
+    //     else {
+    //         const response = axios(`http://localhost:1402/products/category/all`, {
+    //             method: "get",
+    //             headers: {
+    //                 token: process.env.REACT_APP_TOKEN_CONFIRM
+    //             }
+    //         })
+    //         setData(response.data)
+    //     }
+    // },)
 
     return (
-        <div className="w-full h-srceen px-[45px] justify-around py-[65px]">
-            <Row gutter={24}>
+        <div className="w-full min-h-[1000px] px-[45px] justify-around py-[65px] mb-[1rem]">
+            <Row gutter={24} style={{ minHeight: "1000px" }}>
                 <Col span={6}>
                     <Categories />
                 </Col>

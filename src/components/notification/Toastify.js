@@ -46,7 +46,7 @@ export function WrongRecoverEmail() {
     return toast.error("Nhập sai mã phục hồi hoặc email", { position: toast.POSITION.BOTTOM_LEFT });
 }
 export function CorrectRecoverEmail() {
-    return toast.success("Mời bạn nhập mật khẩu mới", { position: toast.POSITION.TOP_RIGHT });
+    return toast.success("Mời bạn kiểm tra hòm thư", { position: toast.POSITION.TOP_RIGHT });
 }
 export function WelcomeUser(name) {
     if (localStorage.getItem("username")) {

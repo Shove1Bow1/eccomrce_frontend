@@ -1,7 +1,7 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import Header from "./components/header/Header";
-import Unauthentication, { Authentication } from "./container/Authentication";
+import VerifyAccount, { Authentication, Unauthentication } from "./container/Authentication";
 import Checkout from "./container/Checkout";
 import ForgotPassword from "./container/ForgotPassword";
 import Home from "./container/Home";
@@ -12,14 +12,14 @@ import View from "./container/View";
 import { ShoppingCartProvider } from "./context/ShoppingCartContext";
 function App() {
   const pathName = '';
-  const location = useLocation()
+  const location = useLocation();
   return (
     <ShoppingCartProvider>
       <div className="bg-[#E5E5E5] w-full h-full">
         <div className="max-w-[1260px] bg-white mx-auto">
           {
-            location.pathname !== '/register' && location.pathname !== '/login' && location.pathname !== '/forgotpassword' && location.pathname !== '/Register' && location.pathname !== '/Login' && location.pathname !== '/Forgotpassword' ?
-              <Header valuePath={pathName} /> : null
+            location.pathname === '/register' || location.pathname === '/login' || location.pathname === '/forgotpassword' || location.pathname === '/Register' || location.pathname === '/Login' || location.pathname === '/Forgotpassword' || location.pathname.split("/")[1] === 'forgotpassword' ?
+              null : <Header valuePath={pathName} />
           }
           <Routes>
             <Route path="/" element={<Home />} />
@@ -32,6 +32,7 @@ function App() {
                   <Profile />
                 </Authentication>
               } />
+            <Route path="/verify" element={<VerifyAccount />} />
           </Routes>
         </div>
       </div>
@@ -51,6 +52,11 @@ function App() {
         <Route path="/forgotpassword" element={
           <Unauthentication>
             <ForgotPassword />
+          </Unauthentication>
+        } />
+        <Route path="/forgotpassword/:recovercode/:id" element={
+          <Unauthentication>
+            <ForgotPassword isRecover={true} />
           </Unauthentication>
         } />
       </Routes>

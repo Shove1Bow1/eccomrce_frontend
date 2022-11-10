@@ -5,11 +5,11 @@ import { ToastContainer } from "react-toastify";
 import styled from "styled-components";
 import * as yup from 'yup';
 import background from '../assets/img/delaney-van-unsplash.png';
-import { ErrorUpdate, HandleToastRegister } from "../components/notification/Toastify";
+import { ErrorUpdate, HandleToastRegister, SuccessUpdate } from "../components/notification/Toastify";
 import useLocationForm from "../service/useLocationForm";
 const Container = styled.div`
   width: full;
-  height: 100vh;
+  min-height: 1000px;
   background: linear-gradient(
       rgba(255, 255, 255, 0.5),
       rgba(255, 255, 255, 0.5)
@@ -143,8 +143,8 @@ const Register = () => {
               addressId: selectedWard.value + "/" + selectedDistrict.value + "/" + selectedCity.value,
             }
           })
-          const result = res.data;
-          if (!result.message) {
+          const result = await res.data;
+          if (!result.isAuth) {
             console.log("run 2");
             var passwordCheck = true;
             var emailCheck = false;
@@ -156,11 +156,12 @@ const Register = () => {
             d.setTime(d.getTime() + (3 * 24 * 60 * 60 * 1000))
             localStorage.setItem("userId", result.userId);
             localStorage.setItem("username", values.userName);
-            localStorage.setItem("addressId", result.addressId);
+            localStorage.setItem("addressId", selectedWard.value + "/" + selectedDistrict.value + "/" + selectedCity.value);
+            SuccessUpdate("Đăng ký thành công, chờ 3 giây để chuyển hướng đến trang người dùng")
             // document.cookie = " userName=" + result.userName + ";expires=" + d + ";path=/";
             setTimeout(() => {
               window.location.replace("http://localhost:3000");
-              HandleToastRegister(result.message, values.userName);
+              // HandleToastRegister(result.message, values.userName);
             }, 3000);
           }
         }
@@ -195,7 +196,8 @@ const Register = () => {
           </div>
           {formik.touched.phoneNumber && formik.errors.phoneNumber ? <div style={{ width: "100%", color: 'red', marginTop: '5px', marginBottom: "5px" }}>{formik.errors.phoneNumber}</div> : null}
           < label style={{ height: "25px", fontWeight: "700", marginTop: "10px" }}> Địa chỉ</label>
-          <div className="flex flex-col gap-5 w-full">
+          <div className="flex flex-col gap-2 w-full">
+            <label>Thành Phố</label>
             <Select
               name="cityId"
               key={`cityId_${selectedCity?.value}`}
@@ -205,7 +207,7 @@ const Register = () => {
               placeholder="Tỉnh/Thành"
               defaultValue={selectedCity}
             />
-
+            <label>Phường/ Huyện</label>
             <Select
               name="districtId"
               key={`districtId_${selectedDistrict?.value}`}
@@ -215,7 +217,7 @@ const Register = () => {
               placeholder="Quận/Huyện"
               defaultValue={selectedDistrict}
             />
-
+            <label>Xã/Thị Trấn/ Ấp</label>
             <Select
               name="wardId"
               key={`wardId_${selectedWard?.value}`}
@@ -225,6 +227,7 @@ const Register = () => {
               onChange={(option) => onWardSelect(option)}
               defaultValue={selectedWard}
             />
+            <label>Số nhà và đường</label>
             <Input name="address" type="text" onChange={formik.handleChange} value={formik.values.address} onBlur={formik.handleBlur} placeholder="Địa chỉ nhà và đường" />
             {formik.touched.address && formik.errors.address ? <div style={{ width: "100%", color: 'red', marginTop: '5px', marginBottom: "5px" }}>{formik.errors.address}</div> : null}
           </div>

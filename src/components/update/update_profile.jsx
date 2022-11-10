@@ -178,9 +178,10 @@ const UserProfile = (props) => {
                     SuccessUpdate("Cập nhật thông tin thành công");
                     SuccessUpdate("tải lại trang sau 3 giây");
                     localStorage.setItem("addressId", selectedWard.value + "/" + selectedDistrict.value + "/" + selectedCity.value);
+                    var username = values.userName.split('')
+                    localStorage.setItem("username", username[username.length - 1])
                     setTimeout(() => {
                         window.location.replace("http://localhost:3000/profile");
-
                     }, 3000);
                 }
                 else {
@@ -201,7 +202,7 @@ const UserProfile = (props) => {
                     <label style={{ height: "25px", fontWeight: "700", marginTop: "10px" }}>Email</label>
                     <Input placeholder="email" type='email' name="email" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.email} disabled />
                     {formik.touched.email && formik.errors.userName ? <div style={{ width: "100%", color: 'red', marginTop: '5px', marginBottom: "5px" }}>{formik.errors.email}</div> : null}
-                    <label style={{ height: "25px", fontWeight: "700", marginTop: "10px" }}>Email</label>
+                    <label style={{ height: "25px", fontWeight: "700", marginTop: "10px" }}>Tên người dùng</label>
                     <Input placeholder="username" type="text" name="userName" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.userName} required />
                     {formik.touched.userName && formik.errors.userName ? <div style={{ width: "100%", color: 'red', marginTop: '5px', marginBottom: "5px" }}>{formik.errors.userName}</div> : null}
                     < label style={{ height: "25px", fontWeight: "700", marginTop: "10px" }}> Nhập số điện thoại</label>

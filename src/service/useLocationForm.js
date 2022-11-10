@@ -41,7 +41,7 @@ async function fetchInitialData(cityIdclone, districtIdClone, wardIdClone) {
     var wardId = 10379;
     if (localStorage.getItem("addressId")) {
         var value = localStorage.getItem("addressId").toString().split("/", 3);
-        console.log(value[0])
+        // console.log(value[0])
         cityId = Number(value[2]);
         districtId = Number(value[1]);
         wardId = Number(value[0]);

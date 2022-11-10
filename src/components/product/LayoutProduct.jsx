@@ -13,7 +13,7 @@ const LayoutProduct = (props) => {
         removeFromCart } = useShoppingCart()
 
     // const quantity = getItemQuantity(id)
-    const { title, price, imgUrl, smDes, id } = props;
+    const { title, price, imgUrl, smDes, id, stock } = props;
     console.log(props);
     const [countProduct, setCountProduct] = useState(1)
     const [isModalOpen, setIsModalOpen] = useState(false);
