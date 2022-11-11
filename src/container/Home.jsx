@@ -6,6 +6,7 @@ import TemplateProducts from "../components/products/TemplateProducts";
 import NewRunner from "../components/runner/NewRunner";
 
 function Home(props) {
+  const { data } = props
   const filter = [
     "Đồ gia dụng",
     "May mặc",
@@ -26,7 +27,7 @@ function Home(props) {
   return (
     <div>
       <div className="flex flex-row items-start w-full h-[410px] px-[45px] justify-around py-[64px]">
-        <CategoryMenu title="Best from Product " item={filter} />
+        <CategoryMenu title="Những sản phẩm tốt nhất" item={filter} />
         {
           BannerInfo.map(index => {
             return (
@@ -35,7 +36,7 @@ function Home(props) {
           })
         }
       </div>
-      <TemplateProducts />
+      <TemplateProducts data={data} />
       <NewRunner />
       <Footer />
     </div>

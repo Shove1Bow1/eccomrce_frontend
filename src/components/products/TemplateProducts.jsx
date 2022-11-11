@@ -1,8 +1,7 @@
 import chevron_right from "../../assets/icon/chevron-right-solid.svg";
 import LayoutProduct from "../product/LayoutProduct";
-import { ProductsData } from "../products/data/ProductsData";
 const TemplateProducts = (props) => {
-    const productData = ProductsData;
+    const productData = props.data.slice(0, 4);
     return (
         <div className="w-full h-[530px] flex flex-col px-[64px] py-[45px] bg-white">
             <div className="w-full h-[38px] relative mb-[33.5px]">
@@ -15,7 +14,13 @@ const TemplateProducts = (props) => {
                 {
                     productData.map(index => {
                         return (
-                            <LayoutProduct key={index.id} imgUrl={index.imgUrl} title={index.title} price={index.price} countStar={5} />
+                            <LayoutProduct
+                                key={index._id}
+                                id={index._id}
+                                image={index.image}
+                                productName={index.productName}
+                                price={index.price}
+                                description={index.description} />
                         )
                     })
                 }

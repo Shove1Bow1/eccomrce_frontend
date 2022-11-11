@@ -1,5 +1,5 @@
 import { StarFilled, StarOutlined } from '@ant-design/icons';
-import { Spin, Tabs, Tag } from 'antd';
+import { Image, Spin, Tabs, Tag } from 'antd';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -8,13 +8,11 @@ import ButtonCustom from '../components/button/Button';
 import Footer from '../components/Footer';
 import Descriptiontab from '../components/itemTab/Description-tab';
 import Reviewtab from '../components/itemTab/Review-tab';
-import TemplateProducts from '../components/products/TemplateProducts';
 import generateThousand from '../ultis/generateThousand';
 
 function Viewdetail(props) {
 
   const location = useLocation()
-
 
   const navigate = useNavigate();
 
@@ -25,7 +23,9 @@ function Viewdetail(props) {
   const radom = Math.floor(Math.random() * 100)
 
   const handleOnclick = () => {
+
     setLoading(true)
+    navigate()
   }
 
   useEffect(() => {
@@ -58,6 +58,10 @@ function Viewdetail(props) {
     },
 
   ]
+  const TagCus = () => {
+    return (<div>   <Tag className='border-none ml-[4px] mr-[2px]  mt-[4px] px-[8px] rounded' color='success'>{radom}%</Tag>
+      <Tag className='border-none ml-[4px] mr-[2px]  z-[100] mt-[4px] px-[8px] rounded' color='success'>Free Shipping</Tag></div>)
+  }
   return (
     <>
       {
@@ -65,10 +69,9 @@ function Viewdetail(props) {
           <>
             <div className='w-full px-[42px] pt-[40px] flex flex-row  '>
               <div className='w-[50%] mr-[12px]'>
-                <div className='bg-[#F9F9F9] rounded rounded-[12px]  h-[436px] mb-[32px] '>
-                  <Tag className='border-none ml-[4px] mr-[2px] mt-[4px] px-[8px] rounded' color='success'>{radom}%</Tag>
-                  <Tag className='border-none ml-[4px] mr-[2px] mt-[4px] px-[8px] rounded' color='success'>Free Shipping</Tag>
-                </div>
+                <Image src={data.image} alt='aeass' height={'100%'} placeholder={TagCus} className='bg-[#F9F9F9] rounded rounded-[12px]  h-[436px] mb-[32px] ' >
+
+                </Image>
               </div>
               <div className='w-[50%] ml-[12px]'>
                 <p className='text-[32px] font-semibold leading-[44px] pb-[10px]'>{data.productName}</p>
@@ -96,7 +99,7 @@ function Viewdetail(props) {
                 </StyledAntDTabs>
               </div>
             </div>
-            <TemplateProducts />
+            {/* <TemplateProducts /> */}
           </>
           :
           <Spin tip="Loading..." >
