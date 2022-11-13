@@ -2,6 +2,8 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import Header from "./components/header/Header";
 import Authentication from "./container/Authentication";
+import Blog from "./container/blog/Blog";
+import DetailBlog from "./container/blog/DetailBlog";
 import Checkout from "./container/Checkout";
 import ForgotPassword from "./container/ForgotPassword";
 import Home from "./container/Home";
@@ -23,6 +25,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/view" element={<View />} />
+            <Route path="/blog/detail-blog/*" element={<DetailBlog />} />
+            <Route path="/blog" element={<Blog />} />
           </Routes>
         </div>
       </div>

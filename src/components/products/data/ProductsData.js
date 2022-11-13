@@ -18,7 +18,7 @@ const ProductsData = [
         price: 18000,
         title: "Xẻng Inox Xúc Đá",
         smallDescription: "Xẻng Inox xúc đá giá rẻ",
-        imgUrl: "https://linhkienlammusic.com/thumbs/540x540x1/upload/product/xeng-inox-xuc-da-2744.jpg"
+        imgUrl: "https://dathangsi.vn/upload/products/2019/03/0859-4170503491_358160309.jpg"
     },
     {
         id: 4,

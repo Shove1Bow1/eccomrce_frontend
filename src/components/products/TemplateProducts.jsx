@@ -1,7 +1,7 @@
 import chevron_right from "../../assets/icon/chevron-right-solid.svg";
 import LayoutProduct from "../product/LayoutProduct";
 import { ProductsData } from "../products/data/ProductsData";
-const TemplateProducts = (props) => {
+const TemplateProducts = () => {
     const productData = ProductsData;
     console.log(productData)
     return (

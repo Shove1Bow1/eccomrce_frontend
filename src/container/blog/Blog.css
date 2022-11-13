@@ -1,0 +1,64 @@
+.card-top {
+  position: relative;
+}
+.card-top-items {
+  position: absolute;
+}
+.meta {
+  bottom: 0;
+  height: 70%;
+  background: linear-gradient(0deg, #000000 0%, rgba(0, 0, 0, 0) 100%);
+  width: 100%;
+  padding: 10px;
+  padding-top: 20%;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+.po-ava {
+  position: absolute;
+  bottom: 8px;
+  width: 50%;
+}
+.ava {
+  width: 25px;
+  height: 25px;
+}
+.text-ava {
+  font-size: 10px;
+  margin-left: 5px;
+  margin-top: 10px;
+  color: #f9f9f9;
+}
+.text-ava-detail-title {
+  font-size: 10px;
+  margin-left: 5px;
+  margin-top: 10px;
+  color: #a9a9a9;
+}
+.date-ava {
+  font-size: 10px;
+  margin-left: 5px;
+  margin-top: 10px;
+  color: #f9f9f9;
+}
+.card-title {
+  color: white;
+  font-weight: bold;
+  text-shadow: 1px 1px 1px #000;
+  font-size: large;
+}
+.card-items {
+  border: none;
+}
+.text-item {
+  font-size: 10px;
+  color: #151515;
+  margin-right: 10px;
+}
+.date-item {
+  font-size: 10px;
+  color: #151515;
+}
+.link-title {
+  font-weight: bold;
+}
