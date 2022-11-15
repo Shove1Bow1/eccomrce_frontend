@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Banner from "../components/banner/Banner";
 import Footer from "../components/Footer";
 import CategoryMenu from "../components/menu/CategoryMenu";
@@ -24,6 +24,9 @@ function Home(props) {
     title: "Sạc Samsung",
     description: "Sạc Samsung"
   }]
+  useEffect(()=>{},[
+    
+  ])
   return (
     <div>
       <div className="flex flex-row items-start w-full h-[410px] px-[45px] justify-around py-[64px]">

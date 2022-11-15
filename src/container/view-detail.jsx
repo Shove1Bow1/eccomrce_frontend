@@ -36,7 +36,6 @@ function Viewdetail(props) {
     axios
       .get(`http://localhost:1402/products/${location.state.id}`)
       .then((e) => {
-        console.log(e.data.data)
         setData(e.data.data)
       })
       .then(function (error) {
@@ -99,7 +98,6 @@ function Viewdetail(props) {
                 </StyledAntDTabs>
               </div>
             </div>
-            {/* <TemplateProducts /> */}
           </>
           :
           <Spin tip="Loading..." >

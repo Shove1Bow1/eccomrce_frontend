@@ -45,6 +45,7 @@ function App() {
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/view" element={<View />} />
             <Route path="/view-detail" element={<ViewDetail />} />
+            <Route path="/confirm-payemnt" element={<ViewDetail />} />
           </Routes>
         </div>
       </div>
