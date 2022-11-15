@@ -35,9 +35,11 @@ function App() {
                 </Authentication>
               } />
             <Route path="/verify" element={<VerifyAccount />} />
-          </Routes>
-        </div>
-      </div>
+            <Route path="/blog/detail-blog/*" element={<DetailBlog />} />
+            <Route path="/blog" element={<Blog />} />
+          </Routes >
+        </div >
+      </div >
       <Routes>
         <Route path="/register" element={
           <Unauthentication>
@@ -65,7 +67,7 @@ function App() {
           </Unauthentication>
         } />
       </Routes>
-    </ShoppingCartProvider>
+    </ShoppingCartProvider >
   );
 }
 
