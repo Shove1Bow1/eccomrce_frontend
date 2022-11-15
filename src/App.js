@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import Header from "./components/header/Header";
@@ -11,7 +12,7 @@ import Register from "./container/Register";
 import View from "./container/View";
 import { ShoppingCartProvider } from "./context/ShoppingCartContext";
 function App() {
-  const pathName = '';
+  const [getPathName, setPathName] = useState("");
   const location = useLocation();
   return (
     <ShoppingCartProvider>
@@ -19,13 +20,14 @@ function App() {
         <div className="max-w-[1260px] bg-white mx-auto">
           {
             location.pathname === '/register' || location.pathname === '/login' || location.pathname === '/forgotpassword' || location.pathname === '/Register' || location.pathname === '/Login' || location.pathname === '/Forgotpassword' || location.pathname.split("/")[1] === 'forgotpassword' ?
-              null : <Header valuePath={pathName} />
+              null : <Header changePath={setPathName} pathName={getPathName} />
           }
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/checkout" element={<Checkout />} />
-            <Route path="/view" element={<View />} />
-            <Route path={`/filter/:pathName`} element={<View />} />
+            <Route path="/products" element={<View />} >
+            </Route>
+            <Route path={"/products/:pathname"} element={<View />} />
             <Route path="/profile" element=
               {
                 <Authentication>
@@ -36,14 +38,12 @@ function App() {
           </Routes>
         </div>
       </div>
-
       <Routes>
         <Route path="/register" element={
           <Unauthentication>
             <Register />
           </Unauthentication>
         } />
-
         <Route path="/login" element={
           <Unauthentication>
             <Login />
@@ -55,6 +55,11 @@ function App() {
           </Unauthentication>
         } />
         <Route path="/forgotpassword/:recovercode/:id" element={
+          <Unauthentication>
+            <ForgotPassword isRecover={true} />
+          </Unauthentication>
+        } />
+        <Route path="/forgotpassword/otp" element={
           <Unauthentication>
             <ForgotPassword isRecover={true} />
           </Unauthentication>

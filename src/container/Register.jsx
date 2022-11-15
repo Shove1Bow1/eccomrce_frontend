@@ -159,6 +159,7 @@ const Register = () => {
             localStorage.setItem("addressId", selectedWard.value + "/" + selectedDistrict.value + "/" + selectedCity.value);
             SuccessUpdate("Đăng ký thành công, chờ 3 giây để chuyển hướng đến trang người dùng")
             // document.cookie = " userName=" + result.userName + ";expires=" + d + ";path=/";
+            formik.resetForm();
             setTimeout(() => {
               window.location.replace("http://localhost:3000");
               // HandleToastRegister(result.message, values.userName);

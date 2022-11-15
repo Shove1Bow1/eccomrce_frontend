@@ -8,6 +8,13 @@ import iconBasket from "./assets/icon/ic-ecommerce-basket.svg";
 import { filter } from "./data/data";
 function Header(props) {
   const [count, setCount] = useState(3);
+  function SetPath(value) {
+    props.changePath(value);
+    return value;
+  }
+  function ReloadPage() {
+    window.location.reload();
+  }
   return (
     <div className="w-full h-full bg-white">
       <div className="px-[45px] pt-[16px]">
@@ -58,7 +65,7 @@ function Header(props) {
         <div className="mx-auto w-fit">
           {filter.map((value, index) => (
             <span className="text-[15px] font-bold mr-[54px]" key={index}>
-              <Link to={value.linkPath} >
+              <Link to={SetPath(value.linkPath)}>
                 {value.name}
               </Link>
             </span>

@@ -99,7 +99,7 @@ const Login = () => {
         localStorage.setItem("addressId", result.addressId);
         // document.cookie = "userId=" + result.idUser + ";expires=" + d + ";path=/";
         // document.cookie = " userName=" + result.userName + ";expires=" + d + ";path=/";
-        setTimeout(() => { window.location.replace("http://localhost:3000"); }, 4000)
+        setTimeout(() => { window.location.replace("http://localhost:3000"); }, 1000)
 
       }
     }
