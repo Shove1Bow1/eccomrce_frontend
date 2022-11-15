@@ -21,45 +21,51 @@ function Items({ currentItems }) {
     )
 }
 export default function PaginationCustom({ itemsPerPage, products }) {
-    console.log(products)
-    const [itemOffset, setItemOffset] = useState(0);
-    const endOffset = itemOffset + itemsPerPage;
-    const currentItems = products.slice(itemOffset, endOffset);
-    const pageCount = Math.ceil(products.length / itemsPerPage);
-    const handlePageClick = (event) => {
-        const newOffset = (event.selected * itemsPerPage) % products.length;
-        setItemOffset(newOffset);
+    console.log(products); const [itemOffset, setItemOffset] = useState(0);
+    if (products) {
+        const endOffset = itemOffset + itemsPerPage;
+        const currentItems = products.slice(itemOffset, endOffset);
+        const pageCount = Math.ceil(products.length / itemsPerPage);
+        const handlePageClick = (event) => {
+            const newOffset = (event.selected * itemsPerPage) % products.length;
+            setItemOffset(newOffset);
+        }
+        return (
+            <>
+                <Items currentItems={currentItems} />
+                <ReactPaginate
+                    // breakLabel="..."
+                    // nextLabel="next >"
+                    // onPageChange={handlePageClick}
+                    // pageRangeDisplayed={5}
+                    // pageCount={pageCount}
+                    // previousLabel="< previous"
+                    // renderOnZeroPageCount={null}
+                    nextLabel="tiếp >"
+                    onPageChange={handlePageClick}
+                    pageRangeDisplayed={5}
+                    marginPagesDisplayed={2}
+                    pageCount={pageCount}
+                    previousLabel="< lui về"
+                    pageClassName="page-item"
+                    pageLinkClassName="page-link"
+                    previousClassName="page-item"
+                    previousLinkClassName="page-link"
+                    nextClassName="page-item"
+                    nextLinkClassName="page-link"
+                    breakLabel="..."
+                    breakClassName="page-item"
+                    breakLinkClassName="page-link"
+                    containerClassName="pagination pagination-custom"
+                    activeClassName="active"
+                    renderOnZeroPageCount={null}
+                />
+            </>
+        )
     }
-    return (
-        <>
-            <Items currentItems={currentItems} />
-            <ReactPaginate
-                // breakLabel="..."
-                // nextLabel="next >"
-                // onPageChange={handlePageClick}
-                // pageRangeDisplayed={5}
-                // pageCount={pageCount}
-                // previousLabel="< previous"
-                // renderOnZeroPageCount={null}
-                nextLabel="tiếp >"
-                onPageChange={handlePageClick}
-                pageRangeDisplayed={5}
-                marginPagesDisplayed={2}
-                pageCount={pageCount}
-                previousLabel="< lui về"
-                pageClassName="page-item"
-                pageLinkClassName="page-link"
-                previousClassName="page-item"
-                previousLinkClassName="page-link"
-                nextClassName="page-item"
-                nextLinkClassName="page-link"
-                breakLabel="..."
-                breakClassName="page-item"
-                breakLinkClassName="page-link"
-                containerClassName="pagination pagination-custom"
-                activeClassName="active"
-                renderOnZeroPageCount={null}
-            />
+    else
+        return <>
+            <h1>Không có dữ liệu</h1>
         </>
-    )
+
 }

@@ -193,7 +193,7 @@ const Categories = (props) => {
                                 height: '40px',
                                 borderRadius: '10px'
                             }}
-                        //onClick={() => props.changeFilterOption("search", true)}
+                            onClick={() => props.filterDirect()}
                         >Tìm</Button>
                     </Col>
                     <Col span={12}>

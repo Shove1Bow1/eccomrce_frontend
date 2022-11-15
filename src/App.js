@@ -3,6 +3,8 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import Header from "./components/header/Header";
 import VerifyAccount, { Authentication, Unauthentication } from "./container/Authentication";
+import Blog from "./container/blog/Blog";
+import DetailBlog from "./container/blog/DetailBlog";
 import Checkout from "./container/Checkout";
 import ForgotPassword from "./container/ForgotPassword";
 import Home from "./container/Home";
@@ -27,7 +29,8 @@ function App() {
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/products" element={<View />} >
             </Route>
-            <Route path={"/products/:pathname"} element={<View />} />
+            <Route path={"/products/*"} element={<View />} />
+            <Route path={"/products/filter"} element={<View />} />
             <Route path="/profile" element=
               {
                 <Authentication>
