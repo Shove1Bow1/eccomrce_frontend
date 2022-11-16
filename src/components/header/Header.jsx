@@ -1,7 +1,7 @@
 import { Badge, Select } from "antd";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ShowUsername } from "../../container/Authentication";
+import { DirectPage, ShowUsername } from "../../container/Authentication";
 import { useShoppingCart } from "../../context/ShoppingCartContext";
 import iconGlass from "./assets/icon/ic-actions-search.svg";
 import iconUser from "./assets/icon/ic-actions-user.svg";
@@ -19,6 +19,12 @@ function Header(props) {
   }
 
   const { getCountItemCart } = useShoppingCart()
+
+  // const [count, setCount] = useState(3);
+  function SetPath(value) {
+    props.changePath(value);
+    return value;
+  }
 
   return (
     <div className="w-full h-full bg-white">
@@ -53,14 +59,16 @@ function Header(props) {
               src={iconGlass}
             />
           </div>
-          <Link>
-            <img
-              className="w-[24px] h-[24px] my-auto mr-[42px]"
-              alt="user"
-              src={iconUser}
-            />
-          </Link>
-          <ShowUsername />
+          <div className="max-w-[150px] h-[24px] my-auto">
+            <DirectPage>
+              <img
+                className="w-[24px] h-[24px] my-auto"
+                alt="user"
+                src={iconUser}
+              />
+              <ShowUsername />
+            </DirectPage>
+          </div>
           <Link to={"/checkout"}>
             <Badge count={getCountItemCart()} size="small">
               <img
@@ -76,7 +84,9 @@ function Header(props) {
         <div className="mx-auto w-fit">
           {filter.map((value, index) => (
             <span className="text-[15px] font-bold mr-[54px]" key={index}>
-              {value}
+              <Link to={SetPath(value.linkPath)}>
+                {value.name}
+              </Link>
             </span>
           ))}
         </div>

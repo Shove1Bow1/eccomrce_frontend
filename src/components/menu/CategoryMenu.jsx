@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import chevron_right from "../../assets/icon/chevron-right-solid.svg";
 function CategoryMenu(props) {
   return (
@@ -8,7 +9,7 @@ function CategoryMenu(props) {
         </p>
         <div className="text-[14px] leading-[19px] text-[#6A983C] pb-[12px]">
           {props.item.map((data, index) => {
-            return <p key={index}>{data}</p>;
+            return (<p key={index}><Link to={data.linkPath}>{data.name}</Link></p>);
           })}
         </div>
       </div>

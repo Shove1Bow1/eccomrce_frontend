@@ -1,21 +1,28 @@
-import { StarFilled } from '@ant-design/icons';
-import { Badge, Button, Checkbox, Col, Form, InputNumber, Row, Slider, Typography } from 'antd';
+import { StarFilled, StarOutlined } from '@ant-design/icons';
+import { Button, Checkbox, Col, InputNumber, Row, Slider, Typography } from 'antd';
 import React, { useState } from 'react';
 
 const { Title } = Typography;
 
-const Categories = () => {
-    const [inputMin, setInputMin] = useState(1);
-    const [inputMax, setInputMax] = useState(1);
-    const onChangeMin = (newValue) => {
-        setInputMin(newValue);
+const Categories = (props) => {
+    const [inputMin, setInputMin] = useState(1000);
+    const [inputMax, setInputMax] = useState(20000000);
+    const onChangeMin = (...newValue) => {
+        if (newValue[1] < props.filterOption.maxPrice)
+            props.changeFilterOption(newValue[0], newValue[1]);
+        else
+            return;
     };
-    const onChangeMax = (newValue) => {
-        setInputMax(newValue);
+    const onChangeMax = (...newValue) => {
+        if (newValue[1] > props.filterOption.minPrice)
+            props.changeFilterOption(newValue[0], newValue[1]);
+        else
+            return;
     };
+    console.log(props.filterOption.star)
     return (
         <>
-            <Form>
+            {/* <Form>
                 <Title level={4} style={{ fontWeight: 'bolder' }}>Categories</Title>
                 <Row gutter={24} style={{ paddingBottom: '10px' }}>
                     <Col span={20}>
@@ -49,8 +56,8 @@ const Categories = () => {
                         <Badge style={{ color: '#6A983C', backgroundColor: '#F4F8EC' }} count='48'></Badge>
                     </Col>
                 </Row>
-            </Form>
-            <Form style={{ paddingTop: '20px' }}>
+            </Form> */}
+            {/* <div style={{ paddingTop: '20px' }}>
                 <Title level={4} style={{ fontWeight: 'bolder' }}>Brands</Title>
                 <Row gutter={24} style={{ paddingBottom: '10px' }}>
                     <Checkbox style={{ marginLeft: '8px', marginBottom: '10px' }}>Filtre by brand item</Checkbox>
@@ -59,12 +66,12 @@ const Categories = () => {
                     <Checkbox style={{ marginBottom: '10px' }}>Filtre by brand item</Checkbox>
                     <Checkbox style={{ marginBottom: '10px' }}>Filtre by brand item</Checkbox>
                 </Row>
-            </Form>
-            <Form style={{ paddingTop: '20px' }}>
-                <Title level={4} style={{ fontWeight: 'bolder' }}>Rating</Title>
+            </div> */}
+            <div style={{ paddingTop: '20px' }}>
+                <Title level={4} style={{ fontWeight: 'bolder' }}>Đánh giá</Title>
                 <Row gutter={24} style={{ paddingBottom: '10px' }}>
                     <Col span={24}>
-                        <Checkbox style={{ marginBottom: '10px' }}>
+                        <Checkbox style={{ marginBottom: '10px' }} value={5} onChange={(e) => props.changeFilterOption("star", e.target.value, e.target.checked)} defaultChecked={props.filterOption.star.includes(5) ? true : false}>
                             <StarFilled style={{ color: '#FDBC15' }} />
                             <StarFilled style={{ color: '#FDBC15' }} />
                             <StarFilled style={{ color: '#FDBC15' }} />
@@ -73,86 +80,106 @@ const Categories = () => {
                         </Checkbox>
                     </Col>
                     <Col span={24}>
-                        <Checkbox style={{ marginBottom: '10px' }}>
+                        <Checkbox style={{ marginBottom: '10px' }} value={4} onChange={(e) => props.changeFilterOption("star", e.target.value, e.target.checked)} defaultChecked={props.filterOption.star.includes(4) ? true : false}>
                             <StarFilled style={{ color: '#FDBC15' }} />
                             <StarFilled style={{ color: '#FDBC15' }} />
                             <StarFilled style={{ color: '#FDBC15' }} />
                             <StarFilled style={{ color: '#FDBC15' }} />
+                            <StarOutlined />
                         </Checkbox>
                     </Col>
                     <Col span={24}>
-                        <Checkbox style={{ marginBottom: '10px' }}>
+                        <Checkbox style={{ marginBottom: '10px' }} value={3} onChange={(e) => props.changeFilterOption("star", e.target.value, e.target.checked)} defaultChecked={props.filterOption.star.includes(3) ? true : false}>
                             <StarFilled style={{ color: '#FDBC15' }} />
                             <StarFilled style={{ color: '#FDBC15' }} />
                             <StarFilled style={{ color: '#FDBC15' }} />
+                            <StarOutlined />
+                            <StarOutlined />
                         </Checkbox>
                     </Col>
                     <Col span={24}>
-                        <Checkbox style={{ marginBottom: '10px' }}>
+                        <Checkbox style={{ marginBottom: '10px' }} value={2} onChange={(e) => props.changeFilterOption("star", e.target.value, e.target.checked)} defaultChecked={props.filterOption.star.includes(2) ? true : false}>
                             <StarFilled style={{ color: '#FDBC15' }} />
                             <StarFilled style={{ color: '#FDBC15' }} />
+                            <StarOutlined />
+                            <StarOutlined />
+                            <StarOutlined />
                         </Checkbox>
                     </Col>
                     <Col span={24}>
-                        <Checkbox style={{ marginBottom: '10px' }}>
+                        <Checkbox style={{ marginBottom: '10px' }} value={1} onChange={(e) => props.changeFilterOption("star", e.target.value, e.target.checked)} defaultChecked={props.filterOption.star.includes(1) ? true : false}>
                             <StarFilled style={{ color: '#FDBC15' }} />
+                            <StarOutlined />
+                            <StarOutlined />
+                            <StarOutlined />
+                            <StarOutlined />
+                        </Checkbox>
+                    </Col>
+                    <Col span={24}>
+                        <Checkbox style={{ marginBottom: '10px' }} value={0} onChange={(e) => props.changeFilterOption("star", e.target.value, e.target.checked)} defaultChecked={props.filterOption.star.includes(0) ? true : false}>
+                            <StarOutlined />
+                            <StarOutlined />
+                            <StarOutlined />
+                            <StarOutlined />
+                            <StarOutlined />
                         </Checkbox>
                     </Col>
                 </Row>
-            </Form>
-            <Form style={{ paddingTop: '20px' }}>
-                <Title level={4} style={{ fontWeight: 'bolder' }}>Price</Title>
+            </div>
+            <div style={{ paddingTop: '20px' }}>
+                <Title level={4} style={{ fontWeight: 'bolder' }}>Giá cả</Title>
                 <Row gutter={24}>
                     <Col span={20}>
                         <Slider
-                            min={1}
-                            max={100}
-                            onChange={onChangeMin}
+                            className='minPrice'
+                            min={1000}
+                            max={20000000}
+                            onChange={(e) => onChangeMin("minPrice", e)}
                             backgroundColor='#ffffff'
-                            value={typeof inputMin === 'number' ? inputMin : 0}
+                            value={props.filterOption.minPrice}
                         />
                     </Col>
                     <Col span={24}>
                         <label>MIN:</label>
                         <InputNumber
-                            min={1}
-                            max={20}
+                            min={1000}
+                            max={20000000}
                             style={{
                                 margin: '0 16px',
                                 borderRadius: '12px',
                                 backgroundColor: '#F9F9F9',
                             }}
-                            value={inputMin}
-                            onChange={onChangeMin}
+                            name="minPrice"
+                            className="minPrice"
+                            value={props.filterOption.minPrice}
+                            onChange={(e) => onChangeMin("minPrice", e)}
                         ></InputNumber>
                     </Col>
                 </Row>
                 <Row gutter={24}>
                     <Col span={20}>
                         <Slider
-                            min={1}
-                            max={100}
-                            onChange={onChangeMax}
-                            value={typeof inputMax === 'number' ? inputMax : 0}
+                            max={20000000}
+                            onChange={(e) => onChangeMax("maxPrice", e)}
+                            value={props.filterOption.maxPrice}
                         />
                     </Col>
                     <Col span={24}>
                         <label>MAX:</label>
                         <InputNumber
-                            min={1}
-                            max={20}
+                            max={20000000}
                             style={{
                                 margin: '0 16px',
                                 borderRadius: '12px',
                                 backgroundColor: '#F9F9F9',
                             }}
-                            value={inputMax}
-                            onChange={onChangeMax}
+                            value={props.filterOption.maxPrice}
+                            onChange={(e) => onChangeMax("maxPrice", e)}
                         ></InputNumber>
                     </Col>
                 </Row>
-            </Form>
-            <Form style={{ paddingTop: '20px' }}>
+            </div>
+            <div style={{ paddingTop: '20px' }}>
                 <Row gutter={24}>
                     <Col span={12}>
                         <Button
@@ -165,7 +192,9 @@ const Categories = () => {
                                 width: '80px',
                                 height: '40px',
                                 borderRadius: '10px'
-                            }}>Search</Button>
+                            }}
+                        //onClick={() => props.changeFilterOption("search", true)}
+                        >Tìm</Button>
                     </Col>
                     <Col span={12}>
                         <Button
@@ -180,7 +209,7 @@ const Categories = () => {
                             type='ghost'>Reset</Button>
                     </Col>
                 </Row>
-            </Form>
+            </div>
         </>
     )
 }

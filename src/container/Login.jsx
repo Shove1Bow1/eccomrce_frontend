@@ -85,19 +85,26 @@ const Login = () => {
           password: values.password,
         }
       })
-      const result = res.data;
-      if (!result.message) {
+      const result = await res.data;
+      if (!result.isAuth) {
+        console.log(false);
         LoginFailedToast();
       }
       else {
         LoginSucessToast(result.userName);
         const d = new Date();
         d.setTime(d.getTime() + (3 * 24 * 60 * 60 * 1000))
+<<<<<<< HEAD
         localStorage.setItem("userId", result.idUser);
         localStorage.setItem("username", values.userName);
+=======
+        localStorage.setItem("userId", result.userId);
+        localStorage.setItem("username", result.userName);
+        localStorage.setItem("addressId", result.addressId);
+>>>>>>> origin/dev
         // document.cookie = "userId=" + result.idUser + ";expires=" + d + ";path=/";
         // document.cookie = " userName=" + result.userName + ";expires=" + d + ";path=/";
-        setTimeout(() => { window.location.replace("http://localhost:3000"); }, 4000)
+        setTimeout(() => { window.location.replace("http://localhost:3000"); }, 1000)
 
       }
     }
@@ -108,13 +115,15 @@ const Login = () => {
       <Wrapper>
         <Title>SIGN IN</Title>
         <Form onSubmit={formik.handleSubmit}>
+          <label>email</label>
           <Input placeholder="email" name="email" onChange={formik.handleChange} minLength="5" onBlur={formik.handleBlur} value={formik.values.email} required />
           {formik.touched.email && formik.errors.email ? <div style={{ color: 'red' }}>{formik.errors.email}</div> : null}
+          <label>password</label>
           <Input placeholder="password" type="password" name="password" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.password} required />
           {formik.touched.password && formik.errors.password ? <div style={{ color: 'red' }}>{formik.errors.password}</div> : null}
           <Button type="submit">LOGIN</Button>
-          <Link href="/forgotpassword">DO NOT YOU REMEMBER THE PASSWORD?</Link>
-          <Link href="/register">CREATE A NEW ACCOUNT</Link>
+          <Link href="/forgotpassword">Bạn quên mật khẩu?</Link>
+          <Link href="/register">Tạo tài khoản mới</Link>
         </Form>
       </Wrapper>
       <ToastContainer />
