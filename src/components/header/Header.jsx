@@ -1,13 +1,20 @@
 import { Badge } from "antd";
-import React, { useState } from "react";
+import { default as React, useState } from "react";
 import { Link } from "react-router-dom";
-import { ShowUsername } from "../../container/Authentication";
+import { DirectPage, ShowUsername } from "../../container/Authentication";
 import iconGlass from "./assets/icon/ic-actions-search.svg";
 import iconUser from "./assets/icon/ic-actions-user.svg";
 import iconBasket from "./assets/icon/ic-ecommerce-basket.svg";
 import { filter } from "./data/data";
 function Header(props) {
   const [count, setCount] = useState(3);
+  function SetPath(value) {
+    props.changePath(value);
+    return value;
+  }
+  function ReloadPage() {
+    window.location.reload();
+  }
   return (
     <div className="w-full h-full bg-white">
       <div className="px-[45px] pt-[16px]">
@@ -33,14 +40,16 @@ function Header(props) {
               src={iconGlass}
             />
           </div>
-          <Link>
-            <img
-              className="w-[24px] h-[24px] my-auto mr-[42px]"
-              alt="user"
-              src={iconUser}
-            />
-          </Link>
-          <ShowUsername />
+          <div className="max-w-[150px] h-[24px] my-auto">
+            <DirectPage>
+              <img
+                className="w-[24px] h-[24px] my-auto"
+                alt="user"
+                src={iconUser}
+              />
+              <ShowUsername />
+            </DirectPage>
+          </div>
           <Link to={"/checkout"}>
             <Badge count={count} size="small">
               <img
@@ -56,7 +65,9 @@ function Header(props) {
         <div className="mx-auto w-fit">
           {filter.map((value, index) => (
             <span className="text-[15px] font-bold mr-[54px]" key={index}>
-              {value}
+              <Link to={SetPath(value.linkPath)}>
+                {value.name}
+              </Link>
             </span>
           ))}
         </div>
