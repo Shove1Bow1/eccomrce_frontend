@@ -1,19 +1,16 @@
 import { Badge } from "antd";
 import { default as React, useState } from "react";
 import { Link } from "react-router-dom";
-import { DirectPage, ShowUsername } from "../../container/Authentication";
+import { DirectPage } from "../../container/Authentication";
 import iconGlass from "./assets/icon/ic-actions-search.svg";
 import iconUser from "./assets/icon/ic-actions-user.svg";
 import iconBasket from "./assets/icon/ic-ecommerce-basket.svg";
 import { filter } from "./data/data";
 function Header(props) {
-  const [count, setCount] = useState(3);
+  const [count, setCount] = useState(0);
   function SetPath(value) {
     props.changePath(value);
     return value;
-  }
-  function ReloadPage() {
-    window.location.reload();
   }
   return (
     <div className="w-full h-full bg-white">
@@ -40,27 +37,31 @@ function Header(props) {
               src={iconGlass}
             />
           </div>
-          <div className="max-w-[150px] h-[24px] my-auto">
+          <DirectPage>
+            <img
+              className="max-w-[150px] h-[24px] my-auto"
+              alt="user"
+              src={iconUser}
+            />
+          </DirectPage>
+
+          {/* <div className="max-w-[150px] h-[24px] my-auto">
             <DirectPage>
-              <img
-                className="w-[24px] h-[24px] my-auto"
-                alt="user"
-                src={iconUser}
-              />
-              <ShowUsername />
-            </DirectPage>
-          </div>
-          <Link to={"/checkout"}>
+              
+              {/* <ShowUsername /> */}
+          {/* </DirectPage> */}
+          {/* </div> */}
+          <Link to={"/checkout"} style={{ maxHeight: "full" }}>
             <Badge count={count} size="small">
               <img
-                className="w-[24px] h-[24px] my-auto "
+                className="w-[24px] h-[24px] my-[15px]"
                 alt="basket"
                 src={iconBasket}
               />
             </Badge>
           </Link>
         </div>
-      </div>
+      </div >
       <div className="px-[45px] py-[16px] bg-[#F9F9F9]">
         <div className="mx-auto w-fit">
           {filter.map((value, index) => (
@@ -72,7 +73,7 @@ function Header(props) {
           ))}
         </div>
       </div>
-    </div>
+    </div >
   );
 }
 

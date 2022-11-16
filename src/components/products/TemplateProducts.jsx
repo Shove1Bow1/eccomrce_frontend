@@ -3,7 +3,7 @@ import LayoutProduct from "../product/LayoutProduct";
 import { ProductsData } from "../products/data/ProductsData";
 const TemplateProducts = (props) => {
     function DirectView() {
-        document.location.href = "/view";
+        document.location.href = "/products";
     }
     const productData = ProductsData;
     return (

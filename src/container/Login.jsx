@@ -39,7 +39,7 @@ const Form = styled.form`
 const Input = styled.input`
   flex: 1;
   min-width: 40%;
-  margin: 10px 0;
+  // margin: 10px 0;
   padding: 10px;
   border:1px solid black;
 `;
@@ -68,7 +68,7 @@ const Login = () => {
       password: '',
     },
     validationSchema: yup.object({
-      email: yup.string().max(40, "must be 40 characters or less").required('Required'),
+      email: yup.string().email("Chưa đúng định dạng email").required('Required'),
       password: yup.string()
         .required('No password provided.')
         .min(8, 'Password is too short - should be 8 chars minimum.'),
@@ -108,14 +108,14 @@ const Login = () => {
   return (
     <Container>
       <Wrapper>
-        <Title>SIGN IN</Title>
+        <Title>Đăng Nhập</Title>
         <Form onSubmit={formik.handleSubmit}>
-          <label>email</label>
+          <label className="mt-[5px] font-[600] font-[15px]">Email</label>
           <Input placeholder="email" name="email" onChange={formik.handleChange} minLength="5" onBlur={formik.handleBlur} value={formik.values.email} required />
-          {formik.touched.email && formik.errors.email ? <div style={{ color: 'red' }}>{formik.errors.email}</div> : null}
-          <label>password</label>
+          {formik.touched.email && formik.errors.email ? <div style={{ width: "100%", color: 'red', marginBottom: "5px", minHeight: "15px", fontSize: "10px" }}>{formik.errors.email}</div> : <div style={{ width: "100%", color: 'red', marginBottom: "5px", minHeight: "15px" }}></div>}
+          <label className="font-[600] font-[15px]">Password</label>
           <Input placeholder="password" type="password" name="password" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.password} required />
-          {formik.touched.password && formik.errors.password ? <div style={{ color: 'red' }}>{formik.errors.password}</div> : null}
+          {formik.touched.password && formik.errors.password ? <div style={{ width: "100%", color: 'red', marginBottom: "5px", minHeight: "15px", fontSize: "10px" }}>{formik.errors.password}</div> : <div style={{ width: "100%", color: 'red', marginBottom: "5px", minHeight: "15px" }}></div>}
           <Button type="submit">LOGIN</Button>
           <Link href="/forgotpassword">Bạn quên mật khẩu?</Link>
           <Link href="/register">Tạo tài khoản mới</Link>

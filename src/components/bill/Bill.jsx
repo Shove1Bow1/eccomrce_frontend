@@ -1,10 +1,31 @@
 import { Button, Checkbox, Col, DatePicker, Form, Input, Row, Select, Typography } from 'antd';
-import React from 'react';
-
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 const { Title } = Typography;
 const { Option } = Select;
 
 const Bill = () => {
+    const [dataUser, setDataUser] = useState();
+    useEffect(() => {
+        async function RetrieveInfo() {
+            if (localStorage.getItem('userId')) {
+                const res = await axios('http://localhost:1402/users/retrieve_info', {
+                    method: 'get',
+                    headers: {
+                        iduser: localStorage.getItem("userId"),
+                        token: process.env.REACT_APP_TOKEN_CONFIRM
+                    }
+                })
+                setDataUser(await res.data.result)
+            }
+            else
+                return;
+        }
+        RetrieveInfo();
+    }, [])
+    useEffect(() => {
+
+    }, [dataUser])
     return (
         <>
             <div style={{ paddingBottom: '30px' }}>
@@ -22,41 +43,41 @@ const Bill = () => {
                     <Input.Group>
                         <Row gutter={24}>
                             <Col span={12}>
-                                <label style={{ fontWeight: 'bold' }}>First name</label>
+                                <label style={{ fontWeight: 'bold' }}>Họ và tên lót</label>
                                 <Form.Item name='first-name'>
-                                    <Input placeholder={'First name'} />
+                                    <Input placeholder={'Họ và tên lót'} />
                                 </Form.Item>
                             </Col>
                             <Col span={12}>
-                                <label style={{ fontWeight: 'bold' }}>Last name</label>
+                                <label style={{ fontWeight: 'bold' }}>Tên</label>
                                 <Form.Item name='last-name'>
-                                    <Input placeholder={'Last name'} />
+                                    <Input placeholder={'Tên'} />
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row gutter={24}>
                             <Col span={12}>
-                                <label style={{ fontWeight: 'bold' }}>Email address</label>
+                                <label style={{ fontWeight: 'bold' }}>Email</label>
                                 <Form.Item name='email' rules={[{ type: 'email' }]}>
-                                    <Input placeholder={'Email address'} />
+                                    <Input placeholder={'Địa chỉ email'} />
                                 </Form.Item>
                             </Col>
                             <Col span={12}>
-                                <label style={{ fontWeight: 'bold' }}>Phone number</label>
+                                <label style={{ fontWeight: 'bold' }}>Số điện thoại</label>
                                 <Form.Item name='phone' rules={[{ type: 'number' }]}>
-                                    <Input placeholder={'Phone number'} />
+                                    <Input placeholder={'Số điện thoại'} />
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row gutter={24}>
                             <Col span={12}>
-                                <label style={{ fontWeight: 'bold' }}>Address</label>
+                                <label style={{ fontWeight: 'bold' }}>Địa chỉ</label>
                                 <Form.Item name='address'>
                                     <Input placeholder={'Address'} />
                                 </Form.Item>
                             </Col>
                             <Col span={12}>
-                                <label style={{ fontWeight: 'bold' }}>Town/City</label>
+                                <label style={{ fontWeight: 'bold' }}>Thành Phố/ Huyện</label>
                                 <Form.Item name='city'>
                                     <Input placeholder={'Town/City'} />
                                 </Form.Item>
@@ -64,7 +85,7 @@ const Bill = () => {
                         </Row>
                         <Row gutter={24}>
                             <Col span={12}>
-                                <label style={{ fontWeight: 'bold' }}>State/Country</label>
+                                <label style={{ fontWeight: 'bold' }}>Phường/Xã/Thị Trấn</label>
                                 <Form.Item name='country'>
                                     <Select
                                         placeholder={'State/Country'}>
@@ -75,7 +96,7 @@ const Bill = () => {
                                 </Form.Item>
                             </Col>
                             <Col span={12}>
-                                <label style={{ fontWeight: 'bold' }}>Zip/Postal code</label>
+                                <label style={{ fontWeight: 'bold' }}>Thôn/TDP/Ấp</label>
                                 <Form.Item name='zip'>
                                     <Input placeholder={'Zip/Postal code'} />
                                 </Form.Item>
