@@ -1,13 +1,26 @@
-import { Badge } from "antd";
-import { default as React, useState } from "react";
-import { Link } from "react-router-dom";
-import { DirectPage } from "../../container/Authentication";
+import { Badge, Select } from "antd";
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { DirectPage, ShowUsername } from "../../container/Authentication";
+import { useShoppingCart } from "../../context/ShoppingCartContext";
 import iconGlass from "./assets/icon/ic-actions-search.svg";
 import iconUser from "./assets/icon/ic-actions-user.svg";
 import iconBasket from "./assets/icon/ic-ecommerce-basket.svg";
 import { filter } from "./data/data";
 function Header(props) {
-  const [count, setCount] = useState(0);
+  const { data } = props
+
+  const dataSearch = data.map((value) => { return { value: value._id, label: value.productName } })
+
+  const navigate = useNavigate()
+
+  const handleSelect = (value) => {
+    navigate('/view-detail', { state: { id: value } })
+  }
+
+  const { getCountItemCart } = useShoppingCart()
+
+  // const [count, setCount] = useState(3);
   function SetPath(value) {
     props.changePath(value);
     return value;
@@ -27,8 +40,16 @@ function Header(props) {
             <div className="text-[#151515] text-[36px] pr-[auto]">LOGO</div>
           </Link>
           <div className="rounded-[12px] flex w-fit p-[15px] mx-auto flex-row  border-[1px]  border-[#D1D1D1] bg-[#F9F9F9]">
-            <input
-              className="bg-[#F9F9F9] w-[300px] focus:ring-0 focus:border-white"
+            <Select
+              showSearch
+              onSelect={handleSelect}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+
+                }
+              }}
+              options={dataSearch}
+              className="bg-black border-none w-[300px] focus:ring-0 focus:border-white"
               placeholder="Search Products, categories ..."
             />
             <img
@@ -45,14 +66,18 @@ function Header(props) {
             />
           </DirectPage>
 
-          {/* <div className="max-w-[150px] h-[24px] my-auto">
+          <div className="max-w-[150px] h-[24px] my-auto">
             <DirectPage>
-              
-              {/* <ShowUsername /> */}
-          {/* </DirectPage> */}
-          {/* </div> */}
-          <Link to={"/checkout"} style={{ maxHeight: "full" }}>
-            <Badge count={count} size="small">
+              <img
+                className="w-[24px] h-[24px] my-auto"
+                alt="user"
+                src={iconUser}
+              />
+              <ShowUsername />
+            </DirectPage>
+          </div>
+          <Link to={"/checkout"}>
+            <Badge count={getCountItemCart()} size="small">
               <img
                 className="w-[24px] h-[24px] my-[15px]"
                 alt="basket"

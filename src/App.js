@@ -1,4 +1,5 @@
-import { useState } from "react";
+import axios from "axios";
+import { useLayoutEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import Header from "./components/header/Header";
@@ -12,10 +13,28 @@ import Login from "./container/Login";
 import Profile from "./container/Profile";
 import Register from "./container/Register";
 import View from "./container/View";
+import ViewDetail from "./container/view-detail";
 import { ShoppingCartProvider } from "./context/ShoppingCartContext";
+
+// Make sure to call `loadStripe` outside of a component’s render to avoid
+// recreating the `Stripe` object on every render.
+
 function App() {
+  const location = useLocation()
+  const [dataSearch, setDataSearch] = useState([{ label: 'cc', value: 'dds' }]);
   const [getPathName, setPathName] = useState("");
-  const location = useLocation();
+  useLayoutEffect(() => {
+    axios
+      .get("http://localhost:1402/products")
+      .then((e) => {
+        setDataSearch(e.data.data)
+      })
+      .then(function (error) {
+        if (error)
+          console.log(error);
+      });
+  }, [])
+
   return (
     <ShoppingCartProvider>
       <div className="bg-[#E5E5E5] w-full h-full">
@@ -25,8 +44,11 @@ function App() {
               null : <Header changePath={setPathName} pathName={getPathName} />
           }
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home data={dataSearch} />} />
             <Route path="/checkout" element={<Checkout />} />
+            <Route path="/view" element={<View />} />
+            <Route path="/view-detail" element={<ViewDetail />} />
+            <Route path="/confirm-payemnt" element={<ViewDetail />} />
             <Route path="/products" element={<View />} >
             </Route>
             <Route path={"/products/*"} element={<View />} />
@@ -40,9 +62,11 @@ function App() {
             <Route path="/verify" element={<VerifyAccount />} />
             <Route path="/blog/detail-blog/*" element={<DetailBlog />} />
             <Route path="/blog" element={<Blog />} />
-          </Routes >
-        </div >
-      </div >
+            {/* </Routes > */}
+          </Routes>
+        </div>
+      </div>
+
       <Routes>
         <Route path="/register" element={
           <Unauthentication>
@@ -70,7 +94,8 @@ function App() {
           </Unauthentication>
         } />
       </Routes>
-    </ShoppingCartProvider >
+    </ShoppingCartProvider>
+
   );
 }
 
