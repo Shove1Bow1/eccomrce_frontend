@@ -1,6 +1,6 @@
 import { Col, Form, Input, Row, Typography } from 'antd';
 import axios from 'axios';
-import { default as React, default as React, useEffect, useState } from 'react';
+import { default as React, useEffect, useState } from 'react';
 import Select from "react-select";
 import { useShoppingCart } from '../../context/ShoppingCartContext';
 import { TYPE_NOTIFICATTION } from '../../enum/notification';

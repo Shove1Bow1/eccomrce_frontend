@@ -180,14 +180,6 @@ const Register = () => {
               // HandleToastRegister(result.message, values.userName);
             }, 3000);
           }
-<<<<<<< HEAD
-        })
-        const result = res.data;
-        if (!result.message) {
-          HandleToastRegister(result.message, emailCheck, passwordCheck);
-          return;
-=======
->>>>>>> origin/dev
         }
         else {
           ErrorUpdate("địa chỉ chỉ nhà và đường bao gồm số và ký tự và khoảng trắng")

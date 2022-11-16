@@ -115,17 +115,6 @@ function useLocationForm(shouldFetchInitialLocation, cityIdclone, districtIdClon
     }, [selectedDistrict]);
 
     function onCitySelect(option) {
-<<<<<<< HEAD
-        console.log(state)
-        setState({
-            ...state,
-            districtOptions: [],
-            wardOptions: [],
-            selectedCity: option,
-            selectedDistrict: null,
-            selectedWard: null,
-        });
-=======
         if (option !== selectedCity) {
             setState({
                 ...state,
@@ -136,7 +125,6 @@ function useLocationForm(shouldFetchInitialLocation, cityIdclone, districtIdClon
                 selectedWard: null
             });
         }
->>>>>>> origin/dev
     }
 
     function onDistrictSelect(option) {

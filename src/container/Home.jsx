@@ -6,17 +6,6 @@ import TemplateProducts from "../components/products/TemplateProducts";
 import NewRunner from "../components/runner/NewRunner";
 
 function Home(props) {
-<<<<<<< HEAD
-  const { data } = props
-  const filter = [
-    "Đồ gia dụng",
-    "May mặc",
-    "Điện tử",
-    "Công nghệ",
-    "Máy tính",
-    "Lót chuột",
-  ];
-=======
   const filter = [{
     name: "Đồ gia dụng",
     linkPath: "/filter/do gia dung",
@@ -41,7 +30,6 @@ function Home(props) {
     name: "Lót chuột",
     linkPath: "/filer/lot chuot"
   }];
->>>>>>> origin/dev
   const BannerInfo = [{
     id: 1,
     title: "Tai Nghe Airpod Pro 2",
@@ -51,8 +39,8 @@ function Home(props) {
     title: "Sạc Samsung",
     description: "Sạc Samsung"
   }]
-  useEffect(()=>{},[
-    
+  useEffect(() => { }, [
+
   ])
   return (
     <div>
@@ -66,7 +54,7 @@ function Home(props) {
           })
         }
       </div>
-      <TemplateProducts data={data} />
+      <TemplateProducts data={filter} />
       <NewRunner />
       <Footer />
     </div>

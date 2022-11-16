@@ -20,13 +20,15 @@ import { ShoppingCartProvider } from "./context/ShoppingCartContext";
 // recreating the `Stripe` object on every render.
 
 function App() {
+
   const location = useLocation()
-  const [dataSearch, setDataSearch] = useState([{ label: 'cc', value: 'dds' }]);
+  const [dataSearch, setDataSearch] = useState([{ label: 'test', value: 'test' }]);
   const [getPathName, setPathName] = useState("");
   useLayoutEffect(() => {
     axios
-      .get("http://localhost:1402/products")
+      .get("http://localhost:1402/products/all")
       .then((e) => {
+        console.log(e.data.data);
         setDataSearch(e.data.data)
       })
       .then(function (error) {
