@@ -37,16 +37,23 @@ function App() {
   //     });
   // }, [])
   useEffect(() => {
-    axios
-      .get("http://localhost:1402/products/all")
-      .then((e) => {
-        console.log(e.data.data);
-        setDataSearch(e.data.data)
-      })
-      .then(function (error) {
-        if (error)
-          console.log(error);
-      });
+    // axios
+    //   .get("http://localhost:1402/products/all")
+    //   .then((e) => {
+    //     console.log(e.data.data);
+    //     setDataSearch(e.data.data)
+    //   })
+    //   .then(function (error) {
+    //     if (error)
+    //       console.log(error);
+    //   });
+    const res = axios("http://localhost:1402/products/all", {
+      method: "get",
+      headers: {
+        token: process.env.REACT_APP_TOKEN_CONFIRM
+      }
+    })
+    console.log(res);
   }, [])
 
   return (
@@ -58,15 +65,17 @@ function App() {
               null : <Header changePath={setPathName} pathName={getPathName} />
           }
           <Routes>
-            <Route path="/" element={<Home data={dataSearch} />} />
+            <Route path="/home" element={<Home data={dataSearch} />} />
+
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/view" element={<View />} />
             <Route path="/view-detail" element={<ViewDetail />} />
             <Route path="/confirm-payemnt" element={<ViewDetail />} />
             <Route path="/products" element={<View />} >
+              <Route path={"/products/*"} element={<View />} />
+              <Route path={"/filter"} element={<View />} />
             </Route>
-            <Route path={"/products/*"} element={<View />} />
-            <Route path={"/products/filter"} element={<View />} />
+
             <Route path="/profile" element=
               {
                 <Authentication>
