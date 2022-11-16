@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import Header from "./components/header/Header";
@@ -36,7 +36,7 @@ function App() {
   //         console.log(error);
   //     });
   // }, [])
-  useEffect(() => {
+  useLayoutEffect(() => {
     // axios
     //   .get("http://localhost:1402/products/all")
     //   .then((e) => {
@@ -54,6 +54,7 @@ function App() {
       }
     })
     console.log(res);
+    setDataSearch(res.data.data);
   }, [])
 
   return (
@@ -65,7 +66,7 @@ function App() {
               null : <Header changePath={setPathName} pathName={getPathName} />
           }
           <Routes>
-            <Route path="/home" element={<Home data={dataSearch} />} />
+            <Route path="" element={<Home data={dataSearch} />} />
 
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/view" element={<View />} />
@@ -73,7 +74,7 @@ function App() {
             <Route path="/confirm-payemnt" element={<ViewDetail />} />
             <Route path="/products" element={<View />} >
               <Route path={"/products/*"} element={<View />} />
-              <Route path={"/filter"} element={<View />} />
+              <Route path={"/products/filter"} element={<View />} />
             </Route>
 
             <Route path="/profile" element=
