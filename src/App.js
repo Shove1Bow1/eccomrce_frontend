@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import Header from "./components/header/Header";
@@ -24,7 +24,19 @@ function App() {
   const location = useLocation()
   const [dataSearch, setDataSearch] = useState([{ label: 'test', value: 'test' }]);
   const [getPathName, setPathName] = useState("");
-  useLayoutEffect(() => {
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:1402/products/all")
+  //     .then((e) => {
+  //       console.log(e.data.data);
+  //       setDataSearch(e.data.data)
+  //     })
+  //     .then(function (error) {
+  //       if (error)
+  //         console.log(error);
+  //     });
+  // }, [])
+  useEffect(() => {
     axios
       .get("http://localhost:1402/products/all")
       .then((e) => {
