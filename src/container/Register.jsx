@@ -1,4 +1,4 @@
-import { Button } from "antd";
+// import { Button } from "antd";
 import axios from "axios";
 import { useFormik } from "formik";
 import { useState } from "react";
@@ -68,14 +68,14 @@ const Agreement = styled.span`
   width: 100%;
 `;
 
-// const Button = styled.button`
-//   width: 40%;
-//   border: none;
-//   padding: 15px 20px;
-//   background-color: teal;
-//   color: white;
-//   cursor: pointer;
-// `;
+const Button = styled.button`
+  width: 40%;
+  border: none;
+  padding: 15px 20px;
+  background-color: teal;
+  color: white;
+  cursor: pointer;
+`;
 const Link = styled.a`
   margin: 5px 0px;
   font-size: 12px;
@@ -132,7 +132,6 @@ const Register = () => {
     }),
     onSubmit: async values => {
       if (values.password !== values.confirmPassword) {
-        // console.log("run 1");
         var message = false;
         var passwordCheck = false;
         var emailCheck = true;
@@ -160,7 +159,6 @@ const Register = () => {
           })
           const result = await res.data;
           if (!result.isAuth) {
-            console.log("run 2");
             var passwordCheck = true;
             var emailCheck = false;
             HandleToastRegister(result.message, emailCheck, passwordCheck);
@@ -180,14 +178,6 @@ const Register = () => {
               // HandleToastRegister(result.message, values.userName);
             }, 3000);
           }
-<<<<<<< HEAD
-        })
-        const result = res.data;
-        if (!result.message) {
-          HandleToastRegister(result.message, emailCheck, passwordCheck);
-          return;
-=======
->>>>>>> origin/dev
         }
         else {
           ErrorUpdate("địa chỉ chỉ nhà và đường bao gồm số và ký tự và khoảng trắng")
@@ -259,7 +249,7 @@ const Register = () => {
           <Agreement>
             Bằng việc tạo tài khoản bạn đã đồng ý các điều khoản của chúng tôi <b>Điều khoản</b>
           </Agreement>
-          <Button onClick={() => EnterLoading()} loading={loading} type="submit" className="w-[2/5] border-none py-[15px] px-[20px] bg-teal-600 decoration-white cursor-pointer h-auto" >Tạo tài khoản</Button>
+          <Button type="submit" className="w-[2/5] border-none py-[15px] px-[20px] bg-teal-600 decoration-white cursor-pointer h-auto" >Tạo tài khoản</Button>
         </Form>
         <Link href="/login">Đã có tài khoản?</Link>
       </Wrapper>

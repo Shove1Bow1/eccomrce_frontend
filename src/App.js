@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import Header from "./components/header/Header";
@@ -21,18 +21,22 @@ import { ShoppingCartProvider } from "./context/ShoppingCartContext";
 
 function App() {
   const location = useLocation()
-  const [dataSearch, setDataSearch] = useState([{ label: 'cc', value: 'dds' }]);
+  const [dataSearch, setDataSearch] = useState([]);
   const [getPathName, setPathName] = useState("");
-  useLayoutEffect(() => {
-    axios
-      .get("http://localhost:1402/products")
-      .then((e) => {
-        setDataSearch(e.data.data)
+
+
+  useEffect(() => {
+    async function WaitForData() {
+      var res = await axios("http://localhost:1402/products/all", {
+        method: "get",
+        headers: {
+          token: process.env.REACT_APP_TOKEN_CONFIRM
+        }
       })
-      .then(function (error) {
-        if (error)
-          console.log(error);
-      });
+      setDataSearch(await res.data.data);
+      console.log("run");
+    }
+    WaitForData();
   }, [])
 
   return (
@@ -41,7 +45,7 @@ function App() {
         <div className="max-w-[1260px] bg-white mx-auto">
           {
             location.pathname === '/register' || location.pathname === '/login' || location.pathname === '/forgotpassword' || location.pathname === '/Register' || location.pathname === '/Login' || location.pathname === '/Forgotpassword' || location.pathname.split("/")[1] === 'forgotpassword' ?
-              null : <Header changePath={setPathName} pathName={getPathName} />
+              null : <Header changePath={setPathName} pathName={getPathName} data={dataSearch} />
           }
           <Routes>
             <Route path="/" element={<Home data={dataSearch} />} />

@@ -19,7 +19,6 @@ const Categories = (props) => {
         else
             return;
     };
-    console.log(props.filterOption.star)
     return (
         <>
             {/* <Form>

@@ -1,7 +1,7 @@
 import { Badge, Select } from "antd";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { DirectPage, ShowUsername } from "../../container/Authentication";
+import { DirectPage } from "../../container/Authentication";
 import { useShoppingCart } from "../../context/ShoppingCartContext";
 import iconGlass from "./assets/icon/ic-actions-search.svg";
 import iconUser from "./assets/icon/ic-actions-user.svg";
@@ -9,8 +9,9 @@ import iconBasket from "./assets/icon/ic-ecommerce-basket.svg";
 import { filter } from "./data/data";
 function Header(props) {
   const { data } = props
-
-  const dataSearch = data.map((value) => { return { value: value._id, label: value.productName } })
+  var dataSearch;
+  if (data)
+    dataSearch = data.map((value) => { return { value: value._id, label: value.productName } })
 
   const navigate = useNavigate()
 
@@ -45,7 +46,6 @@ function Header(props) {
               onSelect={handleSelect}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
-
                 }
               }}
               options={dataSearch}
@@ -60,26 +60,15 @@ function Header(props) {
           </div>
           <DirectPage>
             <img
-              className="max-w-[150px] h-[24px] my-auto"
+              className="max-w-[150px] h-[24px]  my-auto"
               alt="user"
               src={iconUser}
             />
           </DirectPage>
-
-          <div className="max-w-[150px] h-[24px] my-auto">
-            <DirectPage>
-              <img
-                className="w-[24px] h-[24px] my-auto"
-                alt="user"
-                src={iconUser}
-              />
-              <ShowUsername />
-            </DirectPage>
-          </div>
           <Link to={"/checkout"}>
             <Badge count={getCountItemCart()} size="small">
               <img
-                className="w-[24px] h-[24px] my-[15px]"
+                className="w-[24px] h-[24px] text-center my-[15px] min-h-full"
                 alt="basket"
                 src={iconBasket}
               />

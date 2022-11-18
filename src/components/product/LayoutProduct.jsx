@@ -11,10 +11,11 @@ const LayoutProduct = (props) => {
     const {
         insertCartItem } = useShoppingCart()
 
-    // const quantity = getItemQuantity(id)
+    // const quantity = getItemQuantity(id) 
+
     const { productName, price, image, description } = props;
     const [isModalOpen, setIsModalOpen] = useState(false);
-
+    console.log(props.productName)
     const showModal = () => {
         setIsModalOpen(true);
     };

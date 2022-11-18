@@ -16,11 +16,7 @@ const Checkout = () => {
                 <Col span={10}>
                     <Order data={getAllItemQuantity()} />
                 </Col>
-
             </Row>
-            <div className="w-2/3 h-1/5 mx-auto mb-[10px] mt-[10px] flex justify-center text-[#151515] font-[500]">
-                <p>Copyright © 2022 from NHT</p>
-            </div>
             <Footer />
         </div>
     );

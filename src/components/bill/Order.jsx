@@ -17,9 +17,6 @@ const Order = (props) => {
     const decrease = (id) => {
         decreaseCartQuantity(id)
     };
-
-    
-
     return (
         <>
             <div style={{ border: '1px solid #D1D1D1', borderRadius: '12px', paddingTop: '10px', padding: '10px' }}>
