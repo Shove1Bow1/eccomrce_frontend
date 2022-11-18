@@ -1,6 +1,5 @@
 import { Col, Form, Input, Row, Typography } from 'antd';
-import axios from 'axios';
-import { default as React, useEffect, useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import Select from "react-select";
 import { useShoppingCart } from '../../context/ShoppingCartContext';
 import { TYPE_NOTIFICATTION } from '../../enum/notification';
@@ -12,39 +11,8 @@ import Payment from './Payment';
 const { Title } = Typography;
 
 const Bill = () => {
-    const [clientSercet, setClientSercet] = useState(null)
-    const [dataUser, setDataUser] = useState();
-    useEffect(() => {
-        async function RetrieveInfo() {
-            if (localStorage.getItem('userId')) {
-                const res = await axios('http://localhost:1402/users/retrieve_info', {
-                    method: 'get',
-                    headers: {
-                        iduser: localStorage.getItem("userId"),
-                        token: process.env.REACT_APP_TOKEN_CONFIRM
-                    }
-                })
-                setDataUser(await res.data.result)
-            }
-            else
-                return;
-        }
-        RetrieveInfo();
-    }, [])
-    useEffect(() => {
-
-    }, [dataUser])
-    const Item = [
-        {
-            name: 'fisrtName',
-            placeholder: 'First Name',
-            rules: [{ required: true, message: 'please fill it' }]
-        },
-        {
-            name: 'lastName',
-            placeholder: 'Last Name',
-            rules: [{ required: true, message: 'please fill it' }]
-        },
+    // const [dataUser, setDataUser] = useState();
+    const [Item, setItem] = useState([
         {
             name: 'email',
             placeholder: 'Email Address',
@@ -55,10 +23,52 @@ const Bill = () => {
             placeholder: 'Phone Numbers',
             rules: [{ required: true, message: 'please fill it' }],
         },
+    ]);
+    // useEffect(() => {
+    //     async function RetrieveInfo() {
+    //         if (localStorage.getItem('userId')) {
+    //             const res = await axios('http://localhost:1402/users/retrieve_info', {
+    //                 method: 'get',
+    //                 headers: {
+    //                     iduser: localStorage.getItem("userId"),
+    //                     token: process.env.REACT_APP_TOKEN_CONFIRM
+    //                 }
+    //             })
+    //             setDataUser(await res.data.result)
+    //         }
+    //         else
+    //             return;
+    //     }
+    //     if (localStorage.getItem("userId"))
+    //         RetrieveInfo();
+    // }, [])
+    // useEffect(() => {
+    //     if (dataUser)
+    //         setItem([
+    //             {
+    //                 name: 'email',
+    //                 placeholder: 'Email Address',
+    //                 rules: [{ required: true, message: 'please fill it' }, { type: 'email', message: 'Email error' }],
+    //                 value: dataUser.email,
+    //             },
+    //             {
+    //                 name: 'phoneNumber',
+    //                 placeholder: 'Phone Numbers',
+    //                 rules: [{ required: true, message: 'please fill it' }],
+    //                 value: dataUser.phoneNumber
+    //             },
+    //         ])
+    // }, [dataUser])
+    const [clientSercet, setClientSercet] = useState(null);
+    const [confirmCode, setConfirmCode] = useState(null);
+    const Item2 = [
+        {
+            name: 'Tên người dùng',
+            placeholder: 'Tên người dùng',
+            rules: [{ required: true, message: 'please fill it' }]
+        },
     ]
-
     const { sumPrice, getAllItemQuantity, getCountItemCart } = useShoppingCart();
-
     const { state, onCitySelect, onDistrictSelect, onWardSelect } =
         useLocationForm(true);
 
@@ -70,23 +80,35 @@ const Bill = () => {
         selectedDistrict,
         selectedWard,
     } = state;
-
     const handleSubmit = (value) => {
         if (getCountItemCart() === 0) {
-            successNotification(TYPE_NOTIFICATTION.INFOR, 'CartShopping have not item,Plesae select item')
+            successNotification(TYPE_NOTIFICATTION.INFOR, 'Không có sản phẩm trong giỏ hàng')
             return;
         }
         instance.post('/payments/create', { ...value, products: getAllItemQuantity(), totalPrice: sumPrice() }).then(res => res.data).then(data => { setClientSercet(data.data.clientSecret) }).catch(err => { if (err) successNotification(TYPE_NOTIFICATTION.ERROR, "Error", err) })
     }
 
+    useLayoutEffect(() => {
+        function DirectToPayment() {
+            if (localStorage.getItem("userId") && getCountItemCart() !== 0 && !localStorage.getItem("check")) {
+                console.log("1")
+                localStorage.setItem("check", true)
+                instance.post('/payments/create', { userId: localStorage.getItem("userId"), products: getAllItemQuantity(), totalPrice: sumPrice() }).then(res => res.data).then(data => { setClientSercet(data.data.clientSecret); setConfirmCode() }).catch(err => { if (err) successNotification(TYPE_NOTIFICATTION.ERROR, "Error", err) })
+            }
+        }
+        if (!clientSercet) {
+            DirectToPayment();
+        }
+
+    }, [clientSercet])
     return (
         <>
             {
-                !clientSercet && <div style={{ paddingBottom: '30px' }}>
+                !clientSercet ? <div style={{ paddingBottom: '30px' }}>
                     <Title level={3} style={{ fontWeight: 'bolder' }}>Billing info</Title>
                     <Row gutter={24}>
                         <Col span={16}>
-                            <Form.Item style={{ color: '#A9A9A9' }}>Please enter your billing info</Form.Item>
+                            <Form.Item style={{ color: '#A9A9A9' }}>Điền thông tin người thanh toán</Form.Item>
                         </Col>
                         <Col span={8}>
                             <Form.Item style={{ color: '#A9A9A9', textAlign: 'right' }}>Step 1 of 2</Form.Item>
@@ -94,6 +116,14 @@ const Bill = () => {
                     </Row>
                     <Form onFinish={handleSubmit}>
                         <Input.Group>
+                            <Row gutter={24}>
+                                <Col span={24}>
+                                    <label style={{ fontWeight: 'bold' }}>{Item2[0].placeholder}</label>
+                                    <Form.Item name={Item2[0].name} rules={Item2[0].rules}>
+                                        <Input name={Item2[0].name} placeholder={Item2[0].placeholder} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
                             <Row gutter={24}>
                                 {Item.map((item, index) => {
                                     return (
@@ -154,7 +184,7 @@ const Bill = () => {
                                 </Col>
                                 <Col span={24}>
                                     <label style={{ fontWeight: 'bold' }}>Address</label>
-                                    <Form.Item name='street' rules={[{ required: true, message: 'please fill it' },]}>
+                                    <Form.Item name='street' rules={[{ required: true, message: 'please fill it' }]}>
                                         <Input name={'street'} placeholder={'Address'} />
                                     </Form.Item>
                                 </Col>
@@ -165,8 +195,7 @@ const Bill = () => {
                             cus
                         </ButtonCustom>
                     </Form>
-                </div>
-
+                </div > : null
             }
             {
                 clientSercet && <div>
@@ -179,7 +208,7 @@ const Bill = () => {
                             <Form.Item style={{ color: '#A9A9A9', textAlign: 'right' }}>Step 2 of 2</Form.Item>
                         </Col>
                     </Row>
-                    <Payment clientSercet={clientSercet} />
+                    <Payment clientSercet={clientSercet} confirmCode={confirmCode} />
                 </div>
             }
 

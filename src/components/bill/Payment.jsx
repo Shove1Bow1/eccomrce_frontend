@@ -18,11 +18,11 @@ export default function Payment(props) {
         clientSecret,
         appearance,
     };
-
+    localStorage.removeItem("check")
     return (
         <>
             <Elements options={options} stripe={stripePromise}>
-                <CheckoutForm />
+                <CheckoutForm confirmCode={props.confirmCode} />
             </Elements>
         </>
     );

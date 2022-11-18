@@ -3,14 +3,13 @@ import {
 } from "@stripe/react-stripe-js";
 import { Button, Checkbox, Form } from "antd";
 import React from "react";
-import { instance } from "../../ultis/instance";
 
-export default function CheckoutForm() {
+export default function CheckoutForm(props) {
     const stripe = useStripe();
-    const elements = useElements()
+    const elements = useElements();
+    const confirmCode = props.confirmCode;
     const [message, setMessage] = React.useState(null);
     const [isLoading, setIsLoading] = React.useState(false);
-    console.log(elements)
     React.useEffect(() => {
         if (!stripe) {
             return;
@@ -40,7 +39,7 @@ export default function CheckoutForm() {
                     break;
             }
         });
-    }, [stripe]);
+    }, []);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -52,14 +51,13 @@ export default function CheckoutForm() {
         }
 
         setIsLoading(true);
-        instance.put('/payments/confirm', { GEDFDGlD: 'MKDADNJK' })
+        // instance.put('/payments/confirm', { GEDFDGlD: 'MKDADNJK' })
 
         const { error } = await stripe.confirmPayment({
             elements,
             confirmParams: {
                 // Make sure to change this to your payment completion page
                 return_url: "http://localhost:3000",
-
             },
         })
         // This point will only be reached if there is an immediate error when

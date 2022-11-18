@@ -34,8 +34,13 @@ function Viewdetail(props) {
       return
     }
     axios
-      .get(`http://localhost:1402/products/${location.state.id}`)
+      .get(`http://localhost:1402/products/by_id/${location.state.id}`, {
+        headers: {
+          token: process.env.REACT_APP_TOKEN_CONFIRM
+        }
+      })
       .then((e) => {
+        console.log(e.data.data);
         setData(e.data.data)
       })
       .then(function (error) {

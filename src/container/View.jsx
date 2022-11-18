@@ -9,6 +9,7 @@ const View = () => {
     const navigate = useNavigate();
     const [getData, setData] = useState([]);
     var location = useLocation();
+    var [dump, setDump] = useState();
     const valuePath = location.pathname.toString().split('/', 3);
     var finalPath = null;
     if (valuePath[2]) {
@@ -40,10 +41,8 @@ const View = () => {
         }
     }
     async function DirectToFilter() {
-        if (finalPath !== "filter")
+        if (finalPath !== "filter") {
             navigate("/products/filter");
-        if (finalPath === "filter" || finalPath === "current") {
-            console.log(finalPath);
             const changeStar = JSON.stringify(getFilterOption.star)
             const response = await axios(`http://localhost:1402/products/by_filter`, {
                 method: "get",
@@ -56,24 +55,26 @@ const View = () => {
             })
             setData(await response.data.data)
         }
+
+        if (finalPath === "filter" || finalPath === "current") {
+            const changeStar = JSON.stringify(getFilterOption.star)
+            const response = await axios(`http://localhost:1402/products/by_filter`, {
+                method: "get",
+                headers: {
+                    token: process.env.REACT_APP_TOKEN_CONFIRM,
+                    max_price: getFilterOption.maxPrice,
+                    min_price: getFilterOption.minPrice,
+                    star: changeStar,
+                }
+            })
+            setData(await response.data.data)
+            console.log(getData);
+        }
+
     }
-    console.log(finalPath)
+
     useEffect(() => {
         async function RetrieveData() {
-            // console.log('/filter');
-            // if (finalPath === "filter" || finalPath === "current") {
-            //     console.log(finalPath);
-            //     const response = await axios(`http://localhost:1402/products/by_filter`, {
-            //         method: "get",
-            //         headers: {
-            //             token: process.env.REACT_APP_TOKEN_CONFIRM,
-            //             max_price: getFilterOption.maxPrice,
-            //             min_price: getFilterOption.minPrice,
-            //             star: getFilterOption.star,
-            //         }
-            //     })
-            //     setData(await response.data.data)
-            // }
             if (finalPath !== "filter") {
                 const response = await axios(`http://localhost:1402/products/by_category`,
                     {
@@ -87,7 +88,6 @@ const View = () => {
                 setData(await response.data.data);
             }
             if (!finalPath) {
-                console.log("products")
                 const response = await axios(`http://localhost:1402/products/all`, {
                     method: "get",
                     headers: {
@@ -95,11 +95,10 @@ const View = () => {
                     }
                 })
                 setData(await response.data.data)
-                console.log(response.data.data);
             }
         }
         RetrieveData();
-    }, [finalPath])
+    }, [finalPath]);
     return (
         <div className="w-full min-h-[1000px] px-[45px] justify-around py-[65px] mb-[1rem]">
             <Row gutter={24} style={{ minHeight: "1000px" }}>

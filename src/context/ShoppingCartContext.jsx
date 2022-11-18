@@ -12,7 +12,6 @@ export function ShoppingCartProvider({ children }) {
     return cartItems.find(item => item.id === id)?.quantity || 0
   }
   function getAllItemQuantity() {
-    console.log(cartItems)
     return cartItems
   }
   function getCountItemCart() {

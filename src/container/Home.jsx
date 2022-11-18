@@ -54,7 +54,7 @@ function Home(props) {
           })
         }
       </div>
-      <TemplateProducts data={filter} />
+      <TemplateProducts data={props.data} />
       <NewRunner />
       <Footer />
     </div>

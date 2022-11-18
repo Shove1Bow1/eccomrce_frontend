@@ -3,7 +3,6 @@ import ReactPaginate from "react-paginate";
 import LayoutProduct from '../product/LayoutProduct';
 import "./Pagination.css";
 function Items({ currentItems }) {
-    console.log("current" + currentItems)
     return (
         <>
             <ul style={{ display: "flex", flexWrap: "wrap" }}>
@@ -11,7 +10,7 @@ function Items({ currentItems }) {
                     currentItems ? currentItems.map((data, index) => {
                         return (
                             <li key={index} style={{ margin: "5px 5px" }}>
-                                <LayoutProduct imgUrl={data.image} title={data.productName} price={data.price} stock={data.quanity} />
+                                <LayoutProduct image={data.image} productName={data.productName} price={data.price} stock={data.quanity} />
                             </li>
                         )
                     }) : <h1>Không có kết quả</h1>
@@ -21,7 +20,7 @@ function Items({ currentItems }) {
     )
 }
 export default function PaginationCustom({ itemsPerPage, products }) {
-    console.log(products); const [itemOffset, setItemOffset] = useState(0);
+    const [itemOffset, setItemOffset] = useState(0);
     if (products) {
         const endOffset = itemOffset + itemsPerPage;
         const currentItems = products.slice(itemOffset, endOffset);

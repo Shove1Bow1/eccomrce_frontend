@@ -122,7 +122,7 @@ const UserProfile = (props) => {
             setCityId(cityId);
             setDistricId(districtId);
             setWardId(wardId);
-            formik.values.userName = getPakage.username;
+            formik.values.userName = localStorage.getItem("username");
             formik.values.phoneNumber = getPakage.phoneNumber[1] + getPakage.phoneNumber[2] + getPakage.phoneNumber[3] + getPakage.phoneNumber[4] + getPakage.phoneNumber[5] + getPakage.phoneNumber[6] + getPakage.phoneNumber[7] + getPakage.phoneNumber[8] + getPakage.phoneNumber[9];
             formik.values.email = getPakage.email;
             var houseStreet = getPakage.address.toString().split(',');
@@ -170,7 +170,10 @@ const UserProfile = (props) => {
                         userName: values.userName,
                         phoneNumber: "0" + values.phoneNumber,
                         address: values.address + ", " + selectedWard.label + ", " + selectedDistrict.label + ", " + selectedCity.label,
-                        addressId: selectedWard.value + "/" + selectedDistrict.value + "/" + selectedCity.value
+                        addressId: selectedWard.value + "/" + selectedDistrict.value + "/" + selectedCity.value,
+                        cityId: selectedCity,
+                        districtId: selectedDistrict,
+                        wardId: selectedWard,
                     }
                 })
                 const result = await res.data;

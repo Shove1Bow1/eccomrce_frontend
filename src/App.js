@@ -1,6 +1,6 @@
 import axios from "axios";
-import { useLayoutEffect, useState } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import "./App.css";
 import Header from "./components/header/Header";
 import VerifyAccount, { Authentication, Unauthentication } from "./container/Authentication";
@@ -24,37 +24,34 @@ function App() {
   const location = useLocation()
   const [dataSearch, setDataSearch] = useState([{ label: 'test', value: 'test' }]);
   const [getPathName, setPathName] = useState("");
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:1402/products/all")
-  //     .then((e) => {
-  //       console.log(e.data.data);
-  //       setDataSearch(e.data.data)
-  //     })
-  //     .then(function (error) {
-  //       if (error)
-  //         console.log(error);
-  //     });
-  // }, [])
-  useLayoutEffect(() => {
-    // axios
-    //   .get("http://localhost:1402/products/all")
-    //   .then((e) => {
-    //     console.log(e.data.data);
-    //     setDataSearch(e.data.data)
-    //   })
-    //   .then(function (error) {
-    //     if (error)
-    //       console.log(error);
-    //   });
-    const res = axios("http://localhost:1402/products/all", {
-      method: "get",
+  var navigate = useNavigate();
+  if (location.search) {
+    axios("http://localhost:1402/payments/confirm", {
+      method: "post",
       headers: {
         token: process.env.REACT_APP_TOKEN_CONFIRM
+      },
+      data: {
+        confirmCode: location.search.toString().replace('&', ' ').split(" ")[1].replace('&', ' ').split(" ")[0].replace('payment_intent_client_secret=', '')
       }
     })
-    console.log(res);
-    setDataSearch(res.data.data);
+    navigate("/")
+  }
+
+  useEffect(() => {
+    // if (location.pathname !== "/")
+    //   secretCode = ;
+    // console.log(secretCode);
+    async function WaitForData() {
+      var res = await axios("http://localhost:1402/products/all", {
+        method: "get",
+        headers: {
+          token: process.env.REACT_APP_TOKEN_CONFIRM
+        }
+      })
+      setDataSearch(await res.data.data);
+    }
+    WaitForData();
   }, [])
 
   return (
@@ -63,11 +60,11 @@ function App() {
         <div className="max-w-[1260px] bg-white mx-auto">
           {
             location.pathname === '/register' || location.pathname === '/login' || location.pathname === '/forgotpassword' || location.pathname === '/Register' || location.pathname === '/Login' || location.pathname === '/Forgotpassword' || location.pathname.split("/")[1] === 'forgotpassword' ?
-              null : <Header changePath={setPathName} pathName={getPathName} />
+              null : <Header changePath={setPathName} pathName={getPathName} data={dataSearch} />
           }
           <Routes>
-            <Route path="" element={<Home data={dataSearch} />} />
-
+            <Route path="/" element={<Home data={dataSearch} />} />
+            <Route path="/?value" element={<Home />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/view" element={<View />} />
             <Route path="/view-detail" element={<ViewDetail />} />

@@ -33,7 +33,7 @@ export async function LogOut() {
 }
 export function ShowUsername() {
     if (localStorage.getItem("username")) {
-        var username = localStorage.getItem("username")
+        var username = localStorage.getItem("username").toString().split(' ')
         return (
             <p className="w-auto h-[24px] my-auto mr-[42px]">
                 {username[username.length - 1]}
@@ -87,7 +87,6 @@ export default function VerifyAccount() {
     }, [])
 
     useEffect(() => {
-        console.log(changePage)
         if (changePage) {
             setTimeout(() => {
                 window.location.replace("http://localhost:3000")
