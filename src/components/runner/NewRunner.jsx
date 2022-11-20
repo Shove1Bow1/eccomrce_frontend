@@ -1,5 +1,6 @@
 import React, { useLayoutEffect, useState } from "react";
 import Marquee from "react-fast-marquee";
+import { Link } from "react-router-dom";
 import chevron_right from "../../assets/icon/chevron-right-solid.svg";
 import { DataNewRunner } from "./assets/data/DataNewRunner.js";
 function NewRunner(props) {
@@ -12,8 +13,8 @@ function NewRunner(props) {
     <div className="w-[1260px] h-[425.5px] top-[170px] items-center gap-[32px] bg-white">
       <div className="w-[1170] h-[37.5px] relative mx-[45px]">
         <div className="text-[18px] text-[#151515] w-[183px] h-[27px] left-[3px] top-[5px] absolute font-[700] text-[15px]">Một số tin mới</div>
-        <button className="bg-white rounded-[12px] w-[160px] right-[0px] flex flex-row h-[35px] top-[1px] px-[12px] py-[6px] absolute items-center font-[700] text-[15px]">
-          Vào trang tin tức<span><img className="w-[16px] h-[16px]" src={chevron_right}></img></span>
+        <button className="bg-white rounded-[12px] w-[160px] right-[0px] flex flex-row h-[35px] top-[1px] px-[12px] py-[6px] absolute items-center font-[700] text-[15px]"><Link to="/blog">
+          Vào trang tin tức</Link><span><img className="w-[16px] h-[16px]" src={chevron_right}></img></span>
         </button>
       </div>
       <Marquee className="w-[1260px] h-[222px] flex flex-row padding-[0px]">

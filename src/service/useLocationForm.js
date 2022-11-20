@@ -35,23 +35,16 @@ async function fetchLocationOptions(fetchType, locationId) {
 
 async function fetchInitialData(cityIdclone, districtIdClone, wardIdClone) {
 
-    // console.log(false);
     var cityId = 294;
     var districtId = 484;
     var wardId = 10379;
     if (localStorage.getItem("addressId")) {
         var value = localStorage.getItem("addressId").toString().split("/", 3);
-        // console.log(value[0])
         cityId = Number(value[2]);
         districtId = Number(value[1]);
         wardId = Number(value[0]);
     }
-    // if (cityIdclone && districtIdClone && wardIdClone) {
-    //     console.log(true);
-    //     cityId = Number(cityIdclone);
-    //     districtId = Number(districtIdClone);
-    //     wardIdClone = Number(wardIdClone);
-    // }
+
 
     const [cities, districts, wards] = await Promise.all([
         fetchLocationOptions(FETCH_TYPES.CITIES),

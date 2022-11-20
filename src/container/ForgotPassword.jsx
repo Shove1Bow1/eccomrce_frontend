@@ -158,7 +158,7 @@ const ForgotPassword = (props) => {
                 // secretCode: '',
             },
             validationSchema: yup.object({
-                userEmail: yup.string().max(40, "must be 40 characters or less").required('Required'),
+                userEmail: yup.string().email("Chưa đúng định dạng email").required('Required'),
                 // secretCode: yup.string().max(50, "must be 50 characters or less").required('Required')
             }),
             onSubmit: async values => {
@@ -244,7 +244,7 @@ const ForgotPassword = (props) => {
                 <Form onSubmit={recoverPasswordFormik.handleSubmit}>
                     <label>Mật khẩu mới</label>
                     <Input placeholder="*****" name="newPassword" type="password" onChange={recoverPasswordFormik.handleChange} minLength="8" onBlur={recoverPasswordFormik.handleBlur} value={recoverPasswordFormik.values.newPassword} required />
-                    {recoverPasswordFormik.touched.newPassword && recoverPasswordFormik.errors.newPassword ? <div style={{ width: "100%", color: 'red', marginTop: '5px', marginBottom: "5px" }}>{formik.errors.newPassword}</div> : null}
+                    {recoverPasswordFormik.touched.newPassword && recoverPasswordFormik.errors.newPassword ? <div style={{ width: "100%", color: 'red', marginTop: '5px', marginBottom: "5px" }}>{formik.errors.newPassword}</div> : <div style={{ width: "100%", color: 'red', marginBottom: "5px", minHeight: "15px" }}></div>}
                     <label>Nhập lại mật khẩu mới</label>
                     <Input placeholder="*****" name="confirmPassword" type="password" onChange={recoverPasswordFormik.handleChange} minLength="8" onBlur={recoverPasswordFormik.handleBlur} value={recoverPasswordFormik.values.confirmPassword} required />
                     <Button type="submit">Thay đổi mật khẩu</Button>

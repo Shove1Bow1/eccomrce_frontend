@@ -1,11 +1,10 @@
 import chevron_right from "../../assets/icon/chevron-right-solid.svg";
 import LayoutProduct from "../product/LayoutProduct";
-import { ProductsData } from "../products/data/ProductsData";
 const TemplateProducts = (props) => {
+    const productData = props.data.slice(0, 4);
     function DirectView() {
-        document.location.href = "/view";
+        document.location.href = "/products";
     }
-    const productData = ProductsData;
     return (
         <div className="w-full h-[530px] flex flex-col px-[64px] py-[45px] bg-white">
             <div className="w-full h-[38px] relative mb-[33.5px]">
@@ -19,13 +18,12 @@ const TemplateProducts = (props) => {
                     productData.map(index => {
                         return (
                             <LayoutProduct
-                                key={index.id}
-                                id={index.id}
-                                imgUrl={index.imgUrl}
-                                title={index.title}
+                                key={index._id}
+                                id={index._id}
+                                image={index.image}
+                                productName={index.productName}
                                 price={index.price}
-                                smDes={index.smallDescription}
-                                stock={index.stock} />
+                                description={index.description} />
                         )
                     })
                 }
