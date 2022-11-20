@@ -3,6 +3,8 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import Header from "./components/header/Header";
 import VerifyAccount, { Authentication, Unauthentication } from "./container/Authentication";
+import Blog from "./container/blog/Blog";
+import DetailBlog from "./container/blog/DetailBlog";
 import Checkout from "./container/Checkout";
 import ForgotPassword from "./container/ForgotPassword";
 import Home from "./container/Home";
