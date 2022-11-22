@@ -11,7 +11,7 @@ import Reviewtab from '../components/itemTab/Review-tab';
 import generateThousand from '../ultis/generateThousand';
 
 function Viewdetail(props) {
-
+  // localStorage.removeItem("check");
   const location = useLocation()
 
   const navigate = useNavigate();
@@ -66,6 +66,7 @@ function Viewdetail(props) {
     return (<div>   <Tag className='border-none ml-[4px] mr-[2px]  mt-[4px] px-[8px] rounded' color='success'>{radom}%</Tag>
       <Tag className='border-none ml-[4px] mr-[2px]  z-[100] mt-[4px] px-[8px] rounded' color='success'>Free Shipping</Tag></div>)
   }
+  localStorage.removeItem("check")
   return (
     <>
       {

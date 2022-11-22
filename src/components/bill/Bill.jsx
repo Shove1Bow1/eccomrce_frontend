@@ -1,4 +1,4 @@
-import { Col, Form, Input, Row, Typography } from 'antd';
+import { Col, Form, Input, Row, Spin, Typography } from 'antd';
 import React, { useLayoutEffect, useState } from 'react';
 import Select from "react-select";
 import { useShoppingCart } from '../../context/ShoppingCartContext';
@@ -104,7 +104,7 @@ const Bill = () => {
     return (
         <>
             {
-                !clientSercet ? <div style={{ paddingBottom: '30px' }}>
+                !clientSercet && !localStorage.getItem("userId") ? <div style={{ paddingBottom: '30px' }}>
                     <Title level={3} style={{ fontWeight: 'bolder' }}>Billing info</Title>
                     <Row gutter={24}>
                         <Col span={16}>
@@ -198,7 +198,7 @@ const Bill = () => {
                 </div > : null
             }
             {
-                clientSercet && <div>
+                clientSercet && !localStorage.getItem("userId") ? <div>
                     <Title level={3} style={{ fontWeight: 'bolder' }}>Payment method</Title>
                     <Row gutter={24}>
                         <Col span={16}>
@@ -209,10 +209,23 @@ const Bill = () => {
                         </Col>
                     </Row>
                     <Payment clientSercet={clientSercet} confirmCode={confirmCode} />
-                </div>
+                </div> : null
             }
-
-
+            {
+                clientSercet && localStorage.getItem("userId") ?
+                    <div>
+                        <Title level={3} style={{ fontWeight: 'bolder' }}>Payment method</Title>
+                        <Row gutter={24}>
+                            <Col span={16}>
+                                <Form.Item style={{ color: '#A9A9A9' }}>Please enter your payment method</Form.Item>
+                            </Col>
+                            <Col span={8}>
+                                <Form.Item style={{ color: '#A9A9A9', textAlign: 'right' }}>Step 2 of 2</Form.Item>
+                            </Col>
+                        </Row>
+                        <Payment clientSercet={clientSercet} confirmCode={confirmCode} />
+                    </div> : <Spin tip="Đang tải"><div className='h-[500px] text-center' /></Spin>
+            }
         </>
 
     )

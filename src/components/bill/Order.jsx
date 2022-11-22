@@ -29,7 +29,7 @@ const Order = (props) => {
                                     <div style={{ boxShadow: '1px 2px 3px #8c8c8c' }} className='my-[15px] mx-[5px]'>
                                         <Row gutter={24} >
                                             <Col span={6}>
-                                                <Image src={item.image} width={100} style={{ boxShadow: '1px 1px 1px #bfbfbf', borderRadius: '5px' }} />
+                                                <Image src={item.image} width={100} style={{ boxShadow: '1px 1px 1px #bfbfbf', borderRadius: '5px', minHeight: "100px" }} />
                                             </Col>
                                             <Col span={12}>
                                                 <p className='titPro mb-[5px]'><span className='font-normal '>Tên sản phẩm: </span> {item.productName}</p>

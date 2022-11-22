@@ -12,7 +12,7 @@ const LayoutProduct = (props) => {
         insertCartItem } = useShoppingCart()
 
     // const quantity = getItemQuantity(id) 
-
+    console.log(props);
     const { productName, price, image, description } = props;
     const [isModalOpen, setIsModalOpen] = useState(false);
     console.log(props.productName)
@@ -32,7 +32,7 @@ const LayoutProduct = (props) => {
     };
     return (
         <div className="flex flex-col items-start p-[16px] gap-[16px] w-[268px] h-[332px] border-[#D1D1D1] border-[1px] rounded-[12px] bg-white">
-            <img className="left-[0px] right-[0px] top-[0px] bottom-[0px] bg-[#F9F9F9] rounded-[12px] w-[236px] h-[180px]" title={productName} alt="img" src={image} />
+            <img className="left-[0px] right-[0px] top-[0px] bottom-[0px] bg-[#F9F9F9] rounded-[12px] min-w-[236px] min-h-[180px]" title={productName} alt="img" src={image} />
             <div className="flex flex-col items-start w-[236px] h-[184px] padding-[0px] self-stretch">
                 <p className="w-[251px] h-[49px] font-[500] text-[15px] text-[#151515]">{productName}</p>
                 <div className="w-[237px] h-[36px] relative self-stretch flex">
@@ -52,7 +52,7 @@ const LayoutProduct = (props) => {
                             <div style={{ boxShadow: '1px 2px 3px #bfbfbf', padding: '5px' }}>
                                 <Row gutter={24} >
                                     <Col span={6}>
-                                        <Image src={`${image}`} width={100} style={{ boxShadow: '1px 1px 1px #bfbfbf', borderRadius: '5px' }} />
+                                        <Image src={`${image}`} minWidth={100} style={{ minHeight: "100px", boxShadow: '1px 1px 1px #bfbfbf', borderRadius: '5px' }} />
                                     </Col>
                                     <Col span={12}>
                                         <p className='titPro'>Tên sản phẩm:</p>{productName}

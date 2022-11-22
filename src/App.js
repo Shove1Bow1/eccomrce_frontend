@@ -20,7 +20,6 @@ import { ShoppingCartProvider } from "./context/ShoppingCartContext";
 // recreating the `Stripe` object on every render.
 
 function App() {
-
   const location = useLocation()
   const [dataSearch, setDataSearch] = useState([{ label: 'test', value: 'test' }]);
   const [getPathName, setPathName] = useState("");

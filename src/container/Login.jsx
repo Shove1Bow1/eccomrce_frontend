@@ -98,7 +98,8 @@ const Login = () => {
         localStorage.setItem("username", result.userName);
         localStorage.setItem("addressId", result.addressId);
         // document.cookie = "userId=" + result.idUser + ";expires=" + d + ";path=/";
-        // document.cookie = " userName=" + result.userName + ";expires=" + d + ";path=/";
+        // document.cookie = " userName=" + result.userName + ";expires=" + d + ";path=/"; 
+        formik.resetForm();
         setTimeout(() => { window.location.replace("http://localhost:3000"); }, 1000)
 
       }
@@ -116,7 +117,7 @@ const Login = () => {
           <label className="font-[600] font-[15px]">Password</label>
           <Input placeholder="password" type="password" name="password" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.password} required />
           {formik.touched.password && formik.errors.password ? <div style={{ width: "100%", color: 'red', marginBottom: "5px", minHeight: "15px", fontSize: "10px" }}>{formik.errors.password}</div> : <div style={{ width: "100%", color: 'red', marginBottom: "5px", minHeight: "15px" }}></div>}
-          <Button type="submit">LOGIN</Button>
+          <Button name="login-button" type="submit">LOGIN</Button>
           <Link href="/forgotpassword">Bạn quên mật khẩu?</Link>
           <Link href="/register">Tạo tài khoản mới</Link>
         </Form>

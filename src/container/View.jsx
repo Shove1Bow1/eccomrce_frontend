@@ -6,6 +6,7 @@ import Categories from '../components/category/Categories';
 import Footer from '../components/Footer';
 import PaginationCustom from '../components/pagination/Pagination';
 const View = () => {
+
     const navigate = useNavigate();
     const [getData, setData] = useState([]);
     var location = useLocation();
@@ -68,7 +69,6 @@ const View = () => {
                 }
             })
             setData(await response.data.data)
-            console.log(getData);
         }
 
     }
@@ -99,6 +99,7 @@ const View = () => {
         }
         RetrieveData();
     }, [finalPath]);
+    localStorage.removeItem("check")
     return (
         <div className="w-full min-h-[1000px] px-[45px] justify-around py-[65px] mb-[1rem]">
             <Row gutter={24} style={{ minHeight: "1000px" }}>

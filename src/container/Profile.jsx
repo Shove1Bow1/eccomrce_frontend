@@ -34,6 +34,7 @@ export default function Profile(props) {
         }
         return <UserProfile />
     }
+    localStorage.removeItem("check")
     return (
         <>
             <Container>

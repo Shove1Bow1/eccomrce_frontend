@@ -130,6 +130,9 @@ const UserProfile = (props) => {
         }
 
     }, [getPakage])
+    function DisableSubmit() {
+        return false;
+    }
     var { state, onCitySelect, onDistrictSelect, onWardSelect } = useLocationForm(true, getCityId, getDistrictId, getWardId);
     const {
         cityOptions,
@@ -169,23 +172,24 @@ const UserProfile = (props) => {
                     url: "http://localhost:1402/users/update_info", data: {
                         userName: values.userName,
                         phoneNumber: "0" + values.phoneNumber,
-                        address: values.address + ", " + selectedWard.label + ", " + selectedDistrict.label + ", " + selectedCity.label,
+                        address: {
+                            street: values.address,
+                            cityId: selectedCity,
+                            districtId: selectedDistrict,
+                            wardId: selectedWard
+                        },
                         addressId: selectedWard.value + "/" + selectedDistrict.value + "/" + selectedCity.value,
-                        cityId: selectedCity,
-                        districtId: selectedDistrict,
-                        wardId: selectedWard,
                     }
                 })
                 const result = await res.data;
                 if (result.isUpdate) {
-                    SuccessUpdate("Cập nhật thông tin thành công");
-                    SuccessUpdate("tải lại trang sau 3 giây");
+                    SuccessUpdate("Cập nhật thông tin thành công,tải lại trang sau 1 giây");
                     localStorage.setItem("addressId", selectedWard.value + "/" + selectedDistrict.value + "/" + selectedCity.value);
                     var username = values.userName.split('')
                     localStorage.setItem("username", username[username.length - 1])
                     setTimeout(() => {
                         window.location.replace("http://localhost:3000/profile");
-                    }, 3000);
+                    }, 1000);
                 }
                 else {
                     console.log(result);
@@ -254,7 +258,7 @@ const UserProfile = (props) => {
                         {formik.touched.address && formik.errors.address ? <div style={{ width: "100%", color: 'red', marginTop: '5px', marginBottom: "5px" }}>{formik.errors.address}</div> : null}
                     </div>
                     <Button2 type="reset" onClick={() => { formik.resetForm() }}>Huỷ</Button2>
-                    <Button1 type="submit">Lưu</Button1>
+                    <Button1 type="submit" onClick={() => DisableSubmit()}>Lưu</Button1>
                 </Form>
             </Wrapper>
             <ToastContainer />
