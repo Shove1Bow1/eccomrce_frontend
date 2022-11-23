@@ -1,10 +1,12 @@
-import { Table, Tag } from "antd"
-export default function DataBills() {
+import { Table } from "antd";
+import { Link } from "react-router-dom";
+export default function DataBills(props) {
     const DataType = [
         {
             title: "Mã giao dịch",
             dataIndex: "mgd",
             key: "mgd",
+            render: (value) => <Link to={`/profile/bills/${value}`}>{value}</Link>
         },
         {
             title: "Ngày giao dịch",
@@ -15,18 +17,9 @@ export default function DataBills() {
             title: "Tổng số tiền",
             dataIndex: "tst",
             key: "tst",
-        },
-        {
-            title: "Hành Động",
-            dataIndex: "hd",
-            key: "hd",
-            render: (value) => {
-                <a href={value} key={index}>
-                    <Tag color="geekblue">Xem chi tiết</Tag>
-                </a>
-            }
         }
     ]
+    const { data } = props;
     return (
         <>
             <Table />
