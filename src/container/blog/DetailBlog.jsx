@@ -10,6 +10,7 @@ import Footer from '../../components/Footer';
 
 const { Title } = Typography;
 const DetailBlog = () => {
+    localStorage.removeItem("check");
     return (
         <>
             <PageHeader

@@ -2,20 +2,20 @@ import { Col, Form, Image, Modal, Row } from 'antd';
 import { useShoppingCart } from "../../context/ShoppingCartContext";
 
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import { TYPE_NOTIFICATTION } from '../../enum/notification';
 import generateThousand from '../../ultis/generateThousand';
 import successNotification from '../modal/Notification';
 import './layoutProduct.css';
 
 const LayoutProduct = (props) => {
+    const navigate = useNavigate();
     const {
         insertCartItem } = useShoppingCart()
 
     // const quantity = getItemQuantity(id) 
-    console.log(props);
-    const { productName, price, image, description } = props;
+    const { productName, price, image, description, id } = props;
     const [isModalOpen, setIsModalOpen] = useState(false);
-    console.log(props.productName)
     const showModal = () => {
         setIsModalOpen(true);
     };
@@ -34,7 +34,7 @@ const LayoutProduct = (props) => {
         <div className="flex flex-col items-start p-[16px] gap-[16px] w-[268px] h-[332px] border-[#D1D1D1] border-[1px] rounded-[12px] bg-white">
             <img className="left-[0px] right-[0px] top-[0px] bottom-[0px] bg-[#F9F9F9] rounded-[12px] min-w-[236px] min-h-[180px]" title={productName} alt="img" src={image} />
             <div className="flex flex-col items-start w-[236px] h-[184px] padding-[0px] self-stretch">
-                <p className="w-[251px] h-[49px] font-[500] text-[15px] text-[#151515]">{productName}</p>
+                <p className="w-[251px] h-[49px] font-[500] text-[15px] text-[#151515]"><a onClick={() => navigate("/view-detail", { state: { id: id } })}>{productName}</a></p>
                 <div className="w-[237px] h-[36px] relative self-stretch flex">
                     <p className="w-[100px] h-[27px] left-[0px] bot-[4px] font-[600] text-[18px] text-[#151515] absolute">{generateThousand(price)} VND</p>
                     <button

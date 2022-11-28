@@ -10,7 +10,7 @@ function Items({ currentItems }) {
                     currentItems ? currentItems.map((data, index) => {
                         return (
                             <li key={index} style={{ margin: "5px 5px" }}>
-                                <LayoutProduct image={data.image} productName={data.productName} price={data.price} stock={data.quanity} />
+                                <LayoutProduct image={data.image} productName={data.productName} price={data.price} stock={data.quanity} id={data._id} />
                             </li>
                         )
                     }) : <h1>Không có kết quả</h1>
@@ -21,7 +21,7 @@ function Items({ currentItems }) {
 }
 export default function PaginationCustom({ itemsPerPage, products }) {
     const [itemOffset, setItemOffset] = useState(0);
-    if (products) {
+    if (products && products.length > 0) {
         const endOffset = itemOffset + itemsPerPage;
         const currentItems = products.slice(itemOffset, endOffset);
         const pageCount = Math.ceil(products.length / itemsPerPage);
@@ -62,9 +62,11 @@ export default function PaginationCustom({ itemsPerPage, products }) {
             </>
         )
     }
-    else
-        return <>
-            <h1>Không có dữ liệu</h1>
-        </>
-
+    else {
+        return (
+            <div className='w-[full] justify-center flex min-h-[900px]'>
+                <h1 className='m-[auto] font-[600] font-[22px]'>Không có dữ liệu</h1>
+            </div>
+        )
+    }
 }

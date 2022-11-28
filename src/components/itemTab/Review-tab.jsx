@@ -1,7 +1,13 @@
+import { Tabs } from 'antd'
 import React from 'react'
 
 export default function Reviewtab() {
     return (
-        <div></div>
+        <Tabs.TabPane>
+            <div>
+
+            </div>
+        </Tabs.TabPane>
+
     )
 }

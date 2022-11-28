@@ -185,8 +185,7 @@ const UserProfile = (props) => {
                 if (result.isUpdate) {
                     SuccessUpdate("Cập nhật thông tin thành công,tải lại trang sau 1 giây");
                     localStorage.setItem("addressId", selectedWard.value + "/" + selectedDistrict.value + "/" + selectedCity.value);
-                    var username = values.userName.split('')
-                    localStorage.setItem("username", username[username.length - 1])
+                    localStorage.setItem("username", values.userName)
                     setTimeout(() => {
                         window.location.replace("http://localhost:3000/profile");
                     }, 1000);

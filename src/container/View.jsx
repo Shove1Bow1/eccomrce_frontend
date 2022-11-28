@@ -8,13 +8,13 @@ import PaginationCustom from '../components/pagination/Pagination';
 const View = () => {
 
     const navigate = useNavigate();
-    const [getData, setData] = useState([]);
+    const [getData, setData] = useState();
     var location = useLocation();
     var [dump, setDump] = useState();
     const valuePath = location.pathname.toString().split('/', 3);
     var finalPath = null;
     if (valuePath[2]) {
-        finalPath = valuePath[2].replace("%20", ' ');
+        finalPath = valuePath[2];
     }
     const [getFilterOption, setFilterOption] = useState({
         maxPrice: 20000000,

@@ -120,6 +120,7 @@ const Login = () => {
           <Button name="login-button" type="submit">LOGIN</Button>
           <Link href="/forgotpassword">Bạn quên mật khẩu?</Link>
           <Link href="/register">Tạo tài khoản mới</Link>
+          <Link href="/">Quay trở lại trang chủ</Link>
         </Form>
       </Wrapper>
       <ToastContainer />

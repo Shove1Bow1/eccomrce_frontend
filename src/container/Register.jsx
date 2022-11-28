@@ -174,7 +174,7 @@ const Register = () => {
             // document.cookie = " userName=" + result.userName + ";expires=" + d + ";path=/";
             formik.resetForm();
             setTimeout(() => {
-              window.location.replace("http://localhost:3000");
+              window.location.replace("/");
               // HandleToastRegister(result.message, values.userName);
             }, 3000);
           }
@@ -252,6 +252,7 @@ const Register = () => {
           <Button type="submit" className="w-[2/5] border-none py-[15px] px-[20px] bg-teal-600 decoration-white cursor-pointer h-auto" >Tạo tài khoản</Button>
         </Form>
         <Link href="/login">Đã có tài khoản?</Link>
+        <Link href="/">Quay trở lại trang mua hàng</Link>
       </Wrapper>
       <ToastContainer />
     </Container >

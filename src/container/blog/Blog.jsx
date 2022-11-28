@@ -8,6 +8,7 @@ import SubBlog from './component_blog/SubBlog';
 const { Title } = Typography;
 
 export default function Blog() {
+    localStorage.removeItem("check");
     return (
         <div className="w-full h-srceen px-[45px] justify-around py-[65px]">
             <Title level={1} style={{ fontWeight: 'bold' }}>News</Title>

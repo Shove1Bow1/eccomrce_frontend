@@ -62,7 +62,7 @@ function App() {
               null : <Header changePath={setPathName} pathName={getPathName} data={dataSearch} />
           }
           <Routes>
-            <Route path="/" element={<Home data={dataSearch} />} />
+            <Route path="" element={<Home data={dataSearch} />} />
             <Route path="/?value" element={<Home />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/view" element={<View />} />
@@ -73,7 +73,7 @@ function App() {
               <Route path={"/products/filter"} element={<View />} />
             </Route>
 
-            <Route path="/profile" element=
+            <Route path="/profile/*" element=
               {
                 <Authentication>
                   <Profile />
@@ -83,37 +83,34 @@ function App() {
             <Route path="/blog/detail-blog/*" element={<DetailBlog />} />
             <Route path="/blog" element={<Blog />} />
             {/* </Routes > */}
+            <Route path="/register" element={
+              <Unauthentication>
+                <Register />
+              </Unauthentication>
+            } />
+            <Route path="/login" element={
+              <Unauthentication>
+                <Login />
+              </Unauthentication>
+            } />
+            <Route path="/forgotpassword" element={
+              <Unauthentication>
+                <ForgotPassword />
+              </Unauthentication>
+            } />
+            <Route path="/forgotpassword/:recovercode/:id" element={
+              <Unauthentication>
+                <ForgotPassword isRecover={true} />
+              </Unauthentication>
+            } />
+            <Route path="/forgotpassword/otp" element={
+              <Unauthentication>
+                <ForgotPassword isRecover={true} />
+              </Unauthentication>
+            } />
           </Routes>
         </div>
       </div>
-
-      <Routes>
-        <Route path="/register" element={
-          <Unauthentication>
-            <Register />
-          </Unauthentication>
-        } />
-        <Route path="/login" element={
-          <Unauthentication>
-            <Login />
-          </Unauthentication>
-        } />
-        <Route path="/forgotpassword" element={
-          <Unauthentication>
-            <ForgotPassword />
-          </Unauthentication>
-        } />
-        <Route path="/forgotpassword/:recovercode/:id" element={
-          <Unauthentication>
-            <ForgotPassword isRecover={true} />
-          </Unauthentication>
-        } />
-        <Route path="/forgotpassword/otp" element={
-          <Unauthentication>
-            <ForgotPassword isRecover={true} />
-          </Unauthentication>
-        } />
-      </Routes>
     </ShoppingCartProvider>
 
   );

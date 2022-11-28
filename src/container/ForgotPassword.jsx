@@ -236,6 +236,7 @@ const ForgotPassword = (props) => {
                     <Button type="submit">Xác Thực</Button>
                     <Link href="/login">Quay trở lại việc đăng nhập</Link>
                     <Link href="/register">Tạo tài khoản mới</Link>
+                    <Link href="/">Quay trở lại trang mua hàng</Link>
                 </Form>
             )
         }

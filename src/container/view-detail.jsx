@@ -40,7 +40,6 @@ function Viewdetail(props) {
         }
       })
       .then((e) => {
-        console.log(e.data.data);
         setData(e.data.data)
       })
       .then(function (error) {
@@ -99,8 +98,7 @@ function Viewdetail(props) {
                   <ButtonCustom title='Add to cart' className={'text-white w-[140px] h-[47px]'} loading={loading} handleOnClick={handleOnclick} />
                 </div>
                 <StyledAntDTabs>
-
-                  <Tabs defaultValue={1} color="success" animated centered items={itemTabs} className='text-[18px] w-full text-center font-bold' />
+                  <Tabs defaultActiveKey='1' centered items={itemTabs} className='text-[18px] w-full text-center font-bold' />
                 </StyledAntDTabs>
               </div>
             </div>
@@ -118,7 +116,7 @@ function Viewdetail(props) {
 }
 
 const StyledAntDTabs = styled.div`
-  overflow:hidden;
+  // overflow:hidden;
   .ant-tabs {
     width: 100% !important;
     .ant-tabs-nav {
