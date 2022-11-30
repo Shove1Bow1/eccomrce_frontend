@@ -87,7 +87,6 @@ export default function VerifyAccount() {
     }, [])
 
     useEffect(() => {
-        console.log(changePage)
         if (changePage) {
             setTimeout(() => {
                 window.location.replace("http://localhost:3000")
