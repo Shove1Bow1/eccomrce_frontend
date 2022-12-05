@@ -1,5 +1,6 @@
-import { Avatar, Col, Row, Typography } from 'antd';
+import { Col, Row, Typography } from 'antd';
 import axios from 'axios';
+import moment from 'moment';
 import React from 'react';
 import Footer from '../../components/Footer';
 import './Blog.css';
@@ -14,8 +15,13 @@ export default class Blog extends React.Component {
     async componentDidMount() {
         let res = await axios.get('https://newsapi.org/v2/everything?q=ecommerce&apiKey=3be790d015664020b37a4f04a98327ef')
         this.setState({
-            listBlogs: res && res.data && res.data.articles ? res.data.articles : []
+            listBlogs: res && res.data && res.data.articles ? res.data.articles : null
         })
+    }
+    moveToDetailBlog = (item) => {
+        console.log('item', item);
+        localStorage.setItem("New", JSON.stringify(item))
+        window.location.assign(`detail-blog/${item.title}`);
     }
     render() {
         let { listBlogs } = this.state;
@@ -27,21 +33,19 @@ export default class Blog extends React.Component {
                         listBlogs.slice(0, 3).map((item, index) => {
                             return (
                                 <Col span={8}>
-                                    <div className='card-top'>
+                                    <div className='card-top' onClick={() => this.moveToDetailBlog(item)}>
                                         <img
-                                            style={{ width: "100%", borderRadius: '10px' }}
+                                            style={{ height: 250, borderRadius: '10px' }}
                                             alt="example"
-                                            src={item.urlToImage}
-                                        />
+                                            src={item.urlToImage} />
                                         <div
                                             className='meta card-top-items'>
-                                            <span className='card-title'>{item.title}</span>
+                                            <span
+                                                className='card-title'>{item.title}</span>
                                             <Row className='po-ava'>
-                                                <Avatar className='ava' src="https://joeschmoe.io/api/v1/random" />
                                                 <span className='text-ava'>{item.author}</span>
-                                                <span className='date-ava'>{item.publishedAt}</span>
+                                                <span className='date-ava'>{moment(item.publishedAt).format('YYYY-MM-DD')}</span>
                                             </Row>
-
                                         </div>
                                     </div>
                                 </Col>

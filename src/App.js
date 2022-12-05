@@ -81,7 +81,7 @@ function App() {
                 </Authentication>
               } />
             <Route path="/verify" element={<VerifyAccount />} />
-            <Route path="/blog/detail-blog/*" element={<DetailBlog />} />
+            <Route path="/detail-blog/*" element={<DetailBlog />} />
             <Route path="/blog" element={<Blog />} />
             {/* </Routes > */}
           </Routes>
