@@ -1,11 +1,10 @@
+import { ShoppingCartOutlined, UserOutlined } from "@ant-design/icons";
 import { Badge, Select } from "antd";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { DirectPage } from "../../container/Authentication";
 import { useShoppingCart } from "../../context/ShoppingCartContext";
 import iconGlass from "./assets/icon/ic-actions-search.svg";
-import iconUser from "./assets/icon/ic-actions-user.svg";
-import iconBasket from "./assets/icon/ic-ecommerce-basket.svg";
 import { filter } from "./data/data";
 function Header(props) {
   const { data } = props
@@ -58,20 +57,24 @@ function Header(props) {
               src={iconGlass}
             />
           </div>
-          <DirectPage>
-            <img
+          <Link>
+            <DirectPage>
+              {/* <img
               className="max-w-[150px] h-[24px]  my-auto"
               alt="user"
               src={iconUser}
-            />
-          </DirectPage>
+            /> */}
+              <UserOutlined style={{ fontSize: '25px', fontWeight: 'bolder', marginRight: '10px' }} />
+            </DirectPage>
+          </Link>
           <Link to={"/checkout"}>
             <Badge count={getCountItemCart()} size="small">
-              <img
-                className="w-[24px] h-[24px] text-center my-[15px] min-h-full"
+              {/* <img
+                // className="w-[24px] h-[24px] text-center my-[15px] min-h-full"
                 alt="basket"
                 src={iconBasket}
-              />
+              /> */}
+              <ShoppingCartOutlined style={{ fontSize: '25px', fontWeight: 'bolder' }} />
             </Badge>
           </Link>
         </div>

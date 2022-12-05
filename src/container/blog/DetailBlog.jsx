@@ -115,4 +115,4 @@ const DetailBlog = () => {
     )
 }
 
-export default DetailBlog
+export default DetailBlog;

@@ -8,7 +8,7 @@ import {
 } from "../assets/data/FooterData";
 const Footer = () => {
   return (
-    <div className="w-full h-full ">
+    <div className="w-full h-full pt-[50px]">
       <div className=" ml-[45px] flex flex-row w-full">
         <div className="w-1/4 h-auto flex-1">
           <h5 className="font-bold text-[18px] mb-[10px] text-[#151515]">
