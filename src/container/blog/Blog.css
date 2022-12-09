@@ -1,5 +1,7 @@
 .card-top {
   position: relative;
+  display: flex;
+  justify-content: center;
 }
 .card-top-items {
   position: absolute;
@@ -14,10 +16,20 @@
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
 }
+.meta-detail {
+  bottom: 0;
+  height: 400;
+  background: linear-gradient(0deg, #000000 0%, rgba(0, 0, 0, 0) 100%);
+  width: 80%;
+  padding: 10px;
+  padding-top: 20%;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
 .po-ava {
   position: absolute;
   bottom: 8px;
-  width: 50%;
+  width: 80%;
 }
 .ava {
   width: 25px;
@@ -27,7 +39,10 @@
   font-size: 10px;
   margin-left: 5px;
   margin-top: 10px;
+  -webkit-line-clamp: 1;
   color: #f9f9f9;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .text-ava-detail-title {
   font-size: 10px;
@@ -46,6 +61,29 @@
   font-weight: bold;
   text-shadow: 1px 1px 1px #000;
   font-size: large;
+  display: block;
+  display: -webkit-box;
+  height: 16px * 1.3 * 3;
+  font-size: 16px;
+  line-height: 1.3;
+  -webkit-line-clamp: 2; /* số dòng hiển thị */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.card-title-detail {
+  color: white;
+  font-weight: bold;
+  text-shadow: 1px 1px 1px #000;
+  font-size: large;
+  display: block;
+  display: -webkit-box;
+  font-size: 16px;
+  line-height: 1.3;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .card-items {
   border: none;
@@ -61,4 +99,10 @@
 }
 .link-title {
   font-weight: bold;
+  line-height: 1.3;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

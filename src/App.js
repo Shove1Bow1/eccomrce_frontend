@@ -56,7 +56,7 @@ function App() {
   return (
     <ShoppingCartProvider>
       <div className="bg-[#E5E5E5] w-full h-full">
-        <div className="max-w-[1260px] bg-white mx-auto">
+        <div className="w-full bg-white mx-auto">
           {
             location.pathname === '/register' || location.pathname === '/login' || location.pathname === '/forgotpassword' || location.pathname === '/Register' || location.pathname === '/Login' || location.pathname === '/Forgotpassword' || location.pathname.split("/")[1] === 'forgotpassword' ?
               null : <Header changePath={setPathName} pathName={getPathName} data={dataSearch} />
@@ -80,7 +80,7 @@ function App() {
                 </Authentication>
               } />
             <Route path="/verify" element={<VerifyAccount />} />
-            <Route path="/blog/detail-blog/*" element={<DetailBlog />} />
+            <Route path="/detail-blog/*" element={<DetailBlog />} />
             <Route path="/blog" element={<Blog />} />
             {/* </Routes > */}
             <Route path="/register" element={

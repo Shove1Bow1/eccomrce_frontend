@@ -49,7 +49,10 @@ export function ShoppingCartProvider({ children }) {
     setCartItems(currItems => {
       return currItems.map(item => {
         if (item.id === id) {
-          return { ...item, quantity: item.quantity - 1 }
+          if (item.quantity > 1) {
+            return { ...item, quantity: item.quantity - 1 }
+          }
+          return item
         } else {
           return item
         }

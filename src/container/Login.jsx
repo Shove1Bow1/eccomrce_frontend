@@ -6,7 +6,7 @@ import * as yup from "yup";
 import background from '../assets/img/delaney-van-unsplash.png';
 import { LoginFailedToast, LoginSucessToast } from "../components/notification/Toastify";
 const Container = styled.div`
-  width: full;
+  min-width: full;
   height: 100vh;
   background: linear-gradient(
       rgba(255, 255, 255, 0.5),

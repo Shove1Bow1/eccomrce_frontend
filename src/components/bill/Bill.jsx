@@ -227,7 +227,6 @@ const Bill = () => {
                     </div> : <Spin tip="Đang tải"><div className='h-[500px] text-center' /></Spin>
             }
         </>
-
     )
 }
 

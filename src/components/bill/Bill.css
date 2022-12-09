@@ -1,0 +1,41 @@
+.div-bg {
+  background: #f9f9f9;
+  box-shadow: 1px 2px 3px #8c8c8c;
+  border-radius: 12px;
+  padding-top: 10px;
+  padding: 10px;
+}
+.card-bg {
+  box-shadow: 1px 1px 2px #8c8c8c;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+.pos-price {
+  position: absolute;
+  bottom: 0;
+  font-weight: bolder;
+  font-size: 18px;
+  color: #6a983c;
+}
+.txt-quantity {
+  border: 3px solid #d1d1d1;
+  border-radius: 5px;
+  width: 80px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #6a983c;
+}
+.btn-quantity {
+  border-radius: 5px;
+  color: #fff;
+  height: 25px;
+  width: 40px;
+  background-color: #6a983c;
+}
+.btn-cancel {
+  position: absolute;
+  right: 10px;
+  bottom: 0px;
+}
