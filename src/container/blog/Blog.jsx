@@ -11,7 +11,6 @@ const { Title } = Typography;
 
 export default class Blog extends React.Component {
     state = { listBlogs: [] }
-
     async componentDidMount() {
         let res = await axios.get('https://newsapi.org/v2/everything?q=ecommerce&apiKey=3be790d015664020b37a4f04a98327ef')
         this.setState({
