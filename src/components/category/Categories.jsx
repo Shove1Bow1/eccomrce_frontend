@@ -1,6 +1,6 @@
 import { StarFilled, StarOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Col, InputNumber, Row, Slider, Typography } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const { Title } = Typography;
 
@@ -19,6 +19,9 @@ const Categories = (props) => {
         else
             return;
     };
+    useEffect(() => {
+
+    }, [props.finalPath])
     return (
         <>
             {/* <Form>
@@ -70,7 +73,8 @@ const Categories = (props) => {
                 <Title level={4} style={{ fontWeight: 'bolder' }}>Đánh giá</Title>
                 <Row gutter={24} style={{ paddingBottom: '10px' }}>
                     <Col span={24}>
-                        <Checkbox style={{ marginBottom: '10px' }} value={5} onChange={(e) => props.changeFilterOption("star", e.target.value, e.target.checked)} defaultChecked={props.filterOption.star.includes(5) ? true : false}>
+                        <Checkbox style={{ marginBottom: '10px' }} onChange={(e) => props.changeFilterOption("star", 5, e.target.checked)} defaultChecked={props.filterOption.star.includes(4)}>
+                            {console.log('5', props.filterOption.star.includes(5))}
                             <StarFilled style={{ color: '#FDBC15' }} />
                             <StarFilled style={{ color: '#FDBC15' }} />
                             <StarFilled style={{ color: '#FDBC15' }} />
@@ -79,7 +83,7 @@ const Categories = (props) => {
                         </Checkbox>
                     </Col>
                     <Col span={24}>
-                        <Checkbox style={{ marginBottom: '10px' }} value={4} onChange={(e) => props.changeFilterOption("star", e.target.value, e.target.checked)} defaultChecked={props.filterOption.star.includes(4) ? true : false}>
+                        <Checkbox style={{ marginBottom: '10px' }} onChange={(e) => props.changeFilterOption("star", 4, e.target.checked)} defaultChecked={props.filterOption.star.includes(4)}>
                             <StarFilled style={{ color: '#FDBC15' }} />
                             <StarFilled style={{ color: '#FDBC15' }} />
                             <StarFilled style={{ color: '#FDBC15' }} />
@@ -88,7 +92,7 @@ const Categories = (props) => {
                         </Checkbox>
                     </Col>
                     <Col span={24}>
-                        <Checkbox style={{ marginBottom: '10px' }} value={3} onChange={(e) => props.changeFilterOption("star", e.target.value, e.target.checked)} defaultChecked={props.filterOption.star.includes(3) ? true : false}>
+                        <Checkbox style={{ marginBottom: '10px' }} onChange={(e) => props.changeFilterOption("star", 3, e.target.checked)} defaultChecked={props.filterOption.star.includes(3)}>
                             <StarFilled style={{ color: '#FDBC15' }} />
                             <StarFilled style={{ color: '#FDBC15' }} />
                             <StarFilled style={{ color: '#FDBC15' }} />
@@ -97,7 +101,7 @@ const Categories = (props) => {
                         </Checkbox>
                     </Col>
                     <Col span={24}>
-                        <Checkbox style={{ marginBottom: '10px' }} value={2} onChange={(e) => props.changeFilterOption("star", e.target.value, e.target.checked)} defaultChecked={props.filterOption.star.includes(2) ? true : false}>
+                        <Checkbox style={{ marginBottom: '10px' }} onChange={(e) => props.changeFilterOption("star", 2, e.target.checked)} defaultChecked={props.filterOption.star.includes(2)}>
                             <StarFilled style={{ color: '#FDBC15' }} />
                             <StarFilled style={{ color: '#FDBC15' }} />
                             <StarOutlined />
@@ -106,7 +110,8 @@ const Categories = (props) => {
                         </Checkbox>
                     </Col>
                     <Col span={24}>
-                        <Checkbox style={{ marginBottom: '10px' }} value={1} onChange={(e) => props.changeFilterOption("star", e.target.value, e.target.checked)} defaultChecked={props.filterOption.star.includes(1) ? true : false}>
+                        <Checkbox style={{ marginBottom: '10px' }} onChange={(e) => props.changeFilterOption("star", 1, e.target.checked)} defaultChecked={props.filterOption.star.includes(1)}>
+                            {console.log('1', props.filterOption.star.includes(1))}
                             <StarFilled style={{ color: '#FDBC15' }} />
                             <StarOutlined />
                             <StarOutlined />
@@ -115,7 +120,8 @@ const Categories = (props) => {
                         </Checkbox>
                     </Col>
                     <Col span={24}>
-                        <Checkbox style={{ marginBottom: '10px' }} value={0} onChange={(e) => props.changeFilterOption("star", e.target.value, e.target.checked)} defaultChecked={props.filterOption.star.includes(0) ? true : false}>
+                        <Checkbox style={{ marginBottom: '10px' }} onChange={(e) => props.changeFilterOption("star", 0, e.target.checked)} defaultChecked={props.filterOption.star.includes(0)}>
+                            {console.log('0', props.filterOption.star.includes(0))}
                             <StarOutlined />
                             <StarOutlined />
                             <StarOutlined />
