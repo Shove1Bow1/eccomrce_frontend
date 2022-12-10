@@ -10,7 +10,6 @@ const View = () => {
     const navigate = useNavigate();
     const [getData, setData] = useState();
     var location = useLocation();
-    var [dump, setDump] = useState();
     const valuePath = location.pathname.toString().split('/', 3);
     var finalPath = null;
     if (valuePath[2]) {
@@ -26,12 +25,14 @@ const View = () => {
         if (name !== 'star')
             setFilterOption({ ...getFilterOption, [name]: value })
         else {
-            if (isCheck)
+            if (isCheck) {
                 setFilterOption({
                     maxPrice: getFilterOption.maxPrice,
                     minPrice: getFilterOption.minPrice,
                     star: [...getFilterOption.star, value]
                 })
+            }
+
             else {
                 setFilterOption({
                     maxPrice: getFilterOption.maxPrice,
@@ -39,7 +40,9 @@ const View = () => {
                     star: getFilterOption.star.filter((exist) => exist !== value)
                 })
             }
+
         }
+
     }
     async function DirectToFilter() {
         if (finalPath !== "filter") {
@@ -76,6 +79,11 @@ const View = () => {
     useEffect(() => {
         async function RetrieveData() {
             if (finalPath !== "filter") {
+                setFilterOption({
+                    maxPrice: 20000000,
+                    minPrice: 1000,
+                    star: []
+                });
                 const response = await axios(`http://localhost:1402/products/by_category`,
                     {
                         method: "get",
@@ -104,7 +112,7 @@ const View = () => {
         <div className="w-full min-h-[1000px] px-[45px] justify-around py-[65px] mb-[1rem]">
             <Row gutter={24} style={{ minHeight: "1000px" }}>
                 <Col span={6}>
-                    <Categories filterOption={getFilterOption} changeFilterOption={changeHandler} filterDirect={() => DirectToFilter()} />
+                    <Categories filterOption={getFilterOption} finalPath={finalPath} changeFilterOption={changeHandler} filterDirect={() => DirectToFilter()} />
                 </Col>
                 <Col span={18}>
                     <PaginationCustom itemsPerPage={9} products={getData} />

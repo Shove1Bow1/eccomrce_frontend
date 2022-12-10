@@ -48,17 +48,22 @@ function App() {
           token: process.env.REACT_APP_TOKEN_CONFIRM
         }
       })
+      console.log(process.env.REACT_APP_TOKEN_CONFIRM);
       setDataSearch(await res.data.data);
     }
     WaitForData();
   }, [])
-
+  function CheckLocation() {
+    if (location.pathname === '/register' || location.pathname === '/login' || location.pathname === '/forgotpassword' || location.pathname === '/Register' || location.pathname === '/Login' || location.pathname === '/Forgotpassword' || location.pathname.split("/")[1] === 'forgotpassword')
+      return true;
+    return false;
+  }
   return (
     <ShoppingCartProvider>
       <div className="bg-[#E5E5E5] w-full h-full">
-        <div className="w-full bg-white mx-auto">
+        <div className={CheckLocation() ? "w-full bg-white mx-auto" : "w-[1260px] bg-white mx-auto"}>
           {
-            location.pathname === '/register' || location.pathname === '/login' || location.pathname === '/forgotpassword' || location.pathname === '/Register' || location.pathname === '/Login' || location.pathname === '/Forgotpassword' || location.pathname.split("/")[1] === 'forgotpassword' ?
+            CheckLocation() ?
               null : <Header changePath={setPathName} pathName={getPathName} data={dataSearch} />
           }
           <Routes>
