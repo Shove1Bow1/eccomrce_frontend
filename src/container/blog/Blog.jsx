@@ -8,7 +8,7 @@ import BlogList from './component_blog/BlogList';
 import SubBlog from './component_blog/SubBlog';
 
 const { Title } = Typography;
-
+localStorage.removeItem("check");
 export default class Blog extends React.Component {
     state = { listBlogs: [] }
 
