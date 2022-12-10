@@ -84,7 +84,6 @@ const View = () => {
                     minPrice: 1000,
                     star: []
                 });
-                console.log(getFilterOption.star);
                 const response = await axios(`http://localhost:1402/products/by_category`,
                     {
                         method: "get",
