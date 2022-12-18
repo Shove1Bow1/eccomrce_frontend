@@ -80,7 +80,7 @@ export default function UpdatePassword() {
     return (
         <div className="w-full flex justify-center">
             <div className="w-full p-[1rem] bg-white">
-                <h3 className="text-[24px] font-[400]">Cập Nhật Mật Khẩu mới</h3>
+                <h3 className="text-[24px] font-[400]">Cập Nhật Mật Khẩu Mới</h3>
                 <form className="flex flex-col" onSubmit={formik.handleSubmit}>
                     <label className="w-full text-[15px] font-[300]">Mật Khẩu cũ</label>
                     <input className="min-w-[2/5] p-[10px] my-[10px] border-solid border-[1px]" name="oldPassword" placeholder="nhập mật khẩu cũ" type="password" onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.oldPassword} />
