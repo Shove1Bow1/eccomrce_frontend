@@ -74,7 +74,6 @@ const Categories = (props) => {
                 <Row gutter={24} style={{ paddingBottom: '10px' }}>
                     <Col span={24}>
                         <Checkbox style={{ marginBottom: '10px' }} onChange={(e) => props.changeFilterOption("star", 5, e.target.checked)} defaultChecked={props.filterOption.star.includes(4)}>
-                            {console.log('5', props.filterOption.star.includes(5))}
                             <StarFilled style={{ color: '#FDBC15' }} />
                             <StarFilled style={{ color: '#FDBC15' }} />
                             <StarFilled style={{ color: '#FDBC15' }} />
@@ -111,7 +110,6 @@ const Categories = (props) => {
                     </Col>
                     <Col span={24}>
                         <Checkbox style={{ marginBottom: '10px' }} onChange={(e) => props.changeFilterOption("star", 1, e.target.checked)} defaultChecked={props.filterOption.star.includes(1)}>
-                            {console.log('1', props.filterOption.star.includes(1))}
                             <StarFilled style={{ color: '#FDBC15' }} />
                             <StarOutlined />
                             <StarOutlined />
@@ -121,7 +119,6 @@ const Categories = (props) => {
                     </Col>
                     <Col span={24}>
                         <Checkbox style={{ marginBottom: '10px' }} onChange={(e) => props.changeFilterOption("star", 0, e.target.checked)} defaultChecked={props.filterOption.star.includes(0)}>
-                            {console.log('0', props.filterOption.star.includes(0))}
                             <StarOutlined />
                             <StarOutlined />
                             <StarOutlined />
