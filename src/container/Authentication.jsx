@@ -10,7 +10,8 @@ function CheckValueUnauthentication({ children }) {
     else {
         window.location.replace("/")
     }
-} function CheckValueAuthentication({ children }) {
+}
+function CheckValueAuthentication({ children }) {
     if (localStorage.getItem("username") && localStorage.getItem("userId")) {
         return children;
     }
@@ -25,11 +26,28 @@ export function Unauthentication({ children }) {
         </CheckValueUnauthentication>
     )
 }
+async function SaveCartList() {
+    console.log(localStorage.getItem("cartList"));
+    axios({
+        method: "post",
+        url: `${process.env.REACT_APP_BACKEND}products/update_cart_list`,
+        headers: { token: process.env.REACT_APP_TOKEN_CONFIRM },
+        data: {
+            products: JSON.parse(localStorage.getItem("cartList")),
+            userId: localStorage.getItem("userId"),
+        }
+    });
+    return;
+}
 export async function LogOut() {
+    SaveCartList();
     localStorage.removeItem("username");
     localStorage.removeItem("userId");
     localStorage.removeItem("addressId");
-    window.location.replace("/");
+    localStorage.removeItem("cartList");
+    setTimeout(() => window.location.replace("/"), 3000);
+    // const { getAllItemQuanity } = useShoppingCart();
+
 }
 export function ShowUsername() {
     if (localStorage.getItem("username")) {
@@ -89,7 +107,8 @@ export default function VerifyAccount() {
     useEffect(() => {
         if (changePage) {
             setTimeout(() => {
-                window.location.replace("http://localhost:3000")
+                window.location.replace("http://localhost:3000");
+                localStorage.removeItem("username");
             }, 5000)
         }
     }, [changePage])

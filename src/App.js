@@ -20,10 +20,10 @@ import { ShoppingCartProvider } from "./context/ShoppingCartContext";
 // recreating the `Stripe` object on every render.
 
 function App() {
+  const navigate = useNavigate();
   const location = useLocation()
   const [dataSearch, setDataSearch] = useState([{ label: 'test', value: 'test' }]);
   const [getPathName, setPathName] = useState("");
-  var navigate = useNavigate();
   if (location.search) {
     axios("http://localhost:1402/payments/confirm", {
       method: "post",
@@ -34,6 +34,7 @@ function App() {
         confirmCode: location.search.toString().replace('&', ' ').split(" ")[1].replace('&', ' ').split(" ")[0].replace('payment_intent_client_secret=', '')
       }
     })
+    localStorage.removeItem("cartList");
     navigate("/")
   }
 
@@ -48,7 +49,6 @@ function App() {
           token: process.env.REACT_APP_TOKEN_CONFIRM
         }
       })
-      console.log(process.env.REACT_APP_TOKEN_CONFIRM);
       setDataSearch(await res.data.data);
     }
     WaitForData();

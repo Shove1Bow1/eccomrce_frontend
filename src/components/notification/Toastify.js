@@ -1,7 +1,6 @@
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 function ToastSuccessRegister(name) {
-    console.log(name);
     const showToastMessage = (name) => {
         toast.success('Chào mừng bạn đến với Shop NHT, ' + name, {
             position: toast.POSITION.TOP_RIGHT
@@ -9,31 +8,14 @@ function ToastSuccessRegister(name) {
     }
     return showToastMessage(name);
 }
-async function ToastFailedRegister(email, password) {
-    console.log("2");
-    const showToastMessage = (email, password) => {
-        console.log(email, password);
-        var toastValue;
-        if (!password) {
-            console.log("check password")
-            toastValue = toast.error("Mật khẩu xác thực không giống với mật khẩu đã nhập", {
-                position: toast.POSITION.BOTTOM_LEFT
-            })
-        }
-        else
-            if (!email) {
-                console.log("check email");
-                toastValue = toast.error("Email này đã được sử dụng", {
-                    position: toast.POSITION.BOTTOM_LEFT
-                })
-            }
-        return toastValue;
-    }
-    return showToastMessage(email, password);
+export function UsedEmail(email, password) {
+
+    const showToastMessage = toast.error("Email này đã được sử dụng", { position: toast.POSITION.BOTTOM_LEFT });
+    return showToastMessage;
 }
 export function HandleToastRegister(message, email, password, name) {
     if (!message) {
-        return ToastFailedRegister(email, password);
+        // return ToastFailedRegister(email, password);
     }
 }
 export function LoginFailedToast() {

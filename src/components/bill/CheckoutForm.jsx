@@ -70,7 +70,6 @@ export default function CheckoutForm(props) {
         } else {
             setMessage("An unexpected error occurred.");
         }
-
         setIsLoading(false);
     };
 

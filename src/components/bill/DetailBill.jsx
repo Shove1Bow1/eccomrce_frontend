@@ -1,3 +1,8 @@
+import axios from "axios";
+import styled from "styled-components";
+const Button = styled.button`
+
+`
 export default function DetailBill(props) {
     var shipment;
     if (props.billData[0]) {
@@ -5,6 +10,21 @@ export default function DetailBill(props) {
             shipment = "Đang giao";
         else
             shipment = "Đã giao";
+    }
+    function SendMail() {
+        var datePayment = props.billData[0].createdAt.slice(0, 10).split("-").reverse().join("-");
+        axios({
+            method: "get",
+            url: `${process.env.REACT_APP_BACKEND}payments/sent_bill`,
+            headers: {
+                // products: JSON.stringify(props.billData[0].products),
+                billid: props.billData[0]._id,
+                paymentdate: datePayment,
+                token: process.env.REACT_APP_TOKEN_CONFIRM,
+                username: localStorage.getItem("username"),
+                userid: localStorage.getItem("userId"),
+            }
+        })
     }
     return (
         <div className="w-full">
@@ -46,6 +66,7 @@ export default function DetailBill(props) {
                 </tbody>
             </table>
             <h1 className="text-[16px] font-[600]">Tình Trạng đơn hàng: {shipment}</h1>
+            <button onClick={() => SendMail()} className="border-none text-center bg-green-500 w-[6rem] min-h-[2rem] font-[500] mt-[10px] mb-[10px]">Xuất hoá đơn</button>
         </div>
     )
 }

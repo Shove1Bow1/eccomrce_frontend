@@ -97,10 +97,20 @@ const Login = () => {
         localStorage.setItem("userId", result.userId);
         localStorage.setItem("username", result.userName);
         localStorage.setItem("addressId", result.addressId);
+
         // document.cookie = "userId=" + result.idUser + ";expires=" + d + ";path=/";
         // document.cookie = " userName=" + result.userName + ";expires=" + d + ";path=/"; 
         formik.resetForm();
-        setTimeout(() => { window.location.replace("http://localhost:3000"); }, 1000)
+        setTimeout(() => { window.location.replace("http://localhost:3000"); }, 1000);
+        if (localStorage.getItem("cartList")) {
+          console.log("run");
+          const itemAvailable = JSON.parse(localStorage.getItem("cartList"));
+          const filterItemAvailable = new Set(itemAvailable.map(item => item.productId))
+          const itemUser = JSON.parse(result.products);
+          const newCartList = [...itemAvailable, ...itemUser.filter(item => filterItemAvailable.has(item.productId))]
+          localStorage.setItem("cartList", JSON.stringify(newCartList));
+        }
+        else localStorage.setItem("cartList", result.products);
 
       }
     }
