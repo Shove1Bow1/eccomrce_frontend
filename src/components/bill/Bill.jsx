@@ -80,6 +80,8 @@ const Bill = () => {
         selectedDistrict,
         selectedWard,
     } = state;
+    if (cityOptions)
+        console.log(cityOptions);
     const handleSubmit = (value) => {
         if (getCountItemCart() === 0) {
             successNotification(TYPE_NOTIFICATTION.INFOR, 'Không có sản phẩm trong giỏ hàng')
@@ -212,19 +214,21 @@ const Bill = () => {
                 </div> : null
             }
             {
-                clientSercet && localStorage.getItem("userId") ?
-                    <div>
-                        <Title level={3} style={{ fontWeight: 'bolder' }}>Payment method</Title>
-                        <Row gutter={24}>
-                            <Col span={16}>
-                                <Form.Item style={{ color: '#A9A9A9' }}>Please enter your payment method</Form.Item>
-                            </Col>
-                            <Col span={8}>
-                                <Form.Item style={{ color: '#A9A9A9', textAlign: 'right' }}>Step 2 of 2</Form.Item>
-                            </Col>
-                        </Row>
-                        <Payment clientSercet={clientSercet} confirmCode={confirmCode} />
-                    </div> : <Spin tip="Đang tải"><div className='h-[500px] text-center' /></Spin>
+                localStorage.getItem("userId") ? (
+                    clientSercet && localStorage.getItem("userId") ?
+                        <div>
+                            <Title level={3} style={{ fontWeight: 'bolder' }}>Payment method</Title>
+                            <Row gutter={24}>
+                                <Col span={16}>
+                                    <Form.Item style={{ color: '#A9A9A9' }}>Please enter your payment method</Form.Item>
+                                </Col>
+                                <Col span={8}>
+                                    <Form.Item style={{ color: '#A9A9A9', textAlign: 'right' }}>Step 2 of 2</Form.Item>
+                                </Col>
+                            </Row>
+                            <Payment clientSercet={clientSercet} confirmCode={confirmCode} />
+                        </div> : <Spin tip="Đang tải"><div className='h-[500px] text-center' /></Spin>
+                ) : null
             }
         </>
     )
