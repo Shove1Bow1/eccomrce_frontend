@@ -1,5 +1,5 @@
-import { ShoppingCartOutlined, UserOutlined } from "@ant-design/icons";
-import { Badge, Select } from "antd";
+import { CaretRightOutlined, ShoppingCartOutlined, UserOutlined } from "@ant-design/icons";
+import { Badge, Col, Row, Select } from "antd";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { DirectPage } from "../../container/Authentication";
@@ -35,49 +35,67 @@ function Header(props) {
         </div>
         <div className=" w-full h-[1px] bg-[#151515]"></div>
 
-        <div className="py-[40px] flex  flex-row">
-          <Link to={"/"}>
-            <div className="text-[#151515] text-[36px] pr-[auto]">LOGO</div>
-          </Link>
-          <div className="rounded-[12px] flex w-fit p-[15px] mx-auto flex-row  border-[1px]  border-[#D1D1D1] bg-[#F9F9F9]">
-            <Select
-              showSearch
-              onSelect={handleSelect}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                }
-              }}
-              options={dataSearch}
-              className="bg-black border-none w-[300px] focus:ring-0 focus:border-white"
-              placeholder="Search Products, categories ..."
-            />
-            <img
-              className="w-[16px] h-[16px] my-auto just-center"
-              alt="search"
-              src={iconGlass}
-            />
-          </div>
-          <Link>
-            <DirectPage>
-              {/* <img
-              className="max-w-[150px] h-[24px]  my-auto"
-              alt="user"
-              src={iconUser}
-            /> */}
-              <UserOutlined style={{ fontSize: '25px', fontWeight: 'bolder', marginRight: '10px' }} />
-            </DirectPage>
-          </Link>
-          <Link to={"/checkout"}>
-            <Badge count={getCountItemCart()} size="small">
-              {/* <img
-                // className="w-[24px] h-[24px] text-center my-[15px] min-h-full"
-                alt="basket"
-                src={iconBasket}
-              /> */}
-              <ShoppingCartOutlined style={{ fontSize: '25px', fontWeight: 'bolder' }} />
-            </Badge>
-          </Link>
-        </div>
+        <Row gutter={24} style={{ display: 'flex', padding: '40px 0' }}>
+          {/* <div className="py-[40px] flex  flex-row"> */}
+          <Col span={4}>
+            <Link to={"/"}>
+              <div className="text-[#151515] text-[36px] pr-[auto]">LOGO</div>
+            </Link>
+          </Col>
+          <Col span={16}>
+            <div className="rounded-[12px] flex w-fit p-[15px] mx-auto flex-row  border-[1px]  border-[#D1D1D1] bg-[#F9F9F9]">
+              <Select
+                showSearch
+                onSelect={handleSelect}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                  }
+                }}
+                options={dataSearch}
+                className="bg-black border-none w-[300px] focus:ring-0 focus:border-white"
+                placeholder="Search Products, categories ..."
+              />
+              <img
+                className="w-[16px] h-[16px] my-auto just-center"
+                alt="search"
+                src={iconGlass}
+              />
+            </div>
+          </Col>
+          <Col span={4} style={{ display: 'flex', alignItems: 'center', justifyContent: 'right' }}>
+            <Row>
+              {localStorage.getItem("userId") ?
+                (
+                  <div style={{ border: '1px solid #d9d9d9', marginRight: '10px', padding: '0 5px', borderRadius: '5px' }}>
+                    <Link>
+                      <DirectPage>
+                        <span style={{ display: 'flex', alignItems: 'center' }}>Xin chào {localStorage.getItem("username")}</span>
+                        <CaretRightOutlined style={{ display: 'flex', alignItems: 'center' }} />
+                      </DirectPage>
+                    </Link>
+                  </div>
+                ) : (
+                  <>
+                    <Link>
+                      <DirectPage>
+                        <UserOutlined
+                          style={{ fontSize: '25px', fontWeight: 'bolder', marginRight: '10px' }}
+                        />
+                      </DirectPage>
+                    </Link>
+                  </>
+                )}
+              <Link to={"/checkout"}>
+                <Badge count={getCountItemCart()} size="small">
+                  <ShoppingCartOutlined style={{ fontSize: '25px', fontWeight: 'bolder' }} />
+                </Badge>
+              </Link>
+            </Row>
+
+          </Col>
+
+          {/* </div> */}
+        </Row>
       </div >
       <div className="px-[45px] py-[16px] bg-[#F9F9F9]">
         <div className="mx-auto w-fit">

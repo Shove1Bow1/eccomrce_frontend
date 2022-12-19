@@ -7,7 +7,8 @@ import { ToastContainer } from "react-toastify";
 import styled from "styled-components";
 import * as yup from 'yup';
 import background from '../assets/img/delaney-van-unsplash.png';
-import { ErrorUpdate, HandleToastRegister, SuccessUpdate } from "../components/notification/Toastify";
+import { DifferentPassword, ErrorUpdate, SuccessUpdate, UsedEmail } from "../components/notification/Toastify";
+import { useShoppingCart } from "../context/ShoppingCartContext";
 import useLocationForm from "../service/useLocationForm";
 const Container = styled.div`
   width: full;
@@ -85,6 +86,7 @@ const Link = styled.a`
 const Register = () => {
   var temp = false;
   const [loading, setLoading] = useState(temp);
+  const { getAllItemQuantity } = useShoppingCart();
   function EnterLoading() {
     setLoading(true);
     setTimeout(() => {
@@ -132,13 +134,11 @@ const Register = () => {
     }),
     onSubmit: async values => {
       if (values.password !== values.confirmPassword) {
-        var message = false;
-        var passwordCheck = false;
-        var emailCheck = true;
-        HandleToastRegister(message, emailCheck, passwordCheck);
+        DifferentPassword();
         return;
       }
       else {
+        console.log("env", process.env.REACT_APP_TOKEN_CONFIRM)
         if (CheckAddress(values.address)) {
           const res = await axios({
             headers: {
@@ -159,9 +159,7 @@ const Register = () => {
           })
           const result = await res.data;
           if (!result.isAuth) {
-            var passwordCheck = true;
-            var emailCheck = false;
-            HandleToastRegister(result.message, emailCheck, passwordCheck);
+            UsedEmail();
             return;
           }
           else {
