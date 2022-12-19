@@ -18,24 +18,26 @@ export default function DataBills(props) {
                 }
             });
             const resData = await res.data.data;
-            const length = resData.length;
             var arrayData = [];
-            for (var i = 0; i < length; i++) {
-                var shipment;
-                if (resData[i].statusShipment === "pending") {
-                    shipment = "Đang giao";
+            if (resData) {
+                const length = resData.length;
+                for (var i = 0; i < length; i++) {
+                    var shipment;
+                    if (resData[i].statusShipment === "pending") {
+                        shipment = "Đang giao";
+                    }
+                    else
+                        shipment = "Đã giao";
+                    var newObject = {
+                        stt: i,
+                        key: i,
+                        _id: resData[i]._id,
+                        createdAt: resData[i].createdAt.slice(0, 10).split("-").reverse().join("-"),
+                        totalPrice: resData[i].totalPrice,
+                        statusShipment: shipment,
+                    }
+                    arrayData.push(newObject);
                 }
-                else
-                    shipment = "Đã giao";
-                var newObject = {
-                    stt: i,
-                    key: i,
-                    _id: resData[i]._id,
-                    createdAt: resData[i].createdAt.slice(0, 10).split("-").reverse().join("-"),
-                    totalPrice: resData[i].totalPrice,
-                    statusShipment: shipment,
-                }
-                arrayData.push(newObject);
             }
             setPackageData(arrayData)
         }
